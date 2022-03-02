@@ -1,0 +1,39 @@
+﻿<Window
+    x:Class="Battle_Assistant.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Battle_Assistant"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Root"
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
+          
+        <!-- Navigation side bar -->
+        <NavigationView x:Name="NavView"
+                        IsBackButtonVisible="Collapsed"
+                        Loaded="NavView_Loaded"
+                        SelectionChanged="NavView_SelectionChanged"
+                        PaneDisplayMode="LeftCompact">
+            
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="BattlesPage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="GamesPage"/> 
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Icon="Placeholder" Content="About" Tag="AboutPage"/>
+            </NavigationView.FooterMenuItems>
+
+            <!-- Frame where page contents go -->
+            <ScrollViewer>
+                <Frame x:Name="ContentFrame" Padding="12,0,12,24"/>
+            </ScrollViewer>
+        </NavigationView>
+
+        
+    </Grid>
+</Window>

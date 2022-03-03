@@ -8,7 +8,17 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock Text="Settings Page"/>
-    </Grid>
+
+    <StackPanel HorizontalAlignment="Left">
+        <TextBlock
+            Margin="0,12,0,0"
+            Text="Theme Mode"/>
+
+        <StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
+            <RadioButton Content="Light" Tag="Light" Checked="OnThemeModeChecked"/>
+            <RadioButton Content="Dark" Tag="Dark" Checked="OnThemeModeChecked"/>
+            <RadioButton Content="Use system settings" Tag="Default" Checked="OnThemeModeChecked"/>
+        </StackPanel>
+        
+    </StackPanel>
 </Page>

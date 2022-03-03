@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +27,28 @@ namespace Battle_Assistant.Views
         public SettingsPage()
         {
             this.InitializeComponent();
+            Loaded += SettingsPage_Loaded;
+        }
+
+        private void SettingsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //var currentTheme = ThemeHelper.RootTheme.ToString();
+            //(ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
+        }
+
+        private void OnThemeModeChecked(object sender, RoutedEventArgs args)
+        {
+            var selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
+            
+            if(selectedTheme == "Light")
+            {
+                ((FrameworkElement)this.Content).RequestedTheme = ElementTheme.Light;
+            }
+            else
+            {
+                ((FrameworkElement)this.Content).RequestedTheme = ElementTheme.Dark;
+            }
+
         }
     }
 }

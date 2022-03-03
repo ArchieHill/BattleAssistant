@@ -16,12 +16,11 @@
         <NavigationView x:Name="NavView"
                         IsBackButtonVisible="Collapsed"
                         Loaded="NavView_Loaded"
-                        SelectionChanged="NavView_SelectionChanged"
-                        PaneDisplayMode="LeftCompact">
-            
+                        SelectionChanged="NavView_SelectionChanged">
+
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="BattlesPage"/>
-                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="GamesPage"/> 
+                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="GamesPage"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
@@ -29,11 +28,13 @@
             </NavigationView.FooterMenuItems>
 
             <!-- Frame where page contents go -->
-            <ScrollViewer>
-                <Frame x:Name="ContentFrame" Padding="12,0,12,24"/>
+            <ScrollViewer Padding="56,0,0,0"
+                          IsTabStop="False"
+                          UseSystemFocusVisuals="False"
+                          VerticalScrollBarVisibility="Auto"
+                          VerticalScrollMode="Auto">
+                <Frame x:Name="ContentFrame"/>
             </ScrollViewer>
         </NavigationView>
-
-        
     </Grid>
 </Window>

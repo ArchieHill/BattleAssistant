@@ -4,20 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Battle_Assistant.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:l="using:CM_Battle_Assistant.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
-    <!-- <ItemsRepeater>
+    <ItemsRepeater ItemsSource="{Binding Battles}">
         <ItemsRepeater.Layout>
             <StackLayout Orientation="Vertical" Spacing="10"/>
         </ItemsRepeater.Layout>
 
-        <ItemsRepeater.ItemTemplate>
-            <StackPanel></StackPanel>
-        </ItemsRepeater.ItemTemplate>
-    </ItemsRepeater> -->
-
-    <TextBlock Text="BattlesPage"/>
+        <DataTemplate x:DataType="l:BattleModel">
+            <StackPanel BorderThickness="1" Background="DarkGreen" Margin="5" Padding="5,5,5,5">
+                <TextBlock Text="{x:Bind Name}" FontSize="18"/>
+                <TextBlock Text="{x:Bind Status}"/>
+                <TextBlock Text="{x:Bind Game.Name}"/>
+            </StackPanel>
+        </DataTemplate>
+    </ItemsRepeater>
 </Page>

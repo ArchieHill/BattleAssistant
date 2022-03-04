@@ -28,7 +28,7 @@
             </NavigationView.FooterMenuItems>
 
             <!-- Frame where page contents go -->
-            <ScrollViewer Padding="56,0,0,0"
+            <ScrollViewer Padding="56,0,10,0"
                           IsTabStop="False"
                           UseSystemFocusVisuals="False"
                           VerticalScrollBarVisibility="Auto"

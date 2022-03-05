@@ -5,7 +5,7 @@
     xmlns:local="using:Battle_Assistant.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:l="using:CM_Battle_Assistant.Models"
+    xmlns:l="using:Battle_Assistant.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

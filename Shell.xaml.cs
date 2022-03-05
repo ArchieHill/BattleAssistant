@@ -28,6 +28,8 @@ namespace Battle_Assistant
         { 
             ("BattlesPage", typeof(BattlesPage)),
             ("GamesPage", typeof(GamesPage)),
+            ("CreateBattlePage", typeof(CreateBattlePage)),
+            ("AddGamePage", typeof(AddGamePage)),
             ("AboutPage", typeof(AboutPage))
         };
 

@@ -13,7 +13,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\AddGamePage.xaml" />
     <None Remove="Views\BattlesPage.xaml" />
+    <None Remove="Views\CreateBattlePage.xaml" />
     <None Remove="Views\GamesPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
@@ -43,6 +45,16 @@
   <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AddGamePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CreateBattlePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AboutPage.xaml">

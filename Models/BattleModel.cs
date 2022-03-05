@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
-namespace CM_Battle_Assistant.Models
+namespace Battle_Assistant.Models
 {
     public class BattleModel : INotifyPropertyChanged
     {
@@ -74,8 +75,8 @@ namespace CM_Battle_Assistant.Models
             }
         }
 
-        private string sharedDir;
-        public string SharedDir
+        private StorageFolder sharedDir;
+        public StorageFolder SharedDir
         {
             get { return sharedDir; }
             set
@@ -88,9 +89,9 @@ namespace CM_Battle_Assistant.Models
             }
         }
 
-        private string initialGameFile;
+        private StorageFile initialGameFile;
 
-        public string InitialGameFile
+        public StorageFile InitialGameFile
         {
             get { return initialGameFile; }
             set
@@ -103,6 +104,7 @@ namespace CM_Battle_Assistant.Models
                 }
             }
         }
+
         private int currentFileNum;
         public int CurrentFileNum
         {
@@ -123,14 +125,14 @@ namespace CM_Battle_Assistant.Models
         {
             Name = "";
             CurrentFileNum = 1;
-            SharedDir = "";
+            SharedDir = null;
             Game = null;
             Opponent = "";
             Status = "No Status Set";
             LastAction = "No Last Action";
         }
 
-        public BattleModel(string gameFile, string sharedDir, GameModel game, string opponent)
+        public BattleModel(StorageFile gameFile, StorageFolder sharedDir, GameModel game, string opponent)
         {
             SetVarsFromGameFile(gameFile);
             SharedDir = sharedDir;
@@ -145,9 +147,9 @@ namespace CM_Battle_Assistant.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public void SetVarsFromGameFile(string filePath)
+        public void SetVarsFromGameFile(StorageFile gameFile)
         {
-            string filename = Path.GetFileNameWithoutExtension(filePath);
+            string filename = gameFile.DisplayName;
             Name = filename.Substring(0, filename.Length + LAST_FILE_NAME_POS_SUBTRACTOR);
             CurrentFileNum = int.Parse(filename.Substring(filename.Length + FIRST_NUM_POS_SUBTRACTOR));
         }

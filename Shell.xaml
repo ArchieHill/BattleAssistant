@@ -21,6 +21,8 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="BattlesPage"/>
                 <NavigationViewItem Icon="Placeholder" Content="Games" Tag="GamesPage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Create Battle" Tag="CreateBattlePage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Add Game" Tag="AddGamePage"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>

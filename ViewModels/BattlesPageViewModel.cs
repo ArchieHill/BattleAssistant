@@ -1,4 +1,4 @@
-﻿using CM_Battle_Assistant.Models;
+﻿using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,18 +8,31 @@ using System.Threading.Tasks;
 
 namespace Battle_Assistant.ViewModels
 {    
-    public class BattlesPageViewModel
+    public sealed class BattlesPageViewModel
     {
+        private static BattlesPageViewModel instance = null;
+        private static readonly object padlock = new object();
+
+        public static BattlesPageViewModel Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new BattlesPageViewModel();
+                    }
+                }
+
+                return instance;
+            }
+        }
         public ObservableCollection<BattleModel> Battles { get; set; }
 
-        public BattlesPageViewModel()
+        BattlesPageViewModel()
         {
             Battles = new ObservableCollection<BattleModel>();
-
-            GameModel game = new GameModel("example game", "game directory", "game files directory", "game icon");
-            Battles.Add(new BattleModel("Example gamefile 001.ema", "shared directory", game, "opponent"));
-            Battles.Add(new BattleModel());
-            Battles.Add(new BattleModel());
         }
     }
 }

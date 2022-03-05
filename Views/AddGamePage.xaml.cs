@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.ViewModels;
+﻿using Battle_Assistant.Models;
+using Battle_Assistant.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -22,15 +23,29 @@ namespace Battle_Assistant.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BattlesPage : Page
+    public sealed partial class AddGamePage : Page
     {
-        private BattlesPageViewModel viewModel;
-        public BattlesPage ()
+        private AddGameViewModel viewModel;
+        public AddGamePage()
         {
-            //Add the view model as the data context
-            viewModel = BattlesPageViewModel.Instance;
+            viewModel = new AddGameViewModel();
             DataContext = viewModel;
-            this.InitializeComponent();
+            InitializeComponent();    
+        }
+
+        private void SelectIconButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.SelectIcon();
+        }
+
+        private void SelectGameFilesDirButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.SelectGameFilesDir();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            GamesPageViewModel.Instance.Games.Add(viewModel.AddGame());
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CM_Battle_Assistant.Models
+namespace Battle_Assistant.Models
 {
     public class GameModel : INotifyPropertyChanged
     {

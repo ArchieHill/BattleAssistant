@@ -19,14 +19,14 @@
                         SelectionChanged="NavView_SelectionChanged">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="BattlesPage"/>
-                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="GamesPage"/>
-                <NavigationViewItem Icon="Placeholder" Content="Create Battle" Tag="CreateBattlePage"/>
-                <NavigationViewItem Icon="Placeholder" Content="Add Game" Tag="AddGamePage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="Battle_Assistant.Views.BattlesPage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="Battle_Assistant.Views.GamesPage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Create Battle" Tag="Battle_Assistant.Views.CreateBattlePage"/>
+                <NavigationViewItem Icon="Placeholder" Content="Add Game" Tag="Battle_Assistant.Views.AddGamePage"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Icon="Placeholder" Content="About" Tag="AboutPage"/>
+                <NavigationViewItem Icon="Placeholder" Content="About" Tag="Battle_Assistant.Views.AboutPage"/>
             </NavigationView.FooterMenuItems>
 
             <!-- Frame where page contents go -->

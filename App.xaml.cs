@@ -26,7 +26,10 @@ namespace Battle_Assistant
     /// </summary>
     public partial class App : Application
     {
-        public static Window Window;
+        public static Shell Window;
+
+        public INavigation Navigation => m_window;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -48,6 +51,6 @@ namespace Battle_Assistant
             m_window.Activate();
         }
 
-        private Window m_window;
+        private Shell m_window;
     }
 }

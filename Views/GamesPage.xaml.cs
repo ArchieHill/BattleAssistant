@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Battle_Assistant.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -23,8 +24,11 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class GamesPage : Page
     {
+        private GamesPageViewModel viewModel;
         public GamesPage()
         {
+            viewModel = GamesPageViewModel.Instance;
+            DataContext = viewModel;
             this.InitializeComponent();
         }
     }

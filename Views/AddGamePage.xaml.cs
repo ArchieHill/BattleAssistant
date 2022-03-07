@@ -46,6 +46,9 @@ namespace Battle_Assistant.Views
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             GamesPageViewModel.Instance.Games.Add(viewModel.AddGame());
+            var nav = (Application.Current as App).Navigation;
+            var gamesItem = nav.GetNavigationViewItems(typeof(GamesPage)).First();
+            nav.SetCurrentNavigationViewItem(gamesItem);
         }
     }
 }

@@ -32,7 +32,7 @@
         <Button Grid.Row="1" Grid.Column="2" Click="SelectDriveButton_Click">Select Drive</Button>
 
         <TextBlock Grid.Row="2">CM Game:</TextBlock>
-        <ComboBox Grid.Row="2" Grid.Column="1" Name="cbCMGame" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedCMGame}"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="cbGame" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame}"/>
 
         <TextBlock Grid.Row="3">Opponent:</TextBlock>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Battle.Opponent}"/>

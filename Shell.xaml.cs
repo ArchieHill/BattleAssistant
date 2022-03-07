@@ -24,97 +24,9 @@ namespace Battle_Assistant
     /// </summary>
     public sealed partial class Shell : Window
     {
-        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
-        { 
-            ("BattlesPage", typeof(BattlesPage)),
-            ("GamesPage", typeof(GamesPage)),
-            ("CreateBattlePage", typeof(CreateBattlePage)),
-            ("AddGamePage", typeof(AddGamePage)),
-            ("AboutPage", typeof(AboutPage))
-        };
-
         public Shell()
         {
             this.InitializeComponent();
-        }
-
-        private void NavView_Loaded(object sender, RoutedEventArgs args)
-        {
-            ContentFrame.Navigated += On_Navigated;
-
-            NavView_Navigate("BattlesPage");
-        }
-
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            if(args.IsSettingsSelected == true)
-            {
-                NavView_Navigate("settings");
-            }
-            else if(args.SelectedItemContainer != null)
-            {
-                var navItemTag = args.SelectedItemContainer.Tag.ToString();
-                NavView_Navigate(navItemTag);
-            }
-        }
-
-        private void NavView_Navigate(string navItemTag)
-        {
-            Type _page = null;
-            if(navItemTag == "settings")
-            {
-                _page = typeof(SettingsPage);
-            }
-            else
-            {
-                var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-                _page = item.Page;
-            }
-
-            // Get the page type before navigation so you can prevent duplicate
-            // entries in the backstack.
-            var preNavPageType = ContentFrame.CurrentSourcePageType;
-
-            // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
-            {
-                ContentFrame.Navigate(_page, null);
-            }
-        }
-
-        private List<NavigationViewItem> GetNavViewItems()
-        {
-            List<NavigationViewItem> result = new();
-            var items = NavView.MenuItems.Select(i => (NavigationViewItem)i).ToList();
-            items.AddRange(NavView.FooterMenuItems.Select(i => (NavigationViewItem)i));
-            result.AddRange(items);
-
-            foreach (NavigationViewItem mainItem in items)
-            {
-                result.AddRange(mainItem.MenuItems.Select(i => (NavigationViewItem)i));
-            }
-
-            return result;
-        }
-
-        private void On_Navigated(object sender, NavigationEventArgs e)
-        {
-            if (ContentFrame.SourcePageType == typeof(SettingsPage))
-            {
-                // SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
-                NavView.SelectedItem = (NavigationViewItem)NavView.SettingsItem;
-                NavView.Header = "Settings";
-            }
-            else if (ContentFrame.SourcePageType != null)
-            {
-                var item = _pages.FirstOrDefault(p => p.Page == e.SourcePageType);
-               
-                NavView.SelectedItem = 
-                    GetNavViewItems().First(n => n.Tag.Equals(item.Tag));
-
-                NavView.Header =
-                    ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
-            }
         }
     }
 }

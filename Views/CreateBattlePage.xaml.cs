@@ -59,6 +59,9 @@ namespace Battle_Assistant.Views
         private void CreateBattle_Click(object sender, RoutedEventArgs e)
         {
             BattlesPageViewModel.Instance.Battles.Add(viewModel.CreateBattle());
+            var nav = (Application.Current as App).Navigation;
+            var battlesItem = nav.GetNavigationViewItems(typeof(BattlesPage)).First();
+            nav.SetCurrentNavigationViewItem(battlesItem);
         }
     }
 }

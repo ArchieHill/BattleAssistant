@@ -20,10 +20,13 @@ using Battle_Assistant.Views;
 namespace Battle_Assistant
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// A shell window that has the navigation to pages that it contains in a frame.
     /// </summary>
     public sealed partial class Shell : Window
     {
+        /// <summary>
+        /// Shell constructor
+        /// </summary>
         public Shell()
         {
             this.InitializeComponent();

@@ -9,28 +9,11 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Models
 {
-    public class BattleModel : INotifyPropertyChanged
+    public class BattleModel : MasterModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private const int FIRST_NUM_POS_SUBTRACTOR = -3;
 
         private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
-
-        private string name;
-        public string Name 
-        {
-            get { return name; }
-
-            set 
-            { 
-                if (name != value)
-                {
-                    name = value;
-                    NotifyPropertyChanged("Name");
-                }
-            }
-        }
 
         private string status;
         public string Status
@@ -140,11 +123,6 @@ namespace Battle_Assistant.Models
             Opponent = opponent;
             Status = "No Status Set";
             LastAction = "No Last Action";
-        }
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public void SetVarsFromGameFile(StorageFile gameFile)

@@ -7,24 +7,8 @@ using System.Threading.Tasks;
 
 namespace Battle_Assistant.Models
 {
-    public class GameModel : INotifyPropertyChanged
+    public class GameModel : MasterModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    NotifyPropertyChanged("Name");
-                }
-            }
-        }
-
         private string gameIcon;
         public string GameIcon
         {
@@ -110,11 +94,6 @@ namespace Battle_Assistant.Models
             GameIcon = gameIcon;
             GameDir = gameDir;
             GameFilesDir = gameFilesDir;
-        }
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         override

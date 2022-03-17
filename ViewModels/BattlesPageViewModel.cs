@@ -1,4 +1,5 @@
 ﻿using Battle_Assistant.Models;
+using Battle_Assistant.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,8 @@ namespace Battle_Assistant.ViewModels
     {
         private static BattlesPageViewModel instance = null;
         private static readonly object padlock = new object();
+
+        private const string BATTLES_FILE_NAME = "battles.json";
 
         public static BattlesPageViewModel Instance
         {
@@ -32,7 +35,7 @@ namespace Battle_Assistant.ViewModels
 
         BattlesPageViewModel()
         {
-            Battles = new ObservableCollection<BattleModel>();
+            Battles = StorageHelper.LoadModelsFromJSON<BattleModel>(BATTLES_FILE_NAME).Result;
         }
     }
 }

@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Battle-Assistant (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "alwaysReinstallApp": true
     },
     "Battle-Assistant (Unpackaged)": {
       "commandName": "Project"

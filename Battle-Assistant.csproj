@@ -43,10 +43,6 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helper\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Views\AddGamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

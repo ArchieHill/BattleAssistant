@@ -24,14 +24,14 @@
         </Grid.RowDefinitions>
 
         <TextBlock>Game Name:</TextBlock>
-        <TextBox Grid.Column="1" Text="{Binding Game.Name}"/>
+        <TextBox Grid.Column="1" Text="{Binding Game.Name, Mode=TwoWay}"/>
 
         <TextBlock Grid.Row="1">Game Icon:</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Game.GameIcon}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Game.GameIcon, Mode=TwoWay}"/>
         <Button Grid.Row="1" Grid.Column="2" Click="SelectIconButton_Click">Select Icon</Button>
 
         <TextBlock Grid.Row="3">Game Files Directory</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Game.GameFilesDir}"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Game.GameFilesDir, Mode=TwoWay}"/>
         <Button Grid.Row="3" Grid.Column="2" Click="SelectGameFilesDirButton_Click">Select Directory</Button>
 
         <Button Grid.Row="4" Grid.Column="2" Click="AddButton_Click">Add</Button>

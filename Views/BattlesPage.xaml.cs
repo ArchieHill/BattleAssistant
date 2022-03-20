@@ -24,12 +24,11 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class BattlesPage : Page
     {
-        private BattlesPageViewModel viewModel;
+        public BattlesPageViewModel ViewModel { get; set; } = new BattlesPageViewModel();
+
         public BattlesPage ()
         {
-            //Add the view model as the data context
-            viewModel = BattlesPageViewModel.Instance;
-            DataContext = viewModel;
+            DataContext = ViewModel;
             this.InitializeComponent();
         }
     }

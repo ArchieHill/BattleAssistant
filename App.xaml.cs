@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Battle_Assistant.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -8,6 +9,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,7 +30,16 @@ namespace Battle_Assistant
     {
         public static Shell Window;
 
+        public static IntPtr Hwnd;
+        public static ObservableCollection<BattleModel> Battles { get; set; }
+
+        public static ObservableCollection<GameModel> Games { get; set; }
+
         public INavigation Navigation => m_window;
+
+        private const string GAMES_FILE_NAME = "games.json";
+
+        private const string BATTLES_FILE_NAME = "battles.json";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -37,6 +48,12 @@ namespace Battle_Assistant
         public App()
         {
             this.InitializeComponent();
+            Battles = new ObservableCollection<BattleModel>();
+            Games = new ObservableCollection<GameModel>();
+            //So stupid
+            //Games = StorageHelper.LoadModelsFromJSON<GameModel>(GAMES_FILE_NAME).Result;
+            //Doesn't work in vsstudio cause its stupid
+            //Battles = StorageHelper.LoadModelsFromJSON<BattleModel>(BATTLES_FILE_NAME).Result;
         }
 
         /// <summary>
@@ -48,6 +65,7 @@ namespace Battle_Assistant
         {
             m_window = new Shell();
             Window = m_window;
+            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(Window);
             m_window.Activate();
         }
 

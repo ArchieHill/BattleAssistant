@@ -26,6 +26,7 @@ namespace Battle_Assistant.Helpers
             await fileStream.DisposeAsync();
         }
 
+        //C:\Users\Admin\AppData\Local\Packages\c8e8831d-4222-4ea8-ae83-43ec81e66df7_5gyrq6psz227t\LocalState
         public static async Task<ObservableCollection<T>> LoadModelsFromJSON<T>(string fileName)
         {
             ObservableCollection<T> models = new ObservableCollection<T>();
@@ -37,7 +38,7 @@ namespace Battle_Assistant.Helpers
             }
             catch (FileNotFoundException)
             {
-                return models;
+                //With no file found, assume it doesn't exist and move on
             }
             catch (IOException e)
             {

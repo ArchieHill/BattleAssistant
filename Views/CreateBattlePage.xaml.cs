@@ -26,18 +26,15 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class CreateBattlePage : Page
     {
-        private CreateBattleViewModel viewModel;
+        public CreateBattleViewModel ViewModel { get; set; } = new CreateBattleViewModel();
         public CreateBattlePage()
         {
-            var games = GamesPageViewModel.Instance.Games;
-
-            viewModel = new CreateBattleViewModel();
-            DataContext = viewModel;
+            DataContext = ViewModel;
             InitializeComponent();
 
-            if (games.Count > 0)
+            if (App.Games.Count > 0)
             {
-                viewModel.Games = games;
+                ViewModel.Games = App.Games;
             }
             else
             {
@@ -48,17 +45,17 @@ namespace Battle_Assistant.Views
 
         private void SelectFileButton_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.SelectGameFile();
+            ViewModel.SelectGameFile();
         }
 
         private void SelectDriveButton_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.SelectDrive();
+            ViewModel.SelectDrive();
         }
 
         private void CreateBattle_Click(object sender, RoutedEventArgs e)
         {
-            BattlesPageViewModel.Instance.Battles.Add(viewModel.CreateBattle());
+            App.Battles.Add(ViewModel.CreateBattle());
             var nav = (Application.Current as App).Navigation;
             var battlesItem = nav.GetNavigationViewItems(typeof(BattlesPage)).First();
             nav.SetCurrentNavigationViewItem(battlesItem);

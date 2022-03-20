@@ -13,9 +13,6 @@ namespace Battle_Assistant.ViewModels
     {
         public GameModel Game { get; set; }
 
-        //The window handle needed to initialise the file and folder pickers
-        private readonly IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Window);
-
         public AddGameViewModel()
         {
             Game = new GameModel();
@@ -25,7 +22,7 @@ namespace Battle_Assistant.ViewModels
         {
             var filePicker = new FileOpenPicker();
 
-            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".png");
 
             StorageFile file = await filePicker.PickSingleFileAsync();
@@ -35,7 +32,7 @@ namespace Battle_Assistant.ViewModels
         public async void SelectGameFilesDir()
         {
             FolderPicker folderPicker = new FolderPicker();
-            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
 
             folderPicker.FileTypeFilter.Add("*");
 

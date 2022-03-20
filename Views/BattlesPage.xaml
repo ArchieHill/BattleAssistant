@@ -5,7 +5,7 @@
     xmlns:local="using:Battle_Assistant.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:l="using:Battle_Assistant.Models"
+    xmlns:models="using:Battle_Assistant.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -14,7 +14,7 @@
             <StackLayout Orientation="Vertical" Spacing="10"/>
         </ItemsRepeater.Layout>
 
-        <DataTemplate x:DataType="l:BattleModel">
+        <DataTemplate x:DataType="models:BattleModel">
             <StackPanel BorderThickness="1" Background="DarkGreen" Margin="5" Padding="5,5,5,5">
                 <TextBlock Text="{x:Bind Name}" FontSize="18"/>
                 <TextBlock Text="{x:Bind Status}"/>

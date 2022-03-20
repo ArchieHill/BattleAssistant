@@ -11,29 +11,11 @@ namespace Battle_Assistant.ViewModels
 {
     public class GamesPageViewModel
     {
-        private static GamesPageViewModel instance = null;
-        private static readonly object padlock = new object();
+        public ObservableCollection<GameModel> Games { get; set; } = App.Games;
 
-        private const string GAMES_FILE_NAME = "games.json";
-        public static GamesPageViewModel Instance
+        public GamesPageViewModel()
         {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new GamesPageViewModel();
-                    }
-                }
-
-                return instance;
-            }
-        }
-        public ObservableCollection<GameModel> Games { get; set; }
-        GamesPageViewModel()
-        {
-            Games = StorageHelper.LoadModelsFromJSON<GameModel>(GAMES_FILE_NAME).Result;
-        }
+            
+        } 
     }
 }

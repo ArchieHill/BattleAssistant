@@ -22,9 +22,6 @@ namespace Battle_Assistant.ViewModels
 
         public GameModel SelectedGame { get; set; }
 
-        //The window handle needed to initialise the file and folder pickers
-        private readonly IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Window);
-
         public CreateBattleViewModel()
         {
             Battle = new BattleModel();
@@ -33,7 +30,7 @@ namespace Battle_Assistant.ViewModels
         public async void SelectGameFile()
         {
             var filePicker = new FileOpenPicker();
-            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
 
             filePicker.FileTypeFilter.Add(".ema");
             Battle.InitialGameFile = await filePicker.PickSingleFileAsync();
@@ -42,7 +39,7 @@ namespace Battle_Assistant.ViewModels
         public async void SelectDrive()
         {
             var folderPicker = new FolderPicker();
-            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
 
             folderPicker.FileTypeFilter.Add("*");
             Battle.SharedDir = await folderPicker.PickSingleFolderAsync();

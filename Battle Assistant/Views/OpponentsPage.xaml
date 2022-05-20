@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="Battle_Assistant.Views.OpponentsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Battle_Assistant.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Battle_Assistant.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel>
+        <Button Content="Add Opponent" Click="AddOpponent_Click"/>
+        
+        <ItemsRepeater ItemsSource="{Binding Opponents}">
+            <DataTemplate x:DataType="models:OpponentModel">
+                <StackPanel>
+                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding SharedDir}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsRepeater>
+    </StackPanel>
+</Page>

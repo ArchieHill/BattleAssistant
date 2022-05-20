@@ -1,0 +1,33 @@
+﻿<ContentDialog
+    x:Class="Battle_Assistant.Dialogs.StartBattleDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Battle_Assistant.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    PrimaryButtonText="Start Battle"
+    CloseButtonText="Cancel"
+    PrimaryButtonClick="StartBattle_Click"
+    IsPrimaryButtonEnabled="False">
+
+    <ContentDialog.TitleTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="ms-appx:///Assets/SmallLogo.png" Width="40" Height="40" Margin="10,0"/>
+                <TextBlock Text="Start Battle"/>
+            </StackPanel>
+        </DataTemplate>
+    </ContentDialog.TitleTemplate>
+    
+    <StackPanel>
+        <TextBlock>Battle File</TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBox PlaceholderText="Enter the battle filepath here" Text="{Binding Battle.InitialGameFile.Name, Mode=TwoWay}"/>
+            <Button Content="Select File" Click="SelectFile_Click"/>
+        </StackPanel>
+
+        <ComboBox Header="Opponent" PlaceholderText="No Opponents Created" ItemsSource="{Binding Opponents}" SelectedItem="{Binding SelectedOpponent, Mode=TwoWay}"/>
+        <ComboBox Header="Game" PlaceholderText="No Games Added" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
+    </StackPanel>
+</ContentDialog>

@@ -35,6 +35,8 @@ namespace Battle_Assistant
 
         public static ObservableCollection<OpponentModel> Opponents { get; set; }
 
+        public static IntPtr Hwnd;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -55,6 +57,7 @@ namespace Battle_Assistant
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new NavShell();
+            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
             m_window.Activate();
         }
 

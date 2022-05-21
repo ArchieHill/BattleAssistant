@@ -12,7 +12,6 @@ namespace Battle_Assistant.DialogModels
     public class StartBattleDialogModel
     {
         public GameModel SelectedGame { get; set; }
-
         public OpponentModel SelectedOpponent { get; set; }
 
         private ObservableCollection<GameModel> games;
@@ -45,7 +44,7 @@ namespace Battle_Assistant.DialogModels
             }
         }
 
-        BattleModel Battle { get; set; }
+        BattleModel Battle { get; set; } 
 
         public StartBattleDialogModel()
         {
@@ -57,6 +56,7 @@ namespace Battle_Assistant.DialogModels
         public async void SelectBattleFile()
         {
             var filePicker = new FileOpenPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".ema");
             Battle.InitialGameFile = await filePicker.PickSingleFileAsync();
         }

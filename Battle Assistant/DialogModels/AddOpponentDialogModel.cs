@@ -8,10 +8,9 @@ using Windows.Storage.Pickers;
 
 namespace Battle_Assistant.DialogModels
 {
-    
     public class AddOpponentDialogModel
     {
-        OpponentModel Opponent { get; set; }
+        public OpponentModel Opponent { get; set; }
 
         public AddOpponentDialogModel()
         {
@@ -21,6 +20,7 @@ namespace Battle_Assistant.DialogModels
         public async void SelectSharedDrive()
         {
             FolderPicker folderPicker = new FolderPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             Opponent.SharedDir = await folderPicker.PickSingleFolderAsync();
         }

@@ -11,7 +11,7 @@ namespace Battle_Assistant.DialogModels
 {
     public class AddGameDialogModel
     {
-        GameModel Game { get; set; }
+        public GameModel Game { get; set; }
 
         public AddGameDialogModel()
         {
@@ -21,6 +21,7 @@ namespace Battle_Assistant.DialogModels
         public async void SelectGameDir()
         {
             FolderPicker folderPicker = new FolderPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             Game.GameDir = await folderPicker.PickSingleFolderAsync();
         }
@@ -28,6 +29,7 @@ namespace Battle_Assistant.DialogModels
         public async void SelectIconFile()
         {
             var filePicker = new FileOpenPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".png");
             Game.GameIcon = await filePicker.PickSingleFileAsync();
         }

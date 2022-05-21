@@ -6,29 +6,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Title="Add Game"
     PrimaryButtonText="Add Game"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="AddGame_Click">
-    
-    <ContentDialog.TitleTemplate>
-    <DataTemplate>
-        <StackPanel Orientation="Horizontal">
-            <Image Source="ms-appx:///Assets/SmallLogo.png" Width="40" Height="40" Margin="10,0"/>
-            <TextBlock Text="Add Game"/>
-        </StackPanel>
-    </DataTemplate>
-    </ContentDialog.TitleTemplate>
-    
+    PrimaryButtonClick="AddGame_Click"
+    IsPrimaryButtonEnabled="False">
+
     <StackPanel>
         <TextBlock>Game Files Directory</TextBlock>
         <StackPanel Orientation="Horizontal">
-            <TextBox PlaceholderText="Enter the Game Files directory for the game" Text="{Binding Game.GameDir.Path, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding Game.GameDir.Path, Mode=OneWay}"/>
             <Button Content="Select Folder" Click="SelectGameDir_Click"/>
         </StackPanel>
 
         <TextBlock>Game Icon (Optional)</TextBlock>
         <StackPanel Orientation="Horizontal">
-            <TextBox PlaceholderText="Add a game icon to display for the game" Text="{Binding Game.GameIcon.Path, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding Game.GameIcon.Path, Mode=OneWay}"/>
             <Button Content="Select File" Click="SelectIconFile_Click"/>
         </StackPanel>
     </StackPanel>

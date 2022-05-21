@@ -37,6 +37,7 @@ namespace Battle_Assistant.Models
                 if (gameDir != value)
                 {
                     gameDir = value;
+                    Name = value.Name;
                     SetEmailFolders();
                     NotifyPropertyChanged("GameDir");
                 }
@@ -86,12 +87,6 @@ namespace Battle_Assistant.Models
             Name = name;
             GameIcon = gameIcon;
             GameDir = gameDir;
-        }
-
-        override
-        public string ToString()
-        {
-            return Name;
         }
 
         public async void SetEmailFolders()

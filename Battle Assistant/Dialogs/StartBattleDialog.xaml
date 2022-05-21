@@ -6,28 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Title="Start Battle"
     PrimaryButtonText="Start Battle"
     CloseButtonText="Cancel"
     PrimaryButtonClick="StartBattle_Click"
     IsPrimaryButtonEnabled="False">
 
-    <ContentDialog.TitleTemplate>
-        <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-                <Image Source="ms-appx:///Assets/SmallLogo.png" Width="40" Height="40" Margin="10,0"/>
-                <TextBlock Text="Start Battle"/>
-            </StackPanel>
-        </DataTemplate>
-    </ContentDialog.TitleTemplate>
-    
     <StackPanel>
         <TextBlock>Battle File</TextBlock>
         <StackPanel Orientation="Horizontal">
-            <TextBox PlaceholderText="Enter the battle filepath here" Text="{Binding Battle.InitialGameFile.Name, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding Battle.InitialGameFile.Name, Mode=OneWay}"/>
             <Button Content="Select File" Click="SelectFile_Click"/>
         </StackPanel>
 
-        <ComboBox Header="Opponent" PlaceholderText="No Opponents Created" ItemsSource="{Binding Opponents}" SelectedItem="{Binding SelectedOpponent, Mode=TwoWay}"/>
-        <ComboBox Header="Game" PlaceholderText="No Games Added" ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
+        <ComboBox Header="Opponent" PlaceholderText="No Opponents Created" 
+                  ItemsSource="{Binding Opponents, Mode=OneWay}" 
+                  SelectedItem="{Binding SelectedOpponent, Mode=TwoWay}"/>
+        
+        <ComboBox Header="Game" PlaceholderText="No Games Added" 
+                  ItemsSource="{Binding Games, Mode=OneWay}"
+                  SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
     </StackPanel>
 </ContentDialog>

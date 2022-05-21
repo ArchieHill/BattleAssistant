@@ -35,7 +35,7 @@ namespace Battle_Assistant
 
         public static ObservableCollection<OpponentModel> Opponents { get; set; }
 
-        public static IntPtr Hwnd;
+        public static IntPtr Hwnd { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

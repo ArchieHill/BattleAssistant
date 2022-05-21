@@ -43,8 +43,7 @@ namespace Battle_Assistant.DialogModels
                 }
             }
         }
-
-        BattleModel Battle { get; set; } 
+        public BattleModel Battle { get; set; } 
 
         public StartBattleDialogModel()
         {
@@ -53,7 +52,7 @@ namespace Battle_Assistant.DialogModels
             Opponents = App.Opponents;
         }
 
-        public async void SelectBattleFile()
+        public async Task SelectBattleFile()
         {
             var filePicker = new FileOpenPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);

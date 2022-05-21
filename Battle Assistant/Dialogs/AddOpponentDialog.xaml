@@ -6,24 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Title="Add Opponent"
     PrimaryButtonText="Add Opponent"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="AddOpponent_Click">
-
-    <ContentDialog.TitleTemplate>
-        <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-                <Image Source="ms-appx:///Assets/SmallLogo.png" Width="40" Height="40" Margin="10,0"/>
-                <TextBlock Text="Add Opponent"/>
-            </StackPanel>
-        </DataTemplate>
-    </ContentDialog.TitleTemplate>
+    PrimaryButtonClick="AddOpponent_Click"
+    IsPrimaryButtonEnabled="False">
 
     <StackPanel>
-        <TextBox Header="Opponents Name" PlaceholderText="Enter the name of the opponent"/>
+        <TextBox Header="Opponents Name" 
+                 PlaceholderText="Enter the name of the opponent" 
+                 TextChanged="OpponentName_TextChanged" 
+                 Text="{Binding Opponent.Name, Mode=TwoWay}"/>
+        
         <TextBlock>The Shared Drive</TextBlock>
         <StackPanel Orientation="Horizontal">
-            <TextBox PlaceholderText="Enter the file path of the shared drive" Text="{Binding Opponent.SharedDir.Path, Mode=TwoWay}"/>
+            <TextBlock Text="{Binding Opponent.SharedDir.Path, Mode=OneWay}"/>
             <Button Content="Select Folder" Click="SelectSharedDrive_Click"/>
         </StackPanel>
     </StackPanel>

@@ -35,5 +35,11 @@ namespace Battle_Assistant.Models
                 }
             }
         }
+
+       override
+       public string ToString()
+        {
+            return Name;
+        }
     }
 }

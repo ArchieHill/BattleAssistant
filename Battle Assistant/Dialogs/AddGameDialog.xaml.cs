@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -24,11 +25,12 @@ namespace Battle_Assistant.Dialogs
     /// </summary>
     public sealed partial class AddGameDialog : ContentDialog
     {
-        AddGameDialogModel DialogModel { get; set; } = new AddGameDialogModel();
+        private AddGameDialogModel DialogModel { get; set; } 
         public AddGameDialog()
         {
-            this.InitializeComponent();
+            DialogModel = new AddGameDialogModel();
             DataContext = DialogModel;
+            this.InitializeComponent();
         }
 
         private void AddGame_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -36,14 +38,23 @@ namespace Battle_Assistant.Dialogs
             DialogModel.AddGame();
         }
 
-        public void SelectGameDir_Click(object sender, RoutedEventArgs e)
+        private async void SelectGameDir_Click(object sender, RoutedEventArgs e)
         {
-            DialogModel.SelectGameDir();
+            await DialogModel.SelectGameDir();
+            CheckInputs();
         }
 
-        public void SelectIconFile_Click(object sender, RoutedEventArgs e)
+        private void SelectIconFile_Click(object sender, RoutedEventArgs e)
         {
             DialogModel.SelectIconFile();
+        }
+
+        private void CheckInputs()
+        {
+            if (DialogModel.Game.GameDir != null)
+            {
+                IsPrimaryButtonEnabled = true;
+            }
         }
     }
 }

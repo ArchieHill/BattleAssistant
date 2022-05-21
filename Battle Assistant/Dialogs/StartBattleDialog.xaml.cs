@@ -25,11 +25,14 @@ namespace Battle_Assistant.Dialogs
     public sealed partial class StartBattleDialog : ContentDialog
     {
         private StartBattleDialogModel DialogModel { get; } = new StartBattleDialogModel();
+
+        private bool GameAndOpponentExist;
         public StartBattleDialog()
         {
             this.InitializeComponent();
             DataContext = DialogModel;
             Loaded += StartBattleDialog_Loaded;
+            GameAndOpponentExist = false;
         }
 
         private void StartBattleDialog_Loaded(object sender, RoutedEventArgs e)
@@ -37,7 +40,7 @@ namespace Battle_Assistant.Dialogs
             //If at least one game and opponent exist then allow a battle to be started
             if (DialogModel.Games.Count > 0 && DialogModel.Opponents.Count > 0)
             {
-                IsPrimaryButtonEnabled = true;
+                GameAndOpponentExist = true;
             }
         }
 
@@ -46,9 +49,18 @@ namespace Battle_Assistant.Dialogs
             DialogModel.StartBattle();
         }
 
-        public void SelectFile_Click(object sender, RoutedEventArgs e)
+        private async void SelectFile_Click(object sender, RoutedEventArgs e)
         {
-            DialogModel.SelectBattleFile();
+            await DialogModel.SelectBattleFile();
+            CheckInputs();
+        }
+
+        private void CheckInputs()
+        {
+            if(DialogModel.Battle.InitialGameFile != null && GameAndOpponentExist)
+            {
+                IsPrimaryButtonEnabled = true;
+            }
         }
     }
 }

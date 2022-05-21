@@ -17,16 +17,18 @@ namespace Battle_Assistant.DialogModels
             Opponent = new OpponentModel();
         }
         
-        public async void SelectSharedDrive()
+        public async Task SelectSharedDrive()
         {
             FolderPicker folderPicker = new FolderPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             Opponent.SharedDir = await folderPicker.PickSingleFolderAsync();
         }
+
         public void AddOpponent()
         {
             App.Opponents.Add(Opponent);
         }
+
     }
 }

@@ -24,12 +24,13 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class BattlesPage : Page
     {
-        public BattlesPageViewModel ViewModel { get; set; } = new BattlesPageViewModel();
+        public BattlesPageViewModel ViewModel { get; set; }
 
         public BattlesPage()
         {
-            InitializeComponent();
+            ViewModel = new BattlesPageViewModel();
             DataContext = ViewModel;
+            this.InitializeComponent();
         }
         private void StartBattle_Click(object sender, RoutedEventArgs e)
         {

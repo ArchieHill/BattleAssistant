@@ -18,7 +18,7 @@ namespace Battle_Assistant.DialogModels
             Game = new GameModel();
         }
 
-        public async void SelectGameDir()
+        public async Task SelectGameDir()
         {
             FolderPicker folderPicker = new FolderPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);

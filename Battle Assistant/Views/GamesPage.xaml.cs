@@ -24,9 +24,10 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class GamesPage : Page
     {
-        public GamesPageViewModel ViewModel { get; set; } = new GamesPageViewModel();
+        public GamesPageViewModel ViewModel { get; set; }
         public GamesPage()
         {
+            ViewModel = new GamesPageViewModel();
             DataContext = ViewModel;
             this.InitializeComponent();
         }

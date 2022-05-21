@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -24,11 +25,12 @@ namespace Battle_Assistant.Dialogs
     /// </summary>
     public sealed partial class AddOpponentDialog : ContentDialog
     {
-        AddOpponentDialogModel DialogModel { get; set; } = new AddOpponentDialogModel();
+        private AddOpponentDialogModel DialogModel { get; set; }
         public AddOpponentDialog()
         {
-            this.InitializeComponent();
+            DialogModel = new AddOpponentDialogModel();
             DataContext = DialogModel;
+            this.InitializeComponent();
         }
 
         private void AddOpponent_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -36,9 +38,23 @@ namespace Battle_Assistant.Dialogs
             DialogModel.AddOpponent();
         }
 
-        public void SelectSharedDrive_Click(object sender, RoutedEventArgs e)
+        private async void SelectSharedDrive_Click(object sender, RoutedEventArgs e)
         {
-            DialogModel.SelectSharedDrive();
+            await DialogModel.SelectSharedDrive();
+            CheckInputs();
+        }
+
+        private void OpponentName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckInputs();
+        }
+
+        private void CheckInputs()
+        {
+            if (DialogModel.Opponent.SharedDir != null && DialogModel.Opponent.Name != "")
+            {
+                IsPrimaryButtonEnabled = true;
+            }
         }
     }
 }

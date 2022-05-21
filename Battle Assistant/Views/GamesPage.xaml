@@ -12,16 +12,16 @@
     <StackPanel>
         <Button Content="Add Game" Click="AddGame_Click"/>
 
-        <ItemsRepeater ItemsSource="{Binding Games}">
+        <ItemsRepeater ItemsSource="{Binding Games, Mode=OneWay}">
             <ItemsRepeater.Layout>
                 <StackLayout Orientation="Vertical" Spacing="10"/>
             </ItemsRepeater.Layout>
 
             <DataTemplate x:DataType="models:GameModel">
                 <StackPanel BorderThickness="1" Background="DarkGreen" Margin="5" Padding="5,5,5,5">
-                    <TextBlock Text="{Binding Name}" FontSize="18"/>
-                    <Image Source="{Binding GameIcon}" Height="50" Width="50"/>
-                    <TextBlock Text="{Binding GameDir}"/>
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
+                    <Image Source="{Binding GameIcon, Mode=OneWay}" Height="50" Width="50"/>
+                    <TextBlock Text="{Binding GameDir, Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>
         </ItemsRepeater>

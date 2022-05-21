@@ -24,9 +24,11 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class OpponentsPage : Page
     {
-        OpponentsPageViewModel ViewModel { get; } = new OpponentsPageViewModel();
+        public OpponentsPageViewModel ViewModel { get; set; }
         public OpponentsPage()
         {
+            ViewModel = new OpponentsPageViewModel();
+            DataContext = ViewModel;
             this.InitializeComponent();
         }
         private void AddOpponent_Click(object sender, RoutedEventArgs e)

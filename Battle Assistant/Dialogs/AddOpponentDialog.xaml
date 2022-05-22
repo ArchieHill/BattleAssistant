@@ -12,16 +12,20 @@
     PrimaryButtonClick="AddOpponent_Click"
     IsPrimaryButtonEnabled="False">
 
-    <StackPanel>
+    <StackPanel Spacing="24">
+        <!-- Opponent Name Input -->
         <TextBox Header="Opponents Name" 
-                 PlaceholderText="Enter the name of the opponent" 
+                 PlaceholderText="Name" 
                  TextChanged="OpponentName_TextChanged" 
                  Text="{Binding Opponent.Name, Mode=TwoWay}"/>
         
-        <TextBlock>The Shared Drive</TextBlock>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Opponent.SharedDir.Path, Mode=OneWay}"/>
-            <Button Content="Select Folder" Click="SelectSharedDrive_Click"/>
+        <!-- Shared Directory Input-->
+        <StackPanel Spacing="8">
+            <TextBlock>The Shared Drive</TextBlock>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox PlaceholderText="Shared Drive Path" Text="{Binding Opponent.SharedDir.Path, Mode=OneWay}" Width="380"/>
+                <Button Content="Select Folder" Click="SelectSharedDrive_Click" Width="105"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </ContentDialog>

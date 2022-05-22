@@ -12,19 +12,26 @@
     PrimaryButtonClick="StartBattle_Click"
     IsPrimaryButtonEnabled="False">
 
-    <StackPanel>
-        <TextBlock>Battle File</TextBlock>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Battle.InitialGameFile.Name, Mode=OneWay}"/>
-            <Button Content="Select File" Click="SelectFile_Click"/>
+    <StackPanel Spacing="24">
+        <!-- Battle File Input -->
+        <StackPanel>
+            <TextBlock>Battle File</TextBlock>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox Text="{Binding Battle.InitialGameFile.Name, Mode=OneWay}" Width="380"/>
+                <Button Content="Select File" Click="SelectFile_Click" Width="105"/>
+            </StackPanel>
         </StackPanel>
-
-        <ComboBox Header="Opponent" PlaceholderText="No Opponents Created" 
-                  ItemsSource="{Binding Opponents, Mode=OneWay}" 
-                  SelectedItem="{Binding SelectedOpponent, Mode=TwoWay}"/>
         
+        <!-- Opponent Input -->
+        <ComboBox Header="Opponent" PlaceholderText="No Opponents Added" 
+                  ItemsSource="{Binding Opponents, Mode=OneWay}" 
+                  SelectedItem="{Binding SelectedOpponent, Mode=TwoWay}"
+                  Width="250"/>
+           
+        <!-- Game Input -->
         <ComboBox Header="Game" PlaceholderText="No Games Added" 
                   ItemsSource="{Binding Games, Mode=OneWay}"
-                  SelectedItem="{Binding SelectedGame, Mode=TwoWay}"/>
+                  SelectedItem="{Binding SelectedGame, Mode=TwoWay}"
+                  Width="250"/>
     </StackPanel>
 </ContentDialog>

@@ -12,17 +12,23 @@
     PrimaryButtonClick="AddGame_Click"
     IsPrimaryButtonEnabled="False">
 
-    <StackPanel>
-        <TextBlock>Game Files Directory</TextBlock>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Game.GameDir.Path, Mode=OneWay}"/>
-            <Button Content="Select Folder" Click="SelectGameDir_Click"/>
+    <StackPanel Spacing="24">
+        <!-- Game Directory Input -->
+        <StackPanel Spacing="8">
+            <TextBlock>Game Directory</TextBlock>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox PlaceholderText="The Folder That Contains Its Game Files Folder" Text="{Binding Game.GameDir.Path, Mode=OneWay}" Width="380"/>
+                <Button Content="Select Folder" Click="SelectGameDir_Click" Width="105"/>
+            </StackPanel>
         </StackPanel>
-
-        <TextBlock>Game Icon (Optional)</TextBlock>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Game.GameIcon.Path, Mode=OneWay}"/>
-            <Button Content="Select File" Click="SelectIconFile_Click"/>
+        
+        <!-- Game Icon Input -->
+        <StackPanel Spacing="8">
+            <TextBlock>Game Icon (Optional)</TextBlock>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBox PlaceholderText="Image" Text="{Binding Game.GameIcon.Path, Mode=OneWay}" Width="380"/>
+                <Button Content="Select File" Click="SelectIconFile_Click" Width="105"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </ContentDialog>

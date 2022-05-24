@@ -65,6 +65,8 @@ namespace Battle_Assistant.DialogModels
             Battle.Game = SelectedGame;
             Battle.Opponent = SelectedOpponent;
             App.Battles.Add(Battle);
+            //Assign its index so we know where to look to delete it
+            Battle.Index = App.Battles.IndexOf(Battle);
         }
     }
 }

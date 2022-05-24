@@ -76,7 +76,7 @@ namespace Battle_Assistant.Models
 
         public OpponentModel Opponent { get; set; }
 
-        public BattleModel()
+        public BattleModel() : base()
         {
             Name = "";
             CurrentFileNum = 1;

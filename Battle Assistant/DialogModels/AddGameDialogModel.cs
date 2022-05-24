@@ -36,6 +36,8 @@ namespace Battle_Assistant.DialogModels
         public void AddGame()
         {
             App.Games.Add(Game);
+            //Assign its index so we know where to look to delete it
+            Game.Index = App.Games.IndexOf(Game);
         }
     }
 }

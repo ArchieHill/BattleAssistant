@@ -26,5 +26,23 @@ namespace Battle_Assistant.ViewModels
             dialog.XamlRoot = root;
             await dialog.ShowAsync();
         }
+
+        public void DeleteGame(int index)
+        {
+            Games.RemoveAt(index);
+            UpdateIndexes();
+        }
+
+        /// <summary>
+        /// Update the games indexs with their new indexes
+        /// Needs to be called when the list has been manipulated
+        /// </summary>
+        private void UpdateIndexes()
+        {
+            for (int i = 0; i < Games.Count; i++)
+            {
+                Games[i].Index = i;
+            }
+        }
     }
 }

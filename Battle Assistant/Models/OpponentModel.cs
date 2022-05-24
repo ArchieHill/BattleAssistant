@@ -27,5 +27,10 @@ namespace Battle_Assistant.Models
                 }
             }
         }
+
+        public OpponentModel() : base()
+        {
+            SharedDir = null;
+        }
     }
 }

@@ -35,5 +35,20 @@ namespace Battle_Assistant.Views
         {
             ViewModel.AddOpponent(this.Content.XamlRoot);
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = int.Parse(btn.Tag.ToString());
+            ViewModel.Opponents.RemoveAt(index);
+            SetIndexes();
+        }
+        private void SetIndexes()
+        {
+            for (int i = 0; i < ViewModel.Opponents.Count; i++)
+            {
+                ViewModel.Opponents[i].Index = i;
+            }
+        }
     }
 }

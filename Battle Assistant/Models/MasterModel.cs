@@ -12,6 +12,18 @@ namespace Battle_Assistant.Models
         // A property changed event object
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public MasterModel()
+        {
+            Name = "";
+            Index = -1;
+        }
+
+        public MasterModel(string name, int index)
+        {
+            Name = name;
+            Index = index;
+        }
+
         /// <summary>
         /// Notifies the page when a property has changed so the view can be updated
         /// </summary>
@@ -32,6 +44,21 @@ namespace Battle_Assistant.Models
                 {
                     name = value;
                     NotifyPropertyChanged("Name");
+                }
+            }
+        }
+
+        private int index;
+
+        public int Index
+        {
+            get { return index; }
+            set
+            {
+                if(index != value)
+                {
+                    index = value;
+                    NotifyPropertyChanged("Index");
                 }
             }
         }

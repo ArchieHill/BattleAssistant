@@ -28,6 +28,8 @@ namespace Battle_Assistant.DialogModels
         public void AddOpponent()
         {
             App.Opponents.Add(Opponent);
+            //Assign its index so we know where to look to delete it
+            Opponent.Index = App.Opponents.IndexOf(Opponent);
         }
 
     }

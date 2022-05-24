@@ -17,6 +17,7 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Name, Mode=OneWay}"/>
                     <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
+                    <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>
         </ItemsRepeater>

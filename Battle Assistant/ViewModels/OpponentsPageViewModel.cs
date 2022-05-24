@@ -25,5 +25,23 @@ namespace Battle_Assistant.ViewModels
             dialog.XamlRoot = root;
             await dialog.ShowAsync();
         }
+
+        public void DeleteOpponent(int index)
+        {
+            Opponents.RemoveAt(index);
+            UpdateIndexes();
+        }
+
+        /// <summary>
+        /// Update the opponents indexs with their new indexes
+        /// Needs to be called when the list has been manipulated
+        /// </summary>
+        private void UpdateIndexes()
+        {
+            for (int i = 0; i < Opponents.Count; i++)
+            {
+                Opponents[i].Index = i;
+            }
+        }
     }
 }

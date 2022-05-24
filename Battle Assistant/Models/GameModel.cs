@@ -73,9 +73,8 @@ namespace Battle_Assistant.Models
             }
         }
 
-        public GameModel()
+        public GameModel() : base()
         {
-            Name = "";
             GameIcon = null;
             GameDir = null;
             IncomingEmailFolder = null;

@@ -22,8 +22,9 @@
                     <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
                     <Image Source="{Binding GameIcon, Mode=OneWay}" Height="50" Width="50"/>
                     <TextBlock Text="{Binding GameDir, Mode=OneWay}"/>
+                    <Button Content="Delete" Click="DeleteGame_Click" Tag="{Binding Index, Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>
         </ItemsRepeater>
-    </StackPanel>
+    </StackPanel>s
 </Page>

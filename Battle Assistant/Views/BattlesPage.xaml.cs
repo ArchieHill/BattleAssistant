@@ -32,9 +32,32 @@ namespace Battle_Assistant.Views
             DataContext = ViewModel;
             this.InitializeComponent();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetIndexes();
+        }
+
         private void StartBattle_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.StartBattle(this.Content.XamlRoot);
+            SetIndexes();
+        }
+
+        private void EndBattle_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = int.Parse(btn.Tag.ToString());
+            ViewModel.Battles.RemoveAt(index);
+            SetIndexes();
+        }
+
+        private void SetIndexes()
+        {
+            for(int i = 0; i < ViewModel.Battles.Count; i++)
+            {
+                ViewModel.Battles[i].Index = i;
+            }
         }
     }
 }

@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:models="using:Battle_Assistant.Models"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <StackPanel>
         <Button Content="Start Battle" Click="StartBattle_Click"/>
@@ -22,6 +23,7 @@
                     <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
                     <TextBlock Text="{Binding Status, Mode=OneWay}"/>
                     <TextBlock Text="{Binding Game, Mode=OneWay}"/>
+                    <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>
         </ItemsRepeater>

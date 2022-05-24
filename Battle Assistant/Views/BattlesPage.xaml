@@ -23,6 +23,7 @@
                     <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
                     <TextBlock Text="{Binding Status, Mode=OneWay}"/>
                     <TextBlock Text="{Binding Game, Mode=OneWay}"/>
+                    <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
                     <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>

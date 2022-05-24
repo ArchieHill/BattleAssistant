@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Windows.Storage.Pickers;
 
@@ -57,7 +59,7 @@ namespace Battle_Assistant.DialogModels
             var filePicker = new FileOpenPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".ema");
-            Battle.InitialGameFile = await filePicker.PickSingleFileAsync();
+            Battle.BattleFile = await filePicker.PickSingleFileAsync();
         }
 
         public void StartBattle()
@@ -67,6 +69,14 @@ namespace Battle_Assistant.DialogModels
             App.Battles.Add(Battle);
             //Assign its index so we know where to look to delete it
             Battle.Index = App.Battles.IndexOf(Battle);
+            if(File.Exists(Battle.Game.OutgoingEmailFolder.Path + "\\" + Battle.BattleFile.Name))
+            {
+                FileHelper.CopyToSharedDrive(Battle);
+            }
+            else
+            {
+                FileHelper.CopyToIncomingEmail(Battle);
+            }
         }
     }
 }

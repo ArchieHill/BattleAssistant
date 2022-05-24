@@ -26,5 +26,5 @@
                 </StackPanel>
             </DataTemplate>
         </ItemsRepeater>
-    </StackPanel>s
+    </StackPanel>
 </Page>

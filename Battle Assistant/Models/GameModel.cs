@@ -81,13 +81,6 @@ namespace Battle_Assistant.Models
             OutgoingEmailFolder = null;
         }
 
-        public GameModel(string name, StorageFolder gameDir, StorageFile gameIcon)
-        {
-            Name = name;
-            GameIcon = gameIcon;
-            GameDir = gameDir;
-        }
-
         public async void SetEmailFolders()
         {
             IncomingEmailFolder = await StorageFolder.GetFolderFromPathAsync(GameDir.Path + "\\Game Files\\Incoming Email");

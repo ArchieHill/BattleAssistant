@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battle_Assistant.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -43,16 +44,16 @@ namespace Battle_Assistant.Models
             }
         }
 
-        private StorageFile initialGameFile;
-        public StorageFile InitialGameFile
+        private StorageFile battleFile;
+        public StorageFile BattleFile
         {
-            get { return initialGameFile; }
+            get { return battleFile; }
             set
             {
-                if(initialGameFile != value)
+                if(battleFile != value)
                 {
-                    initialGameFile = value;
-                    SetVarsFromGameFile(initialGameFile);
+                    battleFile = value;
+                    SetVarsFromGameFile(battleFile);
                     NotifyPropertyChanged("InitialGameFile");
                 }
             }
@@ -82,17 +83,8 @@ namespace Battle_Assistant.Models
             CurrentFileNum = 1;
             Game = null;
             Opponent = null;
-            Status = "No Status Set";
-            LastAction = "No Last Action";
-        }
-
-        public BattleModel(StorageFile gameFile, GameModel game, OpponentModel opponent)
-        {
-            SetVarsFromGameFile(gameFile);
-            Game = game;
-            Opponent = opponent;
-            Status = "No Status Set";
-            LastAction = "No Last Action";
+            Status = Common.Status.NO_STATUS;
+            LastAction = Actions.NO_LAST_ACTION;
         }
 
         public void SetVarsFromGameFile(StorageFile gameFile)

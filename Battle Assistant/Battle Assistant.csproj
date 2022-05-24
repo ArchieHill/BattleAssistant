@@ -74,7 +74,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="DialogModels\" />
   </ItemGroup>
   <ItemGroup>

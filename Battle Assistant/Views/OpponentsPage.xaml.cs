@@ -41,9 +41,9 @@ namespace Battle_Assistant.Views
             Button btn = (Button)sender;
             int index = int.Parse(btn.Tag.ToString());
             ViewModel.Opponents.RemoveAt(index);
-            SetIndexes();
+            UpdateIndexes();
         }
-        private void SetIndexes()
+        private void UpdateIndexes()
         {
             for (int i = 0; i < ViewModel.Opponents.Count; i++)
             {

@@ -17,7 +17,7 @@
         <StackPanel>
             <TextBlock>Battle File</TextBlock>
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox Text="{Binding Battle.InitialGameFile.Name, Mode=OneWay}" Width="380"/>
+                <TextBox Text="{Binding Battle.BattleFile.Name, Mode=OneWay}" Width="380"/>
                 <Button Content="Select File" Click="SelectFile_Click" Width="105"/>
             </StackPanel>
         </StackPanel>

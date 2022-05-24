@@ -57,7 +57,7 @@ namespace Battle_Assistant.Dialogs
 
         private void CheckInputs()
         {
-            if(DialogModel.Battle.InitialGameFile != null && GameAndOpponentExist)
+            if(DialogModel.Battle.BattleFile != null && GameAndOpponentExist)
             {
                 IsPrimaryButtonEnabled = true;
             }

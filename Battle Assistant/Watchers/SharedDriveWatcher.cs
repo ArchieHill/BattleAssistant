@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.Models;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,24 +10,22 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Watchers
 {
-    public class SharedDriveWatcher
+    public class SharedDriveWatcher : FolderWatcher
     {
-        public FileSystemWatcher Watcher { get; set; }
-
-        public SharedDriveWatcher(StorageFolder sharedDrive)
+        public SharedDriveWatcher(StorageFolder sharedDrive) : base(sharedDrive)
         {
-            Watcher = new FileSystemWatcher(sharedDrive.Path);
-            Watcher.Filter = "*.ema";
-            Watcher.Created += File_Created;
+
         }
 
-        private void File_Created(object sender, FileSystemEventArgs e)
+        override
+        protected async void File_Created(object sender, FileSystemEventArgs e)
         {
             foreach (BattleModel battle in App.Battles)
             {
-                if (battle.Name == e.Name.Substring(0, -4))
+                if (battle.Name == e.Name.Substring(0, e.Name.Length - 7) && battle.BattleFile.Name != e.Name)
                 {
-                    File.Copy(e.FullPath, battle.Game.IncomingEmailFolder.Path + e.Name);
+                    battle.BattleFile = await StorageFile.GetFileFromPathAsync(e.FullPath);
+                    FileHelper.CopyToIncomingEmail(battle);
                 }
             }
         }

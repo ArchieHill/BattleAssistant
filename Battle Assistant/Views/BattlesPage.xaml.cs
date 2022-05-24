@@ -35,13 +35,12 @@ namespace Battle_Assistant.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SetIndexes();
+            UpdateIndexes();
         }
 
         private void StartBattle_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.StartBattle(this.Content.XamlRoot);
-            SetIndexes();
         }
 
         private void EndBattle_Click(object sender, RoutedEventArgs e)
@@ -49,10 +48,10 @@ namespace Battle_Assistant.Views
             Button btn = (Button)sender;
             int index = int.Parse(btn.Tag.ToString());
             ViewModel.Battles.RemoveAt(index);
-            SetIndexes();
+            UpdateIndexes();
         }
 
-        private void SetIndexes()
+        private void UpdateIndexes()
         {
             for(int i = 0; i < ViewModel.Battles.Count; i++)
             {

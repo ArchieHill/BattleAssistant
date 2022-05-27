@@ -49,7 +49,7 @@ namespace Battle_Assistant.Helpers
         public static int GetFileNumber(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            return int.Parse(fileName.Substring(0, fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
+            return int.Parse(fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
         }
     }
 }

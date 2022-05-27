@@ -11,7 +11,13 @@
         <NavigationView x:Name="NavView"
                          Loaded="NavView_Loaded"
                          ItemInvoked="NavView_ItemInvoked"
-                         BackRequested="NavView_BackRequested">
+                         BackRequested="NavView_BackRequested"
+                         IsTabStop="False"
+                         CompactModeThresholdWidth="0">
+
+            <NavigationView.Resources>
+                <Thickness x:Key="NavigationViewHeaderMargin">24,20,0,20</Thickness>
+            </NavigationView.Resources>
 
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="battles"/>
@@ -19,25 +25,9 @@
                 <NavigationViewItem Icon="Placeholder" Content="Opponents" Tag="opponents"/>
                 <NavigationViewItem Icon="Placeholder" Content="About" Tag="about"/>
             </NavigationView.MenuItems>
-
             <ScrollViewer>
-                <Frame x:Name="ContentFrame" Padding="12,0,12,24" IsTabStop="True"
-                       NavigationFailed="ContentFrame_NavigationFailed"/>
+                <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>
         </NavigationView>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger
-                        MinWindowWidth="{Binding NavViewCompactModeThresholdWidth}"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ContentFrame.Padding" Value="24,0,24,24"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Window>

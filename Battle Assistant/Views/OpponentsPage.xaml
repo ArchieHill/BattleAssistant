@@ -9,16 +9,23 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <Button Content="Add Opponent" Click="AddOpponent_Click"/>
+    <StackPanel Padding="24,12,24,0" Spacing="12">
+        <Button Content="Add Opponent" Click="AddOpponent_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Opponents, Mode=OneWay}">
             <DataTemplate x:DataType="models:OpponentModel">
-                <StackPanel>
-                    <TextBlock Text="{Binding Name, Mode=OneWay}"/>
-                    <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
-                    <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}"/>
-                </StackPanel>
+                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <Expander.Header>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
+                    </Expander.Header>
+
+                    <Expander.Content>
+                        <StackPanel>
+                            <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
+                            <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}"/>
+                        </StackPanel>
+                    </Expander.Content>
+                </Expander>
             </DataTemplate>
         </ItemsRepeater>
     </StackPanel>

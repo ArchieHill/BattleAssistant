@@ -40,6 +40,6 @@ namespace Battle_Assistant.Views
         {
             Button btn = (Button)sender;
             ViewModel.DeleteGame(int.Parse(btn.Tag.ToString()));
-        } 
+        }
     }
 }

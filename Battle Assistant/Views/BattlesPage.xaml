@@ -9,22 +9,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <Button Content="Start Battle" Click="StartBattle_Click"/>
+    <StackPanel Padding="24,12,24,0" Spacing="12">
+        <Button Content="Start Battle" Click="StartBattle_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Battles, Mode=OneWay}">
             <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="10"/>
+                <StackLayout Orientation="Vertical" Spacing="12"/>
             </ItemsRepeater.Layout>
 
             <DataTemplate x:DataType="models:BattleModel">
-                <StackPanel BorderThickness="1" Background="DarkGreen" Margin="5" Padding="5,5,5,5">
-                    <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
-                    <TextBlock Text="{Binding Status, Mode=OneWay}"/>
-                    <TextBlock Text="{Binding Game, Mode=OneWay}"/>
-                    <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
-                    <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
-                </StackPanel>
+                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <Expander.Header>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
+                    </Expander.Header>
+
+                    <Expander.Content>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Status, Mode=OneWay}"/>
+                            <TextBlock Text="{Binding Game, Mode=OneWay}"/>
+                            <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
+                            <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
+                        </StackPanel>
+                    </Expander.Content>
+                </Expander>
             </DataTemplate>
         </ItemsRepeater>
     </StackPanel>

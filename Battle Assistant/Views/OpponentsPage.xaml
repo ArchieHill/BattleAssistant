@@ -20,9 +20,13 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel>
-                            <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
-                            <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}"/>
+                        <StackPanel Spacing="24">
+                            <StackPanel Spacing="8">
+                                <TextBlock>Shared Drive</TextBlock>
+                                <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
+                            </StackPanel>
+                            
+                            <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}" HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>

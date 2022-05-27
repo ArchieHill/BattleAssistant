@@ -24,11 +24,23 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel>
-                            <TextBlock Text="{Binding GameDir, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding IncomingEmailFolder, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding OutgoingEmailFolder, Mode=OneWay}"/>
-                            <Button Content="Delete" Click="DeleteGame_Click" Tag="{Binding Index, Mode=OneWay}"/>
+                        <StackPanel Spacing="24">
+                            <StackPanel Spacing="8">
+                                <TextBlock>Game Directory</TextBlock>
+                                <TextBlock Text="{Binding GameDir, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="8">
+                                <TextBlock>Incoming Email Folder</TextBlock>
+                                <TextBlock Text="{Binding IncomingEmailFolder, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="8">
+                                <TextBlock>Outgoing Email Folder</TextBlock>
+                                <TextBlock Text="{Binding OutgoingEmailFolder, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <Button Content="Delete" Click="DeleteGame_Click" Tag="{Binding Index, Mode=OneWay}" HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>

@@ -26,7 +26,7 @@
         <StackPanel Spacing="8">
             <TextBlock>Game Icon (Optional)</TextBlock>
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox PlaceholderText="Image" Text="{Binding Game.GameIcon.Path, Mode=OneWay}" Width="380"/>
+                <TextBox PlaceholderText="Image" Text="{Binding Game.GameIcon, Mode=OneWay}" Width="380"/>
                 <Button Content="Select File" Click="SelectIconFile_Click" Width="105"/>
             </StackPanel>
         </StackPanel>

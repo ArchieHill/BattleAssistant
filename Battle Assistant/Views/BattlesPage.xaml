@@ -20,14 +20,29 @@
             <DataTemplate x:DataType="models:BattleModel">
                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Expander.Header>
-                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
+                            <TextBlock Text="{Binding Status, Mode=OneWay}" FontSize="16"/>
+                        </StackPanel>
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Status, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding Game, Mode=OneWay}"/>
-                            <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
+                        <StackPanel Spacing="24">
+                            <StackPanel Spacing="8">
+                                <TextBlock>Status</TextBlock>
+                                <TextBlock Text="{Binding Status, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="8">
+                                <TextBlock>CM Game</TextBlock>
+                                <TextBlock Text="{Binding Game, Mode=OneWay}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Spacing="8">
+                                <TextBlock>Current File Number</TextBlock>
+                                <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
+                            </StackPanel>
+                            
                             <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
                         </StackPanel>
                     </Expander.Content>

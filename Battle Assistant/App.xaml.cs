@@ -37,6 +37,8 @@ namespace Battle_Assistant
 
         public static ObservableCollection<OpponentModel> Opponents { get; set; }
 
+        public static Window MainWindow { get; set; }
+
         public static IntPtr Hwnd { get; set; }
 
         /// <summary>
@@ -61,11 +63,9 @@ namespace Battle_Assistant
         private async void InitialiseWindow()
         {
             await StorageHelper.LoadAllAsync();
-            m_window = new NavShell();
-            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
-            m_window.Activate();
+            MainWindow = new NavShell();
+            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
+            MainWindow.Activate();
         }
-
-        private Window m_window;
     }
 }

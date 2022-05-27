@@ -29,6 +29,8 @@ namespace Battle_Assistant.Views
         public NavShell()
         {
             this.InitializeComponent();
+            this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(AppTitleBar);    
         }
 
         private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)

@@ -13,6 +13,10 @@
         <Button Content="Add Opponent" Click="AddOpponent_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Opponents, Mode=OneWay}">
+            <ItemsRepeater.Layout>
+                <StackLayout Orientation="Vertical" Spacing="12"/>
+            </ItemsRepeater.Layout>
+            
             <DataTemplate x:DataType="models:OpponentModel">
                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Expander.Header>

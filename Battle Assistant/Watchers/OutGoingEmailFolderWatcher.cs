@@ -12,19 +12,20 @@ namespace Battle_Assistant.Watchers
 {
     public class OutGoingEmailFolderWatcher : FolderWatcher
     {
-        public OutGoingEmailFolderWatcher(StorageFolder oGEFFolder) : base(oGEFFolder)
+        public OutGoingEmailFolderWatcher(string oGEFFolderPath) : base(oGEFFolderPath)
         {
 
         }
 
         override
-        protected async void File_Created(object sender, FileSystemEventArgs e)
+        protected void File_Created(object sender, FileSystemEventArgs e)
         {
             foreach(BattleModel battle in App.Battles)
             {
-                if(battle.Name == e.Name.Substring(0, -7) && battle.BattleFile.Name != e.Name)
+                if(battle.Name == FileHelper.GetFileDisplayName(e.FullPath) && 
+                    Path.GetFileName(battle.BattleFile) != e.Name)
                 {
-                    battle.BattleFile = await StorageFile.GetFileFromPathAsync(e.FullPath);
+                    battle.BattleFile = e.FullPath;
                     FileHelper.CopyToSharedDrive(battle);
                 }
             }

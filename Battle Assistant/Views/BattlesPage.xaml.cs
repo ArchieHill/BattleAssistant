@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.ViewModels;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -33,11 +34,6 @@ namespace Battle_Assistant.Views
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateIndexes();
-        }
-
         private void StartBattle_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.StartBattle(this.Content.XamlRoot);
@@ -49,8 +45,8 @@ namespace Battle_Assistant.Views
             int index = int.Parse(btn.Tag.ToString());
             ViewModel.Battles.RemoveAt(index);
             UpdateIndexes();
+            StorageHelper.UpdateBattleFile();
         }
-
         private void UpdateIndexes()
         {
             for(int i = 0; i < ViewModel.Battles.Count; i++)

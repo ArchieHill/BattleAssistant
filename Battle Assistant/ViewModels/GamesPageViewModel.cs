@@ -31,6 +31,7 @@ namespace Battle_Assistant.ViewModels
         {
             Games.RemoveAt(index);
             UpdateIndexes();
+            StorageHelper.UpdateGameFile();
         }
 
         /// <summary>

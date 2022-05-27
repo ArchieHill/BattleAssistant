@@ -17,7 +17,7 @@
         <StackPanel Spacing="8">
             <TextBlock>Game Directory</TextBlock>
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox PlaceholderText="The Folder That Contains Its Game Files Folder" Text="{Binding Game.GameDir.Path, Mode=OneWay}" Width="380"/>
+                <TextBox PlaceholderText="The Folder That Contains Its Game Files Folder" Text="{Binding Game.GameDir, Mode=OneWay}" Width="380"/>
                 <Button Content="Select Folder" Click="SelectGameDir_Click" Width="105"/>
             </StackPanel>
         </StackPanel>

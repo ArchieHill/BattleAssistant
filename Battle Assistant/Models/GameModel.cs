@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using Windows.Storage;
 using Battle_Assistant.Watchers;
+using Battle_Assistant.Helpers;
+using Battle_Assistant.Common;
 
 namespace Battle_Assistant.Models
 {
@@ -14,8 +16,8 @@ namespace Battle_Assistant.Models
     {
         private OutGoingEmailFolderWatcher oGEFWatcher;
 
-        private StorageFile gameIcon;
-        public StorageFile GameIcon
+        private string gameIcon;
+        public string GameIcon
         {
             get { return gameIcon; }
             set
@@ -28,8 +30,8 @@ namespace Battle_Assistant.Models
             }
         }
 
-        private StorageFolder gameDir;
-        public StorageFolder GameDir
+        private string gameDir;
+        public string GameDir
         {
             get { return gameDir; }
             set
@@ -37,15 +39,15 @@ namespace Battle_Assistant.Models
                 if (gameDir != value)
                 {
                     gameDir = value;
-                    Name = value.Name;
+                    Name = Path.GetFileNameWithoutExtension(value);
                     SetEmailFolders();
                     NotifyPropertyChanged("GameDir");
                 }
             }
         }
 
-        private StorageFolder incomingEmailFolder;
-        public StorageFolder IncomingEmailFolder
+        private string incomingEmailFolder;
+        public string IncomingEmailFolder
         {
             get { return incomingEmailFolder; }
             set
@@ -53,13 +55,13 @@ namespace Battle_Assistant.Models
                 if (incomingEmailFolder != value)
                 {
                     incomingEmailFolder = value;
-                    NotifyPropertyChanged("IncomingEmailDir");
+                    NotifyPropertyChanged("IncomingEmailFolder");
                 }
             }
         }
 
-        private StorageFolder outgoingEmailFolder;
-        public StorageFolder OutgoingEmailFolder
+        private string outgoingEmailFolder;
+        public string OutgoingEmailFolder
         {
             get { return outgoingEmailFolder; }
             set
@@ -68,7 +70,7 @@ namespace Battle_Assistant.Models
                 {
                     outgoingEmailFolder = value;
                     oGEFWatcher = new OutGoingEmailFolderWatcher(outgoingEmailFolder);
-                    NotifyPropertyChanged("OutgoingEmailDir");
+                    NotifyPropertyChanged("OutgoingEmailFolder");
                 }
             }
         }
@@ -81,10 +83,10 @@ namespace Battle_Assistant.Models
             OutgoingEmailFolder = null;
         }
 
-        public async void SetEmailFolders()
+        public void SetEmailFolders()
         {
-            IncomingEmailFolder = await StorageFolder.GetFolderFromPathAsync(GameDir.Path + "\\Game Files\\Incoming Email");
-            OutgoingEmailFolder = await StorageFolder.GetFolderFromPathAsync(GameDir.Path + "\\Game Files\\Outgoing Email");
+            IncomingEmailFolder = GameDir + "\\Game Files\\Incoming Email";
+            OutgoingEmailFolder = GameDir + "\\Game Files\\Outgoing Email";
         }
     }
 }

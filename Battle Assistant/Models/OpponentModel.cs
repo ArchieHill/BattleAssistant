@@ -1,4 +1,6 @@
-﻿using Battle_Assistant.Watchers;
+﻿using Battle_Assistant.Common;
+using Battle_Assistant.Helpers;
+using Battle_Assistant.Watchers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +15,8 @@ namespace Battle_Assistant.Models
     {
         private SharedDriveWatcher sDWatcher;
 
-        private StorageFolder sharedDir;
-        public StorageFolder SharedDir
+        private string sharedDir;
+        public string SharedDir
         {
             get { return sharedDir; }
             set

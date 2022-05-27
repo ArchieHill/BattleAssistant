@@ -18,17 +18,11 @@ namespace Battle_Assistant.Models
             Index = -1;
         }
 
-        public MasterModel(string name, int index)
-        {
-            Name = name;
-            Index = index;
-        }
-
         /// <summary>
         /// Notifies the page when a property has changed so the view can be updated
         /// </summary>
         /// <param name="propName">The property name</param>
-        public void NotifyPropertyChanged(string propName)
+        protected void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
@@ -49,7 +43,6 @@ namespace Battle_Assistant.Models
         }
 
         private int index;
-
         public int Index
         {
             get { return index; }

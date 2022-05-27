@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.ViewModels;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -35,13 +36,13 @@ namespace Battle_Assistant.Views
         {
             ViewModel.AddOpponent(this.Content.XamlRoot);
         }
-
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
             int index = int.Parse(btn.Tag.ToString());
             ViewModel.Opponents.RemoveAt(index);
             UpdateIndexes();
+            StorageHelper.UpdateOpponentFile();
         }
         private void UpdateIndexes()
         {

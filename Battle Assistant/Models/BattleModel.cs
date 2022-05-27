@@ -1,4 +1,5 @@
 ﻿using Battle_Assistant.Common;
+using Battle_Assistant.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,10 +13,6 @@ namespace Battle_Assistant.Models
 {
     public class BattleModel : MasterModel
     {
-        private const int FIRST_NUM_POS_SUBTRACTOR = -3;
-
-        private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
-
         private string status;
         public string Status
         {
@@ -44,8 +41,8 @@ namespace Battle_Assistant.Models
             }
         }
 
-        private StorageFile battleFile;
-        public StorageFile BattleFile
+        private string battleFile;
+        public string BattleFile
         {
             get { return battleFile; }
             set
@@ -87,11 +84,10 @@ namespace Battle_Assistant.Models
             LastAction = Actions.NO_LAST_ACTION;
         }
 
-        public void SetVarsFromGameFile(StorageFile gameFile)
+        public void SetVarsFromGameFile(string gameFile)
         {
-            string filename = gameFile.DisplayName;
-            Name = filename.Substring(0, filename.Length + LAST_FILE_NAME_POS_SUBTRACTOR);
-            CurrentFileNum = int.Parse(filename.Substring(filename.Length + FIRST_NUM_POS_SUBTRACTOR));
+            Name = FileHelper.GetFileDisplayName(gameFile);
+            CurrentFileNum = FileHelper.GetFileNumber(gameFile);
         }
     }
 }

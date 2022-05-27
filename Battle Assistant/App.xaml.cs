@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.Models;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.Models;
 using Battle_Assistant.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -44,9 +46,6 @@ namespace Battle_Assistant
         public App()
         {
             this.InitializeComponent();
-            Battles = new ObservableCollection<BattleModel>();
-            Games = new ObservableCollection<GameModel>();
-            Opponents = new ObservableCollection<OpponentModel>();
         }
 
         /// <summary>
@@ -56,8 +55,15 @@ namespace Battle_Assistant
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            
             m_window = new NavShell();
             Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
+            InitialiseWindow();
+        }
+
+        private async void InitialiseWindow()
+        {
+            await StorageHelper.LoadAllAsync();
             m_window.Activate();
         }
 

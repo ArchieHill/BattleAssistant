@@ -1,4 +1,6 @@
-﻿using Battle_Assistant.Models;
+﻿using Battle_Assistant.Common;
+using Battle_Assistant.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,62 +16,67 @@ namespace Battle_Assistant.Helpers
 {
     public static class StorageHelper
     {
-        private const string GAMES_FILE_NAME = "games.json";
-
-        private const string BATTLES_FILE_NAME = "battles.json";
-
-        private const string OPPONENTS_FILE_NAME = "opponents.json";
-
         static readonly StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
         static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
-        public static async Task SaveAsync()
+        public static async Task SaveAllAsync()
         {
-            await SaveModelsToJSONAsync(App.Games, GAMES_FILE_NAME);
-            await SaveModelsToJSONAsync(App.Opponents, OPPONENTS_FILE_NAME);
-            await SaveModelsToJSONAsync(App.Battles, BATTLES_FILE_NAME);
+            await SaveModels(App.Games, SaveFiles.GAMES);
+            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
+            await SaveModels(App.Battles, SaveFiles.BATTLES);
         }
 
-        public static async Task LoadAsync()
+        public static async Task LoadAllAsync()
         {
-            await LoadModelsFromJSONAsync<GameModel>(GAMES_FILE_NAME);
-            await LoadModelsFromJSONAsync<OpponentModel>(OPPONENTS_FILE_NAME);
-            await LoadModelsFromJSONAsync<BattleModel>(BATTLES_FILE_NAME);
+            App.Games = await LoadModels<GameModel>(SaveFiles.GAMES);
+            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.OPPONENTS);
+            App.Battles = await LoadModels<BattleModel>(SaveFiles.BATTLES);
         }
 
-        public static async Task SaveModelsToJSONAsync<T>(ObservableCollection<T> models, string fileName)
+        public static async Task SaveModels<T>(ObservableCollection<T> models, string fileName)
         {
             StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            Stream fileStream = await file.OpenStreamForReadAsync();
-            await JsonSerializer.SerializeAsync(fileStream, models);
-            await fileStream.DisposeAsync();
+            await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(models, Formatting.Indented));
         }
 
-        //C:\Users\Admin\AppData\Local\Packages\c8e8831d-4222-4ea8-ae83-43ec81e66df7_5gyrq6psz227t\LocalState
-        public static async Task<ObservableCollection<T>> LoadModelsFromJSONAsync<T>(string fileName)
+        public static async void UpdateBattleFile()
         {
-            ObservableCollection<T> models = new ObservableCollection<T>();
+            await SaveModels(App.Battles, SaveFiles.BATTLES);
+        }
+
+        public static async void UpdateGameFile()
+        {
+            await SaveModels(App.Games, SaveFiles.GAMES);
+        }
+
+        public static async void UpdateOpponentFile()
+        {
+            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
+        }
+        //C:\Users\Admin\AppData\Local\Packages\c8e8831d-4222-4ea8-ae83-43ec81e66df7_5gyrq6psz227t\LocalState
+        public static async Task<ObservableCollection<T>> LoadModels<T>(string fileName)
+        {
             try
             {
                 StorageFile file = await localFolder.GetFileAsync(fileName);
-                Stream fileStream = await file.OpenStreamForReadAsync();
-                models = await JsonSerializer.DeserializeAsync<ObservableCollection<T>>(fileStream); 
-                await fileStream.DisposeAsync();
+                string text = await FileIO.ReadTextAsync(file);
+                return JsonConvert.DeserializeObject<ObservableCollection<T>>(text);
             }
             catch (FileNotFoundException)
             {
                 //With no file found, assume it doesn't exist and move on
                 Debug.WriteLine("File not found");
+                return new ObservableCollection<T>();
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 if (e.Source != null)
                 {
                     Debug.WriteLine("IOException source: {0}", e.Source);
                 }
+                return new ObservableCollection<T>();
             }
-            return models;
         }
     }
 }

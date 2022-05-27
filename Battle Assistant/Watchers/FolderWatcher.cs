@@ -12,10 +12,10 @@ namespace Battle_Assistant.Watchers
     {
         public FileSystemWatcher Watcher { get; set; }
 
-        public FolderWatcher(StorageFolder folder)
+        public FolderWatcher(string folderPath)
         {
 
-            Watcher = new FileSystemWatcher(folder.Path);
+            Watcher = new FileSystemWatcher(folderPath);
             Watcher.Filter = "*.ema";
             Watcher.Created += File_Created;
             Watcher.EnableRaisingEvents = true;

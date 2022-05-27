@@ -43,7 +43,7 @@
                                 <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
                             </StackPanel>
                             
-                            <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}"/>
+                            <Button Content="End Battle" Click="EndBattle_Click" Tag="{Binding Index, Mode=OneWay}" HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>

@@ -55,15 +55,14 @@ namespace Battle_Assistant
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            
-            m_window = new NavShell();
-            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
             InitialiseWindow();
         }
 
         private async void InitialiseWindow()
         {
             await StorageHelper.LoadAllAsync();
+            m_window = new NavShell();
+            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
             m_window.Activate();
         }
 

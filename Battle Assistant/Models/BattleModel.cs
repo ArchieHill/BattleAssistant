@@ -51,7 +51,7 @@ namespace Battle_Assistant.Models
                 {
                     battleFile = value;
                     SetVarsFromGameFile(battleFile);
-                    NotifyPropertyChanged("InitialGameFile");
+                    NotifyPropertyChanged("BattleFile");
                 }
             }
         }

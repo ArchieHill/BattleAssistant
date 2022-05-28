@@ -20,10 +20,10 @@
             <DataTemplate x:DataType="models:BattleModel">
                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Expander.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="18"/>
-                            <TextBlock Text="{Binding Status, Mode=OneWay}" FontSize="16"/>
-                        </StackPanel>
+                            <TextBlock Text="{Binding Status, Mode=OneWay}" FontSize="18" HorizontalTextAlignment="Right"/>
+                        </Grid>
                     </Expander.Header>
 
                     <Expander.Content>

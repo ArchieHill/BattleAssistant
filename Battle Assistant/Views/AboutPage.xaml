@@ -9,6 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="24,12,24,0" Spacing="12">
-        <TextBlock>To be implemented</TextBlock>
+        <TextBlock>Attributions</TextBlock>
+        <RichTextBlock>
+            <Paragraph>
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/tank">Tank icon created by max.icons - Flaticon</Hyperlink>
+            </Paragraph>
+        </RichTextBlock>
     </StackPanel>
 </Page>

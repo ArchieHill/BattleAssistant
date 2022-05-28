@@ -54,8 +54,11 @@ namespace Battle_Assistant.Helpers
         /// <returns></returns>
         public static async Task SaveModels<T>(ObservableCollection<T> models, string fileName)
         {
-            StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(models, Formatting.Indented));
+            if(models != null)
+            {
+                StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(models, Formatting.Indented));
+            }
         }
 
         /// <summary>

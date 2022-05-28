@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,6 +30,38 @@ namespace Battle_Assistant.Watchers
             Watcher.EnableRaisingEvents = true;
         }
 
-        protected abstract void File_Created(object sender, FileSystemEventArgs e);
+        /// <summary>
+        /// Finds the battle the new file is part of and actions on the file with File_CreatedTask
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">The file object</param>
+        protected void File_Created(object sender, FileSystemEventArgs e)
+        {
+            foreach (BattleModel battle in App.Battles)
+            {
+                if (battle.Name == FileHelper.GetFileDisplayName(e.FullPath) &&
+                    Path.GetFileName(battle.BattleFile) != e.Name)
+                {
+                    //This if statement is used to allow the file watcher thread to access the UI thread
+                    if (App.MainWindow.DispatcherQueue.HasThreadAccess)
+                    {
+                        File_CreatedTask(battle, e.FullPath);
+                    }
+                    else
+                    {
+                        bool isQueued = App.MainWindow.DispatcherQueue.TryEnqueue(
+                        Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
+                        () => File_CreatedTask(battle, e.FullPath));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The task called when a file is created and is part of a battle
+        /// </summary>
+        /// <param name="battle">The battle the file is a part of</param>
+        /// <param name="newBattleFilePath">The file path of the new battle file</param>
+        protected abstract void File_CreatedTask(BattleModel battle, string newBattleFilePath);
     }
 }

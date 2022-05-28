@@ -24,23 +24,11 @@ namespace Battle_Assistant.Watchers
 
         }
 
-        /// <summary>
-        /// On file creation in the folder copies to incoming email folder
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">The folder created</param>
         override
-        protected void File_Created(object sender, FileSystemEventArgs e)
+        protected void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
-            foreach (BattleModel battle in App.Battles)
-            {
-                if (battle.Name == FileHelper.GetFileDisplayName(e.FullPath) && 
-                    Path.GetFileName(battle.BattleFile) != e.Name)
-                {
-                    battle.BattleFile = e.FullPath;
-                    FileHelper.CopyToIncomingEmail(battle);
-                }
-            }
+            battle.BattleFile = newBattleFilePath;
+            FileHelper.CopyToIncomingEmail(battle);
         }
     }
 }

@@ -25,22 +25,15 @@ namespace Battle_Assistant.Watchers
         }
 
         /// <summary>
-        /// On a file creation in the folder copies to shared drive folder
+        /// The task called when a file is created and is part of a battle
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">The folder thats been created</param>
+        /// <param name="battle">The battle the file is a part of</param>
+        /// <param name="newBattleFilePath">The file path of the new battle file</param>
         override
-        protected void File_Created(object sender, FileSystemEventArgs e)
+        protected void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
-            foreach(BattleModel battle in App.Battles)
-            {
-                if(battle.Name == FileHelper.GetFileDisplayName(e.FullPath) && 
-                    Path.GetFileName(battle.BattleFile) != e.Name)
-                {
-                    battle.BattleFile = e.FullPath;
-                    FileHelper.CopyToSharedDrive(battle);
-                }
-            }
+            battle.BattleFile = newBattleFilePath;
+            FileHelper.CopyToSharedDrive(battle);
         }
     }
 }

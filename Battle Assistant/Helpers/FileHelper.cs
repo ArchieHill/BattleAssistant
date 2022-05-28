@@ -10,12 +10,19 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Helpers
 {
+    /// <summary>
+    /// File Helper Methods
+    /// </summary>
     public static class FileHelper
     {
         private const int FIRST_NUM_POS_SUBTRACTOR = -3;
 
         private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
 
+        /// <summary>
+        /// Copies the battle file to the incoming email folder
+        /// </summary>
+        /// <param name="battle"></param>
         public static void CopyToIncomingEmail(BattleModel battle)
         {
             File.Copy(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile), true);
@@ -23,6 +30,10 @@ namespace Battle_Assistant.Helpers
             battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
         }
 
+        /// <summary>
+        /// Copies the battle file to the shared drive folder
+        /// </summary>
+        /// <param name="battle"></param>
         public static void CopyToSharedDrive(BattleModel battle)
         {
             File.Copy(battle.BattleFile, battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile), true);

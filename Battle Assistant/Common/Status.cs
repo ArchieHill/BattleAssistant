@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Battle_Assistant.Common
+﻿namespace Battle_Assistant.Common
 {
+    /// <summary>
+    /// Battle Status Constants
+    /// </summary>
     public static class Status
     {
         public const string NO_STATUS = "No Status";

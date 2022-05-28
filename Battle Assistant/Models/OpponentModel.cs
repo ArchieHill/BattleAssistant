@@ -11,6 +11,9 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Models
 {
+    /// <summary>
+    /// Opponent model
+    /// </summary>
     public class OpponentModel : MasterModel
     {
         private SharedDriveWatcher sDWatcher;
@@ -30,6 +33,9 @@ namespace Battle_Assistant.Models
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public OpponentModel() : base()
         {
             SharedDir = null;

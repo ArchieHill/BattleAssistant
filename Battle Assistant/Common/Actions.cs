@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Battle_Assistant.Common
+﻿namespace Battle_Assistant.Common
 {
+    /// <summary>
+    /// Actions On File Constants
+    /// </summary>
     public static class Actions
     {
         public const string NO_LAST_ACTION = "No Last Action";

@@ -11,14 +11,25 @@ using Microsoft.UI.Xaml;
 
 namespace Battle_Assistant.ViewModels
 {
+    /// <summary>
+    /// Battle page view model
+    /// </summary>
     public sealed class BattlesPageViewModel
     {
         public ObservableCollection<BattleModel> Battles { get; set; } = App.Battles;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BattlesPageViewModel()
         {
 
         }
+
+        /// <summary>
+        /// Opens the start battle dialog
+        /// </summary>
+        /// <param name="root">The window root for the dialog</param>
         public async void StartBattle(XamlRoot root)
         {
             StartBattleDialog dialog = new StartBattleDialog();
@@ -26,10 +37,15 @@ namespace Battle_Assistant.ViewModels
             await dialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Deletes the battle from the list
+        /// </summary>
+        /// <param name="index"></param>
         public void EndBattle(int index)
         {
             Battles.RemoveAt(index);
             UpdateIndexes();
+            StorageHelper.UpdateBattleFile();
         }
 
         /// <summary>

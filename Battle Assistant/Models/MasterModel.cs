@@ -12,6 +12,9 @@ namespace Battle_Assistant.Models
         // A property changed event object
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MasterModel()
         {
             Name = "";
@@ -27,7 +30,6 @@ namespace Battle_Assistant.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        // The name of the model
         private string name;
         public string Name
         {

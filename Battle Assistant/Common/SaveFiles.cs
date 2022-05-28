@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Battle_Assistant.Common
+﻿namespace Battle_Assistant.Common
 {
+    /// <summary>
+    /// Save File Name Constants
+    /// </summary>
     public static class SaveFiles
     {
         public const string GAMES = "games.json";

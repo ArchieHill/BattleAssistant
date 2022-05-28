@@ -8,10 +8,17 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Watchers
 {
+    /// <summary>
+    /// Template class for folder watchers
+    /// </summary>
     public abstract class FolderWatcher
     {
         public FileSystemWatcher Watcher { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="folderPath">The folder path</param>
         public FolderWatcher(string folderPath)
         {
 

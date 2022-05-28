@@ -12,6 +12,9 @@ using Battle_Assistant.Common;
 
 namespace Battle_Assistant.Models
 {
+    /// <summary>
+    /// The game model
+    /// </summary>
     public class GameModel : MasterModel
     {
         private OutGoingEmailFolderWatcher oGEFWatcher;
@@ -75,6 +78,9 @@ namespace Battle_Assistant.Models
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public GameModel() : base()
         {
             GameIcon = null;
@@ -83,6 +89,9 @@ namespace Battle_Assistant.Models
             OutgoingEmailFolder = null;
         }
 
+        /// <summary>
+        /// Sets the email folders from the game directory folder
+        /// </summary>
         public void SetEmailFolders()
         {
             IncomingEmailFolder = GameDir + "\\Game Files\\Incoming Email";

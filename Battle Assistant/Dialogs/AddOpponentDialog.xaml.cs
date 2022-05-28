@@ -21,11 +21,15 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Dialogs
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A content dialog to add an opponent
     /// </summary>
     public sealed partial class AddOpponentDialog : ContentDialog
     {
         private AddOpponentDialogModel DialogModel { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AddOpponentDialog()
         {
             DialogModel = new AddOpponentDialogModel();
@@ -33,22 +37,40 @@ namespace Battle_Assistant.Dialogs
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Add Opponent Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void AddOpponent_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             DialogModel.AddOpponent();
         }
 
+        /// <summary>
+        /// Select Shared Drive Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SelectSharedDrive_Click(object sender, RoutedEventArgs e)
         {
             await DialogModel.SelectSharedDrive();
             CheckInputs();
         }
 
+        /// <summary>
+        /// Opponents Name Changed Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpponentName_TextChanged(object sender, TextChangedEventArgs e)
         {
             CheckInputs();
         }
 
+        /// <summary>
+        /// Check inputs to enable primary button
+        /// </summary>
         private void CheckInputs()
         {
             if (DialogModel.Opponent.SharedDir != null && DialogModel.Opponent.Name != "")

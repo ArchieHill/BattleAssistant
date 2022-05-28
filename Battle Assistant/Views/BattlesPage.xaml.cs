@@ -21,12 +21,15 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Battle page
     /// </summary>
     public sealed partial class BattlesPage : Page
     {
         public BattlesPageViewModel ViewModel { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BattlesPage()
         {
             ViewModel = new BattlesPageViewModel();
@@ -34,25 +37,25 @@ namespace Battle_Assistant.Views
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Start battle click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartBattle_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.StartBattle(this.Content.XamlRoot);
         }
 
+        /// <summary>
+        /// End battle click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EndBattle_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            int index = int.Parse(btn.Tag.ToString());
-            ViewModel.Battles.RemoveAt(index);
-            UpdateIndexes();
-            StorageHelper.UpdateBattleFile();
-        }
-        private void UpdateIndexes()
-        {
-            for(int i = 0; i < ViewModel.Battles.Count; i++)
-            {
-                ViewModel.Battles[i].Index = i;
-            }
+            ViewModel.EndBattle(int.Parse(btn.Tag.ToString()));
         }
     }
 }

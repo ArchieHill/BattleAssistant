@@ -14,12 +14,19 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Helpers
 {
+    /// <summary>
+    /// Storage helper methods
+    /// </summary>
     public static class StorageHelper
     {
         static readonly StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
         static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
+        /// <summary>
+        /// Updates all save files
+        /// </summary>
+        /// <returns></returns>
         public static async Task SaveAllAsync()
         {
             await SaveModels(App.Games, SaveFiles.GAMES);
@@ -27,6 +34,10 @@ namespace Battle_Assistant.Helpers
             await SaveModels(App.Battles, SaveFiles.BATTLES);
         }
 
+        /// <summary>
+        /// Loads all save files
+        /// </summary>
+        /// <returns></returns>
         public static async Task LoadAllAsync()
         {
             App.Games = await LoadModels<GameModel>(SaveFiles.GAMES);
@@ -34,27 +45,49 @@ namespace Battle_Assistant.Helpers
             App.Battles = await LoadModels<BattleModel>(SaveFiles.BATTLES);
         }
 
+        /// <summary>
+        /// Saves the models to their save file
+        /// </summary>
+        /// <typeparam name="T">The type of model to save</typeparam>
+        /// <param name="models">The list of models</param>
+        /// <param name="fileName">The save file, file name</param>
+        /// <returns></returns>
         public static async Task SaveModels<T>(ObservableCollection<T> models, string fileName)
         {
             StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(models, Formatting.Indented));
         }
 
+        /// <summary>
+        /// Saves the battle models to the save file
+        /// </summary>
         public static async void UpdateBattleFile()
         {
             await SaveModels(App.Battles, SaveFiles.BATTLES);
         }
 
+        /// <summary>
+        /// Saves the game models to the save file
+        /// </summary>
         public static async void UpdateGameFile()
         {
             await SaveModels(App.Games, SaveFiles.GAMES);
         }
 
+        /// <summary>
+        /// Saves the opponent models to the save file
+        /// </summary>
         public static async void UpdateOpponentFile()
         {
             await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
         }
-        //C:\Users\Admin\AppData\Local\Packages\c8e8831d-4222-4ea8-ae83-43ec81e66df7_5gyrq6psz227t\LocalState
+
+        /// <summary>
+        /// Loads the models from the save file
+        /// </summary>
+        /// <typeparam name="T">The type of model thats being loaded</typeparam>
+        /// <param name="fileName">The file name the data is being loaded from</param>
+        /// <returns>A collection of the models loaded</returns>
         public static async Task<ObservableCollection<T>> LoadModels<T>(string fileName)
         {
             try

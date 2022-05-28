@@ -21,11 +21,15 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Dialogs
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A contnent dialog to add a game
     /// </summary>
     public sealed partial class AddGameDialog : ContentDialog
     {
         private AddGameDialogModel DialogModel { get; set; } 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AddGameDialog()
         {
             DialogModel = new AddGameDialogModel();
@@ -33,22 +37,40 @@ namespace Battle_Assistant.Dialogs
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Add Game Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void AddGame_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             DialogModel.AddGame();
         }
 
+        /// <summary>
+        /// Select Game Directory Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SelectGameDir_Click(object sender, RoutedEventArgs e)
         {
             await DialogModel.SelectGameDir();
             CheckInputs();
         }
 
+        /// <summary>
+        /// Select Icon File Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectIconFile_Click(object sender, RoutedEventArgs e)
         {
             DialogModel.SelectIconFile();
         }
 
+        /// <summary>
+        /// Checks the inputs to enable the primary button
+        /// </summary>
         private void CheckInputs()
         {
             if (DialogModel.Game.GameDir != null)

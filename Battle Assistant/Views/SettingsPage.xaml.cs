@@ -20,7 +20,7 @@ using Windows.UI.ViewManagement;
 namespace Battle_Assistant.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Settings page
     /// </summary>
     public sealed partial class SettingsPage : Page
     {

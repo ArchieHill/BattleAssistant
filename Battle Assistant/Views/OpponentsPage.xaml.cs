@@ -21,35 +21,41 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Opponents page
     /// </summary>
     public sealed partial class OpponentsPage : Page
     {
         public OpponentsPageViewModel ViewModel { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public OpponentsPage()
         {
             ViewModel = new OpponentsPageViewModel();
             DataContext = ViewModel;
             this.InitializeComponent();
         }
+
+        /// <summary>
+        /// Add opponent click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddOpponent_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AddOpponent(this.Content.XamlRoot);
         }
+
+        /// <summary>
+        /// Delete opponent click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            int index = int.Parse(btn.Tag.ToString());
-            ViewModel.Opponents.RemoveAt(index);
-            UpdateIndexes();
-            StorageHelper.UpdateOpponentFile();
-        }
-        private void UpdateIndexes()
-        {
-            for (int i = 0; i < ViewModel.Opponents.Count; i++)
-            {
-                ViewModel.Opponents[i].Index = i;
-            }
+            ViewModel.DeleteOpponent(int.Parse(btn.Tag.ToString()));
         }
     }
 }

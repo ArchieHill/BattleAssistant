@@ -11,15 +11,25 @@ using System.Threading.Tasks;
 
 namespace Battle_Assistant.ViewModels
 {
+    /// <summary>
+    /// Games page view model
+    /// </summary>
     public class GamesPageViewModel
     {
         public ObservableCollection<GameModel> Games { get; set; } = App.Games;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public GamesPageViewModel()
         {
 
         }
 
+        /// <summary>
+        /// Opens the add game dialog
+        /// </summary>
+        /// <param name="root"></param>
         public async void AddGame(XamlRoot root)
         {
             AddGameDialog dialog = new AddGameDialog();
@@ -27,6 +37,10 @@ namespace Battle_Assistant.ViewModels
             await dialog.ShowAsync();
         }
 
+        /// <summary>
+        /// Deletes the game from the list
+        /// </summary>
+        /// <param name="index"></param>
         public void DeleteGame(int index)
         {
             Games.RemoveAt(index);

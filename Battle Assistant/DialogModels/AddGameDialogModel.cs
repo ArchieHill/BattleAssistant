@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -10,15 +7,25 @@ using Battle_Assistant.Helpers;
 
 namespace Battle_Assistant.DialogModels
 {
+    /// <summary>
+    /// Add Game Dialog Model
+    /// </summary>
     public class AddGameDialogModel
     {
         public GameModel Game { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AddGameDialogModel()
         {
             Game = new GameModel();
         }
 
+        /// <summary>
+        /// Opens a folder picker for the user to select the games directory
+        /// </summary>
+        /// <returns>The path of the folder</returns>
         public async Task SelectGameDir()
         {
             FolderPicker folderPicker = new FolderPicker();
@@ -28,6 +35,9 @@ namespace Battle_Assistant.DialogModels
             Game.GameDir = folder.Path;
         }
 
+        /// <summary>
+        /// Opens a file picker for the user to select a png file for the icon
+        /// </summary>
         public async void SelectIconFile()
         {
             var filePicker = new FileOpenPicker();
@@ -36,6 +46,10 @@ namespace Battle_Assistant.DialogModels
             StorageFile file = await filePicker.PickSingleFileAsync();
             Game.GameIcon = file.Path;
         }
+
+        /// <summary>
+        /// Adds the game to the list and updates the save file
+        /// </summary>
         public void AddGame()
         {
             App.Games.Add(Game);

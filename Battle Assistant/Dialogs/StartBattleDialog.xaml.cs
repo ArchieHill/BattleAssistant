@@ -20,13 +20,17 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Dialogs
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// A content dialog to add a battle
     /// </summary>
     public sealed partial class StartBattleDialog : ContentDialog
     {
         private StartBattleDialogModel DialogModel { get; } = new StartBattleDialogModel();
 
         private bool GameAndOpponentExist;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public StartBattleDialog()
         {
             this.InitializeComponent();
@@ -35,6 +39,11 @@ namespace Battle_Assistant.Dialogs
             GameAndOpponentExist = false;
         }
 
+        /// <summary>
+        /// Page Loaded Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartBattleDialog_Loaded(object sender, RoutedEventArgs e)
         {
             //If at least one game and opponent exist then allow a battle to be started
@@ -44,17 +53,30 @@ namespace Battle_Assistant.Dialogs
             }
         }
 
+        /// <summary>
+        /// Start Battle Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void StartBattle_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             DialogModel.StartBattle();
         }
 
+        /// <summary>
+        /// Select Battle File Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SelectFile_Click(object sender, RoutedEventArgs e)
         {
             await DialogModel.SelectBattleFile();
             CheckInputs();
         }
 
+        /// <summary>
+        /// Checks the inputs and enables the primary button
+        /// </summary>
         private void CheckInputs()
         {
             if(DialogModel.Battle.BattleFile != null && GameAndOpponentExist)

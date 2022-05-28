@@ -11,6 +11,9 @@ using Windows.Storage;
 
 namespace Battle_Assistant.Models
 {
+    /// <summary>
+    /// The battle model
+    /// </summary>
     public class BattleModel : MasterModel
     {
         private string status;
@@ -74,6 +77,9 @@ namespace Battle_Assistant.Models
 
         public OpponentModel Opponent { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BattleModel() : base()
         {
             Name = "";
@@ -84,10 +90,14 @@ namespace Battle_Assistant.Models
             LastAction = Actions.NO_LAST_ACTION;
         }
 
-        public void SetVarsFromGameFile(string gameFile)
+        /// <summary>
+        /// Sets the name and file number from the battle file
+        /// </summary>
+        /// <param name="battleFile">The battle file path</param>
+        public void SetVarsFromGameFile(string battleFile)
         {
-            Name = FileHelper.GetFileDisplayName(gameFile);
-            CurrentFileNum = FileHelper.GetFileNumber(gameFile);
+            Name = FileHelper.GetFileDisplayName(battleFile);
+            CurrentFileNum = FileHelper.GetFileNumber(battleFile);
         }
     }
 }

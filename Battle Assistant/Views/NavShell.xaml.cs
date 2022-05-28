@@ -26,6 +26,9 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class NavShell : Window
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public NavShell()
         {
             this.InitializeComponent();
@@ -33,6 +36,12 @@ namespace Battle_Assistant.Views
             this.SetTitleBar(AppTitleBar);    
         }
 
+        /// <summary>
+        /// Navigation failed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="Exception"></exception>
         private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -47,6 +56,11 @@ namespace Battle_Assistant.Views
         ("about", typeof(AboutPage)),
         };
 
+        /// <summary>
+        /// Window loaded event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
             // Add handler for ContentFrame navigation.
@@ -57,6 +71,11 @@ namespace Battle_Assistant.Views
             NavView_Navigate("battles", new EntranceNavigationTransitionInfo());
         }
 
+        /// <summary>
+        /// Navigation item invoked event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked == true)
@@ -70,6 +89,11 @@ namespace Battle_Assistant.Views
             }
         }
 
+        /// <summary>
+        /// Navigate to page
+        /// </summary>
+        /// <param name="navItemTag">The tag of the navigatoin item</param>
+        /// <param name="transitionInfo"></param>
         private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
         {
             Type _page = null;
@@ -93,6 +117,11 @@ namespace Battle_Assistant.Views
             }
         }
 
+        /// <summary>
+        /// Navigation back requested event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             TryGoBack();

@@ -60,6 +60,9 @@ namespace Battle_Assistant
             InitialiseWindow();
         }
 
+        /// <summary>
+        /// Loads the saved data and activates the window
+        /// </summary>
         private async void InitialiseWindow()
         {
             await StorageHelper.LoadAllAsync();

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
@@ -12,6 +10,9 @@ using Windows.Storage.Pickers;
 
 namespace Battle_Assistant.DialogModels
 {
+    /// <summary>
+    /// Start Battle Dialog Model
+    /// </summary>
     public class StartBattleDialogModel
     {
         public GameModel SelectedGame { get; set; }
@@ -48,6 +49,9 @@ namespace Battle_Assistant.DialogModels
         }
         public BattleModel Battle { get; set; } 
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public StartBattleDialogModel()
         {
             Battle = new BattleModel();
@@ -55,6 +59,10 @@ namespace Battle_Assistant.DialogModels
             Opponents = App.Opponents;
         }
 
+        /// <summary>
+        /// Opens a file picker to so the user can select the battle file
+        /// </summary>
+        /// <returns>The battle files path</returns>
         public async Task SelectBattleFile()
         {
             var filePicker = new FileOpenPicker();
@@ -64,6 +72,9 @@ namespace Battle_Assistant.DialogModels
             Battle.BattleFile = file.Path;
         }
 
+        /// <summary>
+        /// Adds the battle to the list and updates the save file
+        /// </summary>
         public void StartBattle()
         {
             Battle.Game = SelectedGame;

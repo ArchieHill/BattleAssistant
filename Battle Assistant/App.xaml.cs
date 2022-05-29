@@ -1,4 +1,5 @@
-﻿using Battle_Assistant.Helpers;
+﻿using Battle_Assistant.Common;
+using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Battle_Assistant.Views;
 using Microsoft.UI.Xaml;
@@ -66,9 +67,36 @@ namespace Battle_Assistant
         private async void InitialiseWindow()
         {
             await StorageHelper.LoadAllAsync();
+            UpdateAllBattles();
             MainWindow = new NavShell();
             Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
             MainWindow.Activate();
+        }
+
+        private void UpdateAllBattles()
+        {
+            foreach(BattleModel battle in Battles)
+            {
+                if(battle.Status == Status.WAITING)
+                {
+                    string nextBattleFilePath = battle.Opponent.SharedDir + "\\" + battle.Name + " " + (battle.CurrentFileNum + 1).ToString("D3") + ".ema";
+                    if (File.Exists(nextBattleFilePath))
+                    {
+                        battle.BattleFile = nextBattleFilePath;
+                        FileHelper.CopyToIncomingEmail(battle);
+                    }
+                }
+                else if(battle.Status == Status.YOUR_TURN)
+                {
+                    string nextBattleFilePath = battle.Game.OutgoingEmailFolder + "\\" + battle.Name + " " + (battle.CurrentFileNum + 1).ToString("D3") + ".ema";
+                    if (File.Exists(nextBattleFilePath))
+                    {
+                        battle.BattleFile = nextBattleFilePath;
+                        FileHelper.CopyToSharedDrive(battle);
+                    }
+                }
+                
+            }
         }
     }
 }

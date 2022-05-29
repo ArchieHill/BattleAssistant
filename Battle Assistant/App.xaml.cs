@@ -72,14 +72,18 @@ namespace Battle_Assistant
             Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
             MainWindow.Activate();
         }
-
+    
+        /// <summary>
+        /// Checks each battle to see if there is a new file to move for the battle
+        /// </summary>
         private void UpdateAllBattles()
         {
             foreach(BattleModel battle in Battles)
             {
                 if(battle.Status == Status.WAITING)
                 {
-                    string nextBattleFilePath = battle.Opponent.SharedDir + "\\" + battle.Name + " " + (battle.CurrentFileNum + 1).ToString("D3") + ".ema";
+                    //This constructs the path of the file with the next file number, then checks if its exists
+                    string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
@@ -88,7 +92,8 @@ namespace Battle_Assistant
                 }
                 else if(battle.Status == Status.YOUR_TURN)
                 {
-                    string nextBattleFilePath = battle.Game.OutgoingEmailFolder + "\\" + battle.Name + " " + (battle.CurrentFileNum + 1).ToString("D3") + ".ema";
+                    //This constructs the path of the file with the next file number, then checks if its exists
+                    string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;

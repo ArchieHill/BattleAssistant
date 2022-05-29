@@ -64,5 +64,17 @@ namespace Battle_Assistant.Helpers
             string fileName = Path.GetFileNameWithoutExtension(path);
             return int.Parse(fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
         }
+
+        /// <summary>
+        /// Constructs a battle file path
+        /// </summary>
+        /// <param name="folderPath">The folder the battle file will be in</param>
+        /// <param name="battleName">The battle files name</param>
+        /// <param name="number">The battle files number</param>
+        /// <returns>The full path of the constructed battle file</returns>
+        public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
+        {
+            return folderPath + "\\" + battleName + " " + number.ToString("D3") + ".ema";
+        }
     }
 }

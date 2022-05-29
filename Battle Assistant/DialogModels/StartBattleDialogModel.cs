@@ -90,7 +90,6 @@ namespace Battle_Assistant.DialogModels
             {
                 FileHelper.CopyToIncomingEmail(Battle);
             }
-            StorageHelper.UpdateBattleFile();
         }
     }
 }

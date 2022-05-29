@@ -28,6 +28,7 @@ namespace Battle_Assistant.Helpers
             File.Copy(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile), true);
             battle.Status = Status.YOUR_TURN;
             battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
+            StorageHelper.UpdateBattleFile();
         }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace Battle_Assistant.Helpers
             File.Copy(battle.BattleFile, battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile), true);
             battle.Status = Status.WAITING;
             battle.LastAction = Actions.COPY_TO_SHAREDDRIVE;
+            StorageHelper.UpdateBattleFile();
         }
 
         /// <summary>

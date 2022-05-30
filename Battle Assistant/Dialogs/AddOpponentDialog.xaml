@@ -15,6 +15,7 @@
     <StackPanel Spacing="24">
         <!-- Opponent Name Input -->
         <TextBox Header="Opponents Name" 
+                 x:Name="OpponentName"
                  PlaceholderText="Name" 
                  TextChanged="OpponentName_TextChanged" 
                  Text="{Binding Opponent.Name, Mode=TwoWay}"/>

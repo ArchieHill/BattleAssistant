@@ -73,7 +73,7 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         private void CheckInputs()
         {
-            if (DialogModel.Opponent.SharedDir != null && DialogModel.Opponent.Name != "")
+            if (DialogModel.Opponent.SharedDir != null && OpponentName.Text != "")
             {
                 IsPrimaryButtonEnabled = true;
             }

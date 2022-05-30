@@ -54,7 +54,7 @@ namespace Battle_Assistant.Views
         private void DeleteGame_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            ViewModel.DeleteGame(int.Parse(btn.Tag.ToString()));
+            ViewModel.DeleteGame(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
         }
     }
 }

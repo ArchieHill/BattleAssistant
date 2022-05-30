@@ -2,6 +2,7 @@
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,11 +42,17 @@ namespace Battle_Assistant.ViewModels
         /// Deletes the game from the list
         /// </summary>
         /// <param name="index"></param>
-        public void DeleteGame(int index)
+        public async void DeleteGame(int index, XamlRoot root)
         {
-            Games.RemoveAt(index);
-            UpdateIndexes();
-            StorageHelper.UpdateGameFile();
+            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog();
+            dialog.XamlRoot = root;
+            var result = await dialog.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+                Games.RemoveAt(index);
+                UpdateIndexes();
+                StorageHelper.UpdateGameFile();
+            }
         }
 
         /// <summary>

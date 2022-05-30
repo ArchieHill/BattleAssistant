@@ -55,7 +55,7 @@ namespace Battle_Assistant.Views
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            ViewModel.DeleteOpponent(int.Parse(btn.Tag.ToString()));
+            ViewModel.DeleteOpponent(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
         }
     }
 }

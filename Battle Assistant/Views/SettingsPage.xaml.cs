@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -32,23 +33,26 @@ namespace Battle_Assistant.Views
 
         private void SettingsPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //var currentTheme = ThemeHelper.RootTheme.ToString();
-            //(ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
+            var currentTheme = (this.XamlRoot.Content as Grid).RequestedTheme.ToString();
+            (ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
         }
 
         private void OnThemeModeChecked(object sender, RoutedEventArgs args)
         {
             var selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
-            
-            if(selectedTheme == "Light")
+            if(selectedTheme != null)
             {
-                ((FrameworkElement)this.Content).RequestedTheme = ElementTheme.Light;
+                (this.XamlRoot.Content as Grid).RequestedTheme = GetEnum<ElementTheme>(selectedTheme);
             }
-            else
-            {
-                ((FrameworkElement)this.Content).RequestedTheme = ElementTheme.Dark;
-            }
+        }
 
+        private TEnum GetEnum<TEnum>(string text) where TEnum : struct
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
+            }
+            return (TEnum)Enum.Parse(typeof(TEnum), text);
         }
     }
 }

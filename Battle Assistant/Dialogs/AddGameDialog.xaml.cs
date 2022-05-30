@@ -21,7 +21,7 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Dialogs
 {
     /// <summary>
-    /// A contnent dialog to add a game
+    /// A content dialog to add a game
     /// </summary>
     public sealed partial class AddGameDialog : ContentDialog
     {

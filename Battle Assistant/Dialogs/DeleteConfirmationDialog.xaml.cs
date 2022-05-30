@@ -21,7 +21,7 @@ using Windows.Foundation.Collections;
 namespace Battle_Assistant.Dialogs
 {
     /// <summary>
-    /// A contnent dialog to add a game
+    /// A delete confirmation dialog
     /// </summary>
     public sealed partial class DeleteConfirmationDialog : ContentDialog
     {

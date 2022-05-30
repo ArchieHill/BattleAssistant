@@ -27,6 +27,7 @@
     <None Remove="Dialogs\AddGameDialog.xaml" />
     <None Remove="Dialogs\AddOpponentDialog.xaml" />
     <None Remove="Dialogs\DeleteConfirmationDialog.xaml" />
+    <None Remove="Dialogs\EndBattleConfirmationDialog.xaml" />
     <None Remove="Dialogs\StartBattleDialog.xaml" />
     <None Remove="Views\NavShell.xaml" />
     <None Remove="Views\OpponentsPage.xaml" />
@@ -55,6 +56,10 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Dialogs\EndBattleConfirmationDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Dialogs\DeleteConfirmationDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

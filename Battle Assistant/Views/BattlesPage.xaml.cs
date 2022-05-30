@@ -55,7 +55,7 @@ namespace Battle_Assistant.Views
         private void EndBattle_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            ViewModel.EndBattle(int.Parse(btn.Tag.ToString()));
+            ViewModel.EndBattle(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
         }
     }
 }

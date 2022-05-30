@@ -41,11 +41,17 @@ namespace Battle_Assistant.ViewModels
         /// Deletes the battle from the list
         /// </summary>
         /// <param name="index"></param>
-        public void EndBattle(int index)
+        public async void EndBattle(int index, XamlRoot root)
         {
-            Battles.RemoveAt(index);
-            UpdateIndexes();
-            StorageHelper.UpdateBattleFile();
+            EndBattleConfirmationDialog dialog = new EndBattleConfirmationDialog();
+            dialog.XamlRoot = root;
+            var result = await dialog.ShowAsync();
+            if(result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            {
+                Battles.RemoveAt(index);
+                UpdateIndexes();
+                StorageHelper.UpdateBattleFile();
+            }
         }
 
         /// <summary>

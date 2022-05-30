@@ -71,6 +71,7 @@ namespace Battle_Assistant
             MainWindow = new NavShell();
             Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
             MainWindow.Activate();
+            SettingsHelper.LoadSettings();
         }
     
         /// <summary>

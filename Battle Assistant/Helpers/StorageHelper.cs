@@ -21,8 +21,6 @@ namespace Battle_Assistant.Helpers
     {
         static readonly StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
-        static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
         /// <summary>
         /// Updates all save files
         /// </summary>

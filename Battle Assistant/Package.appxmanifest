@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="0fa3f631-b3c0-425a-88e5-80d76101c89c"
-    Publisher="CN=Admin"
-    Version="1.0.0.0" />
+    Name="Battle-Assistant"
+    Publisher="CN=Dawntaker"
+    Version="0.1.1.0" />
 
   <Properties>
     <DisplayName>Battle Assistant</DisplayName>
-    <PublisherDisplayName>Admin</PublisherDisplayName>
+    <PublisherDisplayName>Dawntaker</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

@@ -15,5 +15,10 @@
                 <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/tank">Tank icon created by max.icons - Flaticon</Hyperlink>
             </Paragraph>
         </RichTextBlock>
+
+        <TextBlock>
+                    Version: 
+                    <Run Text="{Binding Version}" FontWeight="Bold" />
+        </TextBlock>
     </StackPanel>
 </Page>

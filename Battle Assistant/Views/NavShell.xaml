@@ -13,15 +13,16 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="AppTitleBar">
-            <Image Source="Assets\Square44x44Logo.png"
-                   HorizontalAlignment="Left" 
-                   Width="16" Height="16" 
-                   Margin="8,0"/>
-            <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
-                       TextWrapping="NoWrap"
-                       VerticalAlignment="Center"
-                       Margin="28,0,0,0"/>
+        <Grid x:Name="AppTitleBar" Background="{ThemeResource AppBarBackgroundThemeBrush}">
+            <Image Source="/Assets/Square44x44Logo.targetsize-24.png"
+           HorizontalAlignment="Left" 
+           Width="20" Height="20" 
+           Margin="5,0"/>
+           <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
+               TextWrapping="NoWrap"
+               Style="{StaticResource CaptionTextBlockStyle}" 
+               VerticalAlignment="Center"
+               Margin="28,0,0,0"/>
         </Grid>
 
         <NavigationView x:Name="NavView" Grid.Row="1"
@@ -30,10 +31,6 @@
                          BackRequested="NavView_BackRequested"
                          IsTabStop="False"
                          CompactModeThresholdWidth="0">
-
-            <NavigationView.Resources>
-                <Thickness x:Key="NavigationViewHeaderMargin">24,20,0,20</Thickness>
-            </NavigationView.Resources>
 
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="battles"/>

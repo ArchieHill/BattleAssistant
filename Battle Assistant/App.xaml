@@ -10,8 +10,7 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
-            <SolidColorBrush x:Key="WindowCaptionBackground">Black</SolidColorBrush>
-            
+            <Thickness x:Key="NavigationViewHeaderMargin">24,20,0,20</Thickness>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

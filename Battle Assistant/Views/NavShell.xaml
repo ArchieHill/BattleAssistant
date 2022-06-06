@@ -33,10 +33,25 @@
                          CompactModeThresholdWidth="0">
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Placeholder" Content="Battles" Tag="battles"/>
-                <NavigationViewItem Icon="Placeholder" Content="Games" Tag="games"/>
-                <NavigationViewItem Icon="Placeholder" Content="Opponents" Tag="opponents"/>
-                <NavigationViewItem Icon="Placeholder" Content="About" Tag="about"/>
+                <NavigationViewItem Content="Battles" Tag="battles">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/swordsIcon.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Games" Tag="games">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Opponents" Tag="opponents">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="/Assets/userIcon.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                
+                <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.MenuItems>
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>

@@ -14,6 +14,15 @@
             <Paragraph>
                 <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/tank">Tank icon created by max.icons - Flaticon</Hyperlink>
             </Paragraph>
+            <Paragraph>
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/sword">Sword icon created by Good Ware - Flaticon</Hyperlink>
+            </Paragraph>
+            <Paragraph>
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/joy">Joy stick icon created by TwentyOneProject - Flaticon</Hyperlink>
+            </Paragraph>
+            <Paragraph>
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/user">User icon created by Freepik - Flaticon</Hyperlink>
+            </Paragraph>
         </RichTextBlock>
 
         <TextBlock>

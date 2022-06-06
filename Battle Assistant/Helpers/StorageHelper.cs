@@ -95,7 +95,12 @@ namespace Battle_Assistant.Helpers
             {
                 StorageFile file = await localFolder.GetFileAsync(fileName);
                 string text = await FileIO.ReadTextAsync(file);
-                return JsonConvert.DeserializeObject<ObservableCollection<T>>(text);
+                ObservableCollection<T> models = JsonConvert.DeserializeObject<ObservableCollection<T>>(text);
+                if(models != null)
+                {
+                    return models;
+                }
+                return new ObservableCollection<T>();
             }
             catch (FileNotFoundException)
             {

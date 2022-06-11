@@ -43,7 +43,7 @@ namespace Battle_Assistant.ViewModels
         /// <param name="index"></param>
         public async void EndBattle(int index, XamlRoot root)
         {
-            EndBattleConfirmationDialog dialog = new EndBattleConfirmationDialog();
+            EndBattleConfirmationDialog dialog = new EndBattleConfirmationDialog(Battles[index]);
             dialog.XamlRoot = root;
             var result = await dialog.ShowAsync();
             if(result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)

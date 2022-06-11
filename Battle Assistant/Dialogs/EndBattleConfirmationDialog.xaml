@@ -8,9 +8,11 @@
     mc:Ignorable="d"
     Title="End Battle Confirmation"
     PrimaryButtonText="End Battle"
-    CloseButtonText="Cancel">
+    CloseButtonText="Cancel"
+    PrimaryButtonClick="EndBattle_Click">
 
     <StackPanel Spacing="24">
+        <CheckBox Content="Clean up all folders" Checked="CleanUp_Checked" Unchecked="CleanUp_Unchecked"></CheckBox>
         <TextBlock>Are you sure you want to end the battle?</TextBlock>
     </StackPanel>
 </ContentDialog>

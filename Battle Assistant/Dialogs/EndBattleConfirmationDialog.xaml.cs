@@ -1,4 +1,5 @@
 ﻿using Battle_Assistant.DialogModels;
+using Battle_Assistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -25,12 +26,31 @@ namespace Battle_Assistant.Dialogs
     /// </summary>
     public sealed partial class EndBattleConfirmationDialog : ContentDialog
     {
+        private EndBattleConfirmationDialogModel DialogModel { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public EndBattleConfirmationDialog()
+        public EndBattleConfirmationDialog(BattleModel battle)
         {
+            DialogModel = new EndBattleConfirmationDialogModel(battle);
+            DataContext = DialogModel;
             this.InitializeComponent();
+        }
+
+        private void CleanUp_Checked(object sender, RoutedEventArgs e)
+        {
+            DialogModel.CleanUpFolders = true;
+        }
+
+        private void CleanUp_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DialogModel.CleanUpFolders = false;
+        }
+
+        private void EndBattle_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            DialogModel.EndBattle();
         }
     }
 }

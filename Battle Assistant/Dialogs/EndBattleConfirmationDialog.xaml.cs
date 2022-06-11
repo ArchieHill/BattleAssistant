@@ -38,16 +38,31 @@ namespace Battle_Assistant.Dialogs
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Clenup checkbox checked event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CleanUp_Checked(object sender, RoutedEventArgs e)
         {
             DialogModel.CleanUpFolders = true;
         }
 
+        /// <summary>
+        /// Cleanup checkbox uncheck event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CleanUp_Unchecked(object sender, RoutedEventArgs e)
         {
             DialogModel.CleanUpFolders = false;
         }
 
+        /// <summary>
+        /// End battle click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void EndBattle_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             DialogModel.EndBattle();

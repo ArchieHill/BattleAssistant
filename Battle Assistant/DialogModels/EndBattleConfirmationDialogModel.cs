@@ -9,17 +9,27 @@ using Windows.Storage;
 
 namespace Battle_Assistant.DialogModels
 {
+    /// <summary>
+    /// End Battle Confirmation Dialog Model
+    /// </summary>
     public class EndBattleConfirmationDialogModel
     {
         private BattleModel battle;
 
         public bool CleanUpFolders { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="battle">The battle being ended</param>
         public EndBattleConfirmationDialogModel(BattleModel battle)
         {
             this.battle = battle;
         }
 
+        /// <summary>
+        /// Ends the battle
+        /// </summary>
         public void EndBattle()
         {
             if(CleanUpFolders)

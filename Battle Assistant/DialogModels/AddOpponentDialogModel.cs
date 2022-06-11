@@ -35,7 +35,10 @@ namespace Battle_Assistant.DialogModels
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-            Opponent.SharedDir = folder.Path;
+            if(folder != null)
+            {
+                Opponent.SharedDir = folder.Path;
+            }
         }
 
         /// <summary>

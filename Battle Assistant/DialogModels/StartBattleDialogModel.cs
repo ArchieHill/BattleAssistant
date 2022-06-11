@@ -69,7 +69,10 @@ namespace Battle_Assistant.DialogModels
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".ema");
             StorageFile file = await filePicker.PickSingleFileAsync();
-            Battle.BattleFile = file.Path;
+            if(file != null)
+            {
+                Battle.BattleFile = file.Path;
+            }
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Battle_Assistant.Dialogs;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Battle_Assistant.ViewModels
 {
@@ -46,7 +47,7 @@ namespace Battle_Assistant.ViewModels
             EndBattleConfirmationDialog dialog = new EndBattleConfirmationDialog(Battles[index]);
             dialog.XamlRoot = root;
             var result = await dialog.ShowAsync();
-            if(result == Microsoft.UI.Xaml.Controls.ContentDialogResult.Primary)
+            if(result == ContentDialogResult.Primary)
             {
                 Battles.RemoveAt(index);
                 UpdateIndexes();

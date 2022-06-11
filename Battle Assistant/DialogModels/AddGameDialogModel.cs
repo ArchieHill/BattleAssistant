@@ -32,7 +32,10 @@ namespace Battle_Assistant.DialogModels
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-            Game.GameDir = folder.Path;
+            if(folder != null)
+            {
+                Game.GameDir = folder.Path;
+            }
         }
 
         /// <summary>
@@ -44,7 +47,10 @@ namespace Battle_Assistant.DialogModels
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".png");
             StorageFile file = await filePicker.PickSingleFileAsync();
-            Game.GameIcon = file.Path;
+            if(file != null)
+            {
+                Game.GameIcon = file.Path;
+            }
         }
 
         /// <summary>

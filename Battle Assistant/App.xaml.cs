@@ -21,6 +21,12 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinRT;
+using System.Runtime.InteropServices;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using WinRT.Interop;
+using Windows.Graphics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,6 +48,10 @@ namespace Battle_Assistant
 
         public static IntPtr Hwnd { get; set; }
 
+        private static WindowId windowId;
+
+        private static AppWindow appWindow;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -62,26 +72,64 @@ namespace Battle_Assistant
         }
 
         /// <summary>
-        /// Loads the saved data and activates the window
+        /// Loads data and activates the window
         /// </summary>
         private async void InitialiseWindow()
         {
-            await StorageHelper.LoadAllAsync();
-            UpdateAllBattles();
             MainWindow = new NavShell();
-            Hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow);
-            MainWindow.Activate();
+            Hwnd = WindowNative.GetWindowHandle(MainWindow);
+            windowId = Win32Interop.GetWindowIdFromWindow(Hwnd);
+            appWindow = AppWindow.GetFromWindowId(windowId);
+
+            //Load data and settings
+            await StorageHelper.LoadAllAsync();
             SettingsHelper.LoadSettings();
+
+            //We set this after the load settings so we don't waste time writing the sizes to the settings that we just loaded
+            appWindow.Changed += AppWindow_Changed;
+
+            //Checks if battles have changed whilst the application has been closed
+            UpdateAllBattles();
+
+            MainWindow.Activate();
         }
-    
+
+        /// <summary>
+        /// Resizes the application window
+        /// </summary>
+        /// <param name="width">The new width of the application</param>
+        /// <param name="height">The new height of the application</param>
+        public static void SetWindowSize(int width, int height)
+        {
+            var size = new SizeInt32();
+            size.Width = width;
+            size.Height = height;
+
+            appWindow.Resize(size);    
+        }
+
+        /// <summary>
+        /// App Window property change event
+        /// </summary>
+        /// <param name="sender">The app window</param>
+        /// <param name="args">The event args</param>
+        private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            if (args.DidSizeChange)
+            {
+                var size = sender.Size;
+                SettingsHelper.SaveWindowSize(size.Width, size.Height);
+            }
+        }
+
         /// <summary>
         /// Checks each battle to see if there is a new file to move for the battle
         /// </summary>
         private void UpdateAllBattles()
         {
-            foreach(BattleModel battle in Battles)
+            foreach (BattleModel battle in Battles)
             {
-                if(battle.Status == Status.WAITING)
+                if (battle.Status == Status.WAITING)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
@@ -91,7 +139,7 @@ namespace Battle_Assistant
                         FileHelper.CopyToIncomingEmail(battle);
                     }
                 }
-                else if(battle.Status == Status.YOUR_TURN)
+                else if (battle.Status == Status.YOUR_TURN)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);
@@ -101,7 +149,7 @@ namespace Battle_Assistant
                         FileHelper.CopyToSharedDrive(battle);
                     }
                 }
-                
+
             }
         }
     }

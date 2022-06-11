@@ -2,6 +2,7 @@
 using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,9 +31,18 @@ namespace Battle_Assistant.Watchers
         /// <param name="battle">The battle the file is a part of</param>
         /// <param name="newBattleFilePath">The file path of the new battle file</param>
         override
-        protected void File_CreatedTask(BattleModel battle, string newBattleFilePath)
+        protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
+            //Rename the file in the incoming email folder to show that that file is waiting on opponent
+            File.Move(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\~" + Path.GetFileName(battle.BattleFile));
+            File.Delete(battle.BattleFile);
+
             battle.BattleFile = newBattleFilePath;
+            while(IsFileLocked(new FileInfo(battle.BattleFile)))
+            {
+                await Task.Delay(500);
+            }
+            
             FileHelper.CopyToSharedDrive(battle);
         }
     }

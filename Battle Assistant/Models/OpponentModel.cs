@@ -14,7 +14,7 @@ namespace Battle_Assistant.Models
     /// <summary>
     /// Opponent model
     /// </summary>
-    public class OpponentModel : MasterModel
+    public class OpponentModel : MasterModel, IDisposable
     {
         private SharedDriveWatcher sDWatcher;
 
@@ -39,6 +39,11 @@ namespace Battle_Assistant.Models
         public OpponentModel() : base()
         {
             SharedDir = null;
+        }
+
+        public void Dispose()
+        {
+            sDWatcher.Dispose();
         }
     }
 }

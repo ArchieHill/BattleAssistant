@@ -34,6 +34,11 @@
                             </StackPanel>
 
                             <StackPanel Spacing="8">
+                                <TextBlock>Last Action</TextBlock>
+                                <TextBlock Text="{Binding LastAction, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="8">
                                 <TextBlock>CM Game</TextBlock>
                                 <TextBlock Text="{Binding Game, Mode=OneWay}"/>
                             </StackPanel>

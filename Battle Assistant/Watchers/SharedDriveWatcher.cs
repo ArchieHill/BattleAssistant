@@ -2,6 +2,7 @@
 using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,14 @@ namespace Battle_Assistant.Watchers
         }
 
         override
-        protected void File_CreatedTask(BattleModel battle, string newBattleFilePath)
+        protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
             battle.BattleFile = newBattleFilePath;
+            while (IsFileLocked(new FileInfo(battle.BattleFile)))
+            {
+                Debug.WriteLine("Waiting for file to unlock");
+                await Task.Delay(500);
+            }
             FileHelper.CopyToIncomingEmail(battle);
         }
     }

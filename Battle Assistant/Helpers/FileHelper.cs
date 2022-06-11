@@ -2,6 +2,7 @@
 using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,10 +26,22 @@ namespace Battle_Assistant.Helpers
         /// <param name="battle"></param>
         public static void CopyToIncomingEmail(BattleModel battle)
         {
-            File.Copy(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile), true);
-            battle.Status = Status.YOUR_TURN;
-            battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
-            StorageHelper.UpdateBattleFile();
+            string fileInIncomingEmailPath = battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile);
+
+            try
+            {
+                File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
+                battle.BattleFile = fileInIncomingEmailPath;
+
+                battle.Status = Status.YOUR_TURN;
+                battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
+                StorageHelper.UpdateBattleFile();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("File failed to copy: " + e.Message);
+            }
+            
         }
 
         /// <summary>
@@ -37,10 +50,21 @@ namespace Battle_Assistant.Helpers
         /// <param name="battle"></param>
         public static void CopyToSharedDrive(BattleModel battle)
         {
-            File.Copy(battle.BattleFile, battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile), true);
-            battle.Status = Status.WAITING;
-            battle.LastAction = Actions.COPY_TO_SHAREDDRIVE;
-            StorageHelper.UpdateBattleFile();
+            string fileInSharedDrivePath = battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile);
+            try
+            {
+                File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
+                battle.BattleFile = fileInSharedDrivePath;
+
+                battle.Status = Status.WAITING;
+                battle.LastAction = Actions.COPY_TO_SHAREDDRIVE;
+                StorageHelper.UpdateBattleFile();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("File failed to copy: " + e.Message);
+            }
+            
         }
 
         /// <summary>

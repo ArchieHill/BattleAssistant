@@ -15,7 +15,7 @@ namespace Battle_Assistant.Models
     /// <summary>
     /// The game model
     /// </summary>
-    public class GameModel : MasterModel
+    public class GameModel : MasterModel, IDisposable
     {
         private OutGoingEmailFolderWatcher oGEFWatcher;
 
@@ -96,6 +96,11 @@ namespace Battle_Assistant.Models
         {
             IncomingEmailFolder = GameDir + "\\Game Files\\Incoming Email";
             OutgoingEmailFolder = GameDir + "\\Game Files\\Outgoing Email";
+        }
+
+        public void Dispose()
+        {
+            oGEFWatcher.Dispose();
         }
     }
 }

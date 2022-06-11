@@ -9,7 +9,7 @@
   <Identity
     Name="Battle-Assistant"
     Publisher="CN=Dawntaker"
-    Version="0.1.1.0" />
+    Version="0.1.2.0" />
 
   <Properties>
     <DisplayName>Battle Assistant</DisplayName>

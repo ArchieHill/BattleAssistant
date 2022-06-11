@@ -2,6 +2,7 @@
 using Battle_Assistant.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,9 @@ namespace Battle_Assistant.Watchers
     /// <summary>
     /// Template class for folder watchers
     /// </summary>
-    public abstract class FolderWatcher
+    public abstract class FolderWatcher : IDisposable
     {
-        public FileSystemWatcher Watcher { get; set; }
+        protected FileSystemWatcher Watcher { get; set; }
 
         /// <summary>
         /// Constructor
@@ -24,9 +25,10 @@ namespace Battle_Assistant.Watchers
         public FolderWatcher(string folderPath)
         {
 
-            Watcher = new FileSystemWatcher(folderPath);
+            Watcher = new FileSystemWatcher();
+            Watcher.Path = folderPath;
             Watcher.Filter = "*.ema";
-            Watcher.Created += File_Created;
+            Watcher.Created += new FileSystemEventHandler(File_Created);
             Watcher.EnableRaisingEvents = true;
         }
 
@@ -37,24 +39,57 @@ namespace Battle_Assistant.Watchers
         /// <param name="e">The file object</param>
         protected void File_Created(object sender, FileSystemEventArgs e)
         {
+            string createdFile = e.FullPath.Replace("-TEMP", "");
             foreach (BattleModel battle in App.Battles)
             {
-                if (battle.Name == FileHelper.GetFileDisplayName(e.FullPath) &&
-                    Path.GetFileName(battle.BattleFile) != e.Name)
+                if (battle.Name == FileHelper.GetFileDisplayName(createdFile) &&
+                    Path.GetFileName(battle.BattleFile) != Path.GetFileName(createdFile)) 
                 {
                     //This if statement is used to allow the file watcher thread to access the UI thread
                     if (App.MainWindow.DispatcherQueue.HasThreadAccess)
                     {
-                        File_CreatedTask(battle, e.FullPath);
+                        File_CreatedTask(battle, createdFile);
                     }
                     else
                     {
                         bool isQueued = App.MainWindow.DispatcherQueue.TryEnqueue(
                         Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
-                        () => File_CreatedTask(battle, e.FullPath));
+                        () => File_CreatedTask(battle, createdFile));
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the file is locked 
+        /// </summary>
+        /// <param name="file">The file that is being checked</param>
+        /// <returns>If the file is locked or not</returns>
+        protected static bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open,
+                         FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
 
         /// <summary>
@@ -63,5 +98,10 @@ namespace Battle_Assistant.Watchers
         /// <param name="battle">The battle the file is a part of</param>
         /// <param name="newBattleFilePath">The file path of the new battle file</param>
         protected abstract void File_CreatedTask(BattleModel battle, string newBattleFilePath);
+
+        public void Dispose()
+        {
+            Watcher.Dispose();
+        }
     }
 }

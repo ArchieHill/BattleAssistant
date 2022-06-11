@@ -49,6 +49,7 @@ namespace Battle_Assistant.ViewModels
             var result = await dialog.ShowAsync();
             if(result == ContentDialogResult.Primary)
             {
+                Opponents[index].Dispose();
                 Opponents.RemoveAt(index);
                 UpdateIndexes();
                 StorageHelper.UpdateOpponentFile();

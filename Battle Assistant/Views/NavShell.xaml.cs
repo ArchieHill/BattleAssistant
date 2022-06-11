@@ -164,9 +164,16 @@ namespace Battle_Assistant.Views
             {
                 var item = _pages.FirstOrDefault(p => p.Page == e.SourcePageType);
 
-                NavView.SelectedItem = NavView.MenuItems
+                //Get all the menu items including the footer menu items
+                var navItems = NavView.MenuItems.Select(i => (NavigationViewItem)i).ToList();
+                navItems.AddRange(NavView.FooterMenuItems.Select(i => (NavigationViewItem)i));
+
+                //Find and set the selected nav item
+                NavView.SelectedItem = navItems
                     .OfType<NavigationViewItem>()
                     .First(n => n.Tag.Equals(item.Tag));
+
+
 
                 NavView.Header =
                     ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();

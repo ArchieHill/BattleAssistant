@@ -50,9 +50,12 @@
                         <BitmapIcon UriSource="/Assets/userIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                
-                <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.MenuItems>
+    
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
+            </NavigationView.FooterMenuItems>
+            
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>

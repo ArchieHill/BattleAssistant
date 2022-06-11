@@ -104,8 +104,20 @@ namespace Battle_Assistant
             var size = new SizeInt32();
             size.Width = width;
             size.Height = height;
-
             appWindow.Resize(size);    
+        }
+
+        /// <summary>
+        /// Repositions the application window
+        /// </summary>
+        /// <param name="x">The x position on the screen</param>
+        /// <param name="y">The y position on the screen</param>
+        public static void SetWindowPosition(int x, int y)
+        {
+            var position = new PointInt32();
+            position.X = x;
+            position.Y = y;
+            appWindow.Move(position);
         }
 
         /// <summary>
@@ -119,6 +131,12 @@ namespace Battle_Assistant
             {
                 var size = sender.Size;
                 SettingsHelper.SaveWindowSize(size.Width, size.Height);
+            }
+
+            if(args.DidPositionChange)
+            {
+                var position = sender.Position;
+                SettingsHelper.SaveWindowPosition(position.X, position.Y);
             }
         }
 

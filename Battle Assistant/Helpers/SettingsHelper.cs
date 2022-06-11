@@ -16,9 +16,14 @@ namespace Battle_Assistant.Helpers
     {
         private static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         private const string THEME_SETTING = "theme";
+
         private const string WIDTH_SETTING = "width";
         private const string HEIGHT_SETTING = "height";
         private const string WINDOW_SIZE_SETTING = "windowSize";
+
+        private const string X_POSITION_SETTING = "X";
+        private const string Y_POSITION_SETTING = "Y";
+        private const string WINDOW_POSITION_SETTING = "position";
 
         /// <summary>
         /// Saves the theme
@@ -29,12 +34,30 @@ namespace Battle_Assistant.Helpers
             localSettings.Values[THEME_SETTING] = theme;
         }
 
+        /// <summary>
+        /// Saves the window size
+        /// </summary>
+        /// <param name="width">The window width</param>
+        /// <param name="height">The window height</param>
         public static void SaveWindowSize(int width, int height)
         {
             ApplicationDataCompositeValue windowSize = new ApplicationDataCompositeValue();
             windowSize[WIDTH_SETTING] = width;
             windowSize[HEIGHT_SETTING] = height;
             localSettings.Values[WINDOW_SIZE_SETTING] = windowSize;
+        }
+
+        /// <summary>
+        /// Saves the window position
+        /// </summary>
+        /// <param name="x">The windows x position</param>
+        /// <param name="y">The windows y position</param>
+        public static void SaveWindowPosition(int x, int y)
+        {
+            ApplicationDataCompositeValue windowPosition = new ApplicationDataCompositeValue();
+            windowPosition[X_POSITION_SETTING] = x;
+            windowPosition[Y_POSITION_SETTING] = y;
+            localSettings.Values[WINDOW_POSITION_SETTING] = windowPosition;
         }
 
         /// <summary>
@@ -56,6 +79,15 @@ namespace Battle_Assistant.Helpers
                 int width = (int)windowSize[WIDTH_SETTING];
                 int height = (int)windowSize[HEIGHT_SETTING];
                 App.SetWindowSize(width, height);
+            }
+
+            //Sets the application window position
+            ApplicationDataCompositeValue windowPosition = (ApplicationDataCompositeValue)localSettings.Values[WINDOW_POSITION_SETTING];
+            if (windowPosition!= null)
+            {
+                int x = (int)windowPosition[X_POSITION_SETTING];
+                int y  = (int)windowPosition[Y_POSITION_SETTING];
+                App.SetWindowPosition(x, y);
             }
         }
 

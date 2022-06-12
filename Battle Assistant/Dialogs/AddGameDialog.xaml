@@ -21,14 +21,5 @@
                 <Button Content="Select Folder" Click="SelectGameDir_Click" Width="105"/>
             </StackPanel>
         </StackPanel>
-        
-        <!-- Game Icon Input -->
-        <StackPanel Spacing="8">
-            <TextBlock>Game Icon (Optional)</TextBlock>
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <TextBox PlaceholderText="Image" Text="{Binding Game.GameIcon, Mode=OneWay}" Width="380"/>
-                <Button Content="Select File" Click="SelectIconFile_Click" Width="105"/>
-            </StackPanel>
-        </StackPanel>
     </StackPanel>
 </ContentDialog>

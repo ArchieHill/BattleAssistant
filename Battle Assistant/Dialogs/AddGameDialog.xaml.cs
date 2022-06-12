@@ -59,16 +59,6 @@ namespace Battle_Assistant.Dialogs
         }
 
         /// <summary>
-        /// Select Icon File Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectIconFile_Click(object sender, RoutedEventArgs e)
-        {
-            DialogModel.SelectIconFile();
-        }
-
-        /// <summary>
         /// Checks the inputs to enable the primary button
         /// </summary>
         private void CheckInputs()

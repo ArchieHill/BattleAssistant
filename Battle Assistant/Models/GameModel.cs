@@ -19,20 +19,6 @@ namespace Battle_Assistant.Models
     {
         private OutGoingEmailFolderWatcher oGEFWatcher;
 
-        private string gameIcon;
-        public string GameIcon
-        {
-            get { return gameIcon; }
-            set
-            {
-                if (gameIcon != value)
-                {
-                    gameIcon = value;
-                    NotifyPropertyChanged("GameIcon");
-                }
-            }
-        }
-
         private string gameDir;
         public string GameDir
         {
@@ -83,7 +69,6 @@ namespace Battle_Assistant.Models
         /// </summary>
         public GameModel() : base()
         {
-            GameIcon = null;
             GameDir = null;
             IncomingEmailFolder = null;
             OutgoingEmailFolder = null;

@@ -39,21 +39,6 @@ namespace Battle_Assistant.DialogModels
         }
 
         /// <summary>
-        /// Opens a file picker for the user to select a png file for the icon
-        /// </summary>
-        public async void SelectIconFile()
-        {
-            var filePicker = new FileOpenPicker();
-            WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
-            filePicker.FileTypeFilter.Add(".png");
-            StorageFile file = await filePicker.PickSingleFileAsync();
-            if(file != null)
-            {
-                Game.GameIcon = file.Path;
-            }
-        }
-
-        /// <summary>
         /// Adds the game to the list and updates the save file
         /// </summary>
         public void AddGame()

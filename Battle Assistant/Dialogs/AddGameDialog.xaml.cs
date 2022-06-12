@@ -41,9 +41,9 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         public AddGameDialog()
         {
-            DialogModel = new AddGameDialogModel();
-            DataContext = DialogModel;
             this.InitializeComponent();
+            DialogModel = new AddGameDialogModel(DialogInfoBar);
+            DataContext = DialogModel;
         }
 
         /// <summary>

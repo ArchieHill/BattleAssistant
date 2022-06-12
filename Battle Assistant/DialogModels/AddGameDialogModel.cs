@@ -22,8 +22,10 @@
 
 using System;
 using System.Threading.Tasks;
+using System.IO;
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -36,12 +38,15 @@ namespace Battle_Assistant.DialogModels
     {
         public GameModel Game { get; set; }
 
+        private InfoBar dialogInfoBar;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public AddGameDialogModel()
+        public AddGameDialogModel(InfoBar dialogInfoBar)
         {
             Game = new GameModel();
+            this.dialogInfoBar = dialogInfoBar;
         }
 
         /// <summary>
@@ -56,7 +61,18 @@ namespace Battle_Assistant.DialogModels
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                Game.GameDir = folder.Path;
+                if(Directory.Exists(folder.Path + "\\Game Files"))
+                {
+                    Game.GameDir = folder.Path;
+                }
+                else
+                {
+                    dialogInfoBar.Severity = InfoBarSeverity.Error;
+                    dialogInfoBar.Title = "Invalid folder";
+                    dialogInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
+                    dialogInfoBar.IsOpen = true;
+                }
+                
             }
         }
 

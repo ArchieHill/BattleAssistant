@@ -76,13 +76,15 @@ namespace Battle_Assistant
         /// </summary>
         private async void InitialiseWindow()
         {
+            //Load data, must come before making the main window to ensure the data is loaded onto the default navigated page
+            await StorageHelper.LoadAllAsync();
+
             MainWindow = new NavShell();
             Hwnd = WindowNative.GetWindowHandle(MainWindow);
             windowId = Win32Interop.GetWindowIdFromWindow(Hwnd);
             appWindow = AppWindow.GetFromWindowId(windowId);
 
-            //Load data and settings
-            await StorageHelper.LoadAllAsync();
+            //Load settings
             SettingsHelper.LoadSettings();
 
             //We set this after the load settings so we don't waste time writing the sizes to the settings that we just loaded

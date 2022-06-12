@@ -23,14 +23,22 @@ namespace Battle_Assistant.Helpers
         /// <summary>
         /// Copies the battle file to the incoming email folder
         /// </summary>
-        /// <param name="battle"></param>
+        /// <param name="battle">The battle that has its file being copied</param>
         public static void CopyToIncomingEmail(BattleModel battle)
         {
             string fileInIncomingEmailPath = battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile);
-
             try
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
+                if (battle.AutoClean)
+                {
+                    //Find the old file in the incoming email folder and delete it
+                    string oldFileInIncomingEmail = ConstructBattleFilePath(battle.Game.IncomingEmailFolder, "~" + battle.Name, GetFileNumber(battle.BattleFile) - 2);
+                    if (File.Exists(oldFileInIncomingEmail))
+                    {
+                        File.Delete(oldFileInIncomingEmail);
+                    }
+                }
                 battle.BattleFile = fileInIncomingEmailPath;
 
                 battle.Status = Status.YOUR_TURN;
@@ -47,13 +55,29 @@ namespace Battle_Assistant.Helpers
         /// <summary>
         /// Copies the battle file to the shared drive folder
         /// </summary>
-        /// <param name="battle"></param>
+        /// <param name="battle">The battle that has its file being copied</param>
         public static void CopyToSharedDrive(BattleModel battle)
         {
             string fileInSharedDrivePath = battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile);
             try
             {
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
+                if (battle.AutoClean)
+                {
+                    //Find the old battle file in the outgoing email folder and delete it
+                    string oldFileInOutgoingEmail = ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, GetFileNumber(battle.BattleFile) - 2);
+                    if (File.Exists(oldFileInOutgoingEmail))
+                    {
+                        File.Delete(oldFileInOutgoingEmail);
+                    }
+
+                    //Find the old battle file in the shared drive and delete it
+                    string oldFileInSharedDrive = ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, GetFileNumber(battle.BattleFile) - 2);
+                    if (File.Exists(oldFileInSharedDrive))
+                    {
+                        File.Delete(oldFileInSharedDrive);
+                    }
+                }
                 battle.BattleFile = fileInSharedDrivePath;
 
                 battle.Status = Status.WAITING;

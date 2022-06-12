@@ -73,6 +73,8 @@ namespace Battle_Assistant.Models
             }
         }
 
+        public bool AutoClean { get; set; }
+
         public GameModel Game { get; set; }
 
         public OpponentModel Opponent { get; set; }
@@ -84,6 +86,7 @@ namespace Battle_Assistant.Models
         {
             Name = "";
             CurrentFileNum = 1;
+            AutoClean = false;
             Game = null;
             Opponent = null;
             Status = Common.Status.NO_STATUS;

@@ -21,7 +21,9 @@
                 <Button Content="Select File" Click="SelectFile_Click" Width="105"/>
             </StackPanel>
         </StackPanel>
-        
+
+        <CheckBox Content="Auto clean folders" Checked="AutoClean_Checked" Unchecked="AutoClean_Unchecked"/>
+
         <!-- Opponent Input -->
         <ComboBox Header="Opponent" PlaceholderText="No Opponents Added" 
                   ItemsSource="{Binding Opponents, Mode=OneWay}" 

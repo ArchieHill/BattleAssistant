@@ -84,5 +84,15 @@ namespace Battle_Assistant.Dialogs
                 IsPrimaryButtonEnabled = true;
             }
         }
+
+        private void AutoClean_Checked(object sender, RoutedEventArgs e)
+        {
+            DialogModel.Battle.AutoClean = true;
+        }
+
+        private void AutoClean_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DialogModel.Battle.AutoClean = false;
+        }
     }
 }

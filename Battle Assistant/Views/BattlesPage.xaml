@@ -39,10 +39,20 @@
                             </StackPanel>
 
                             <StackPanel Spacing="8">
+                                <TextBlock>Opponent</TextBlock>
+                                <TextBlock Text="{Binding Opponent, Mode=OneWay}"/>
+                            </StackPanel>
+
+                            <StackPanel Spacing="8">
                                 <TextBlock>CM Game</TextBlock>
                                 <TextBlock Text="{Binding Game, Mode=OneWay}"/>
                             </StackPanel>
-                            
+
+                            <StackPanel Spacing="8">
+                                <TextBlock>Auto Cleaning</TextBlock>
+                                <TextBlock Text="{Binding AutoClean, Mode=OneWay}"/>
+                            </StackPanel>
+
                             <StackPanel Spacing="8">
                                 <TextBlock>Current File Number</TextBlock>
                                 <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>

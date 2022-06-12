@@ -9,25 +9,25 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="24,12,24,0" Spacing="12">
-        <TextBlock>Attributions</TextBlock>
-        <RichTextBlock>
-            <Paragraph>
-                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/tank">Tank icon created by max.icons - Flaticon</Hyperlink>
-            </Paragraph>
-            <Paragraph>
-                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/sword">Sword icon created by Good Ware - Flaticon</Hyperlink>
-            </Paragraph>
-            <Paragraph>
-                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/joy">Joy stick icon created by TwentyOneProject - Flaticon</Hyperlink>
-            </Paragraph>
-            <Paragraph>
-                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/user">User icon created by Freepik - Flaticon</Hyperlink>
-            </Paragraph>
-        </RichTextBlock>
-
-        <TextBlock>
+        <TextBlock FontSize="18">
                     Version: 
                     <Run Text="{Binding Version}" FontWeight="Bold" />
         </TextBlock>
+        
+        <TextBlock FontSize="18">Attributions</TextBlock>
+        <RichTextBlock>
+            <Paragraph Margin="0,0,0,8">
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/tank">Tank icon created by max.icons - Flaticon</Hyperlink>
+            </Paragraph>
+            <Paragraph Margin="0,0,0,8">
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/sword">Sword icon created by Good Ware - Flaticon</Hyperlink>
+            </Paragraph>
+            <Paragraph Margin="0,0,0,8">
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/joy">Joy stick icon created by TwentyOneProject - Flaticon</Hyperlink>
+            </Paragraph>
+            <Paragraph Margin="0,0,0,8">
+                <Hyperlink NavigateUri="https://www.flaticon.com/free-icons/user">User icon created by Freepik - Flaticon</Hyperlink>
+            </Paragraph>
+        </RichTextBlock>
     </StackPanel>
 </Page>

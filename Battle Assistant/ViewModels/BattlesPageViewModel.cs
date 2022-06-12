@@ -1,14 +1,10 @@
-﻿using Battle_Assistant.Models;
+﻿using Battle_Assistant.Dialogs;
 using Battle_Assistant.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Battle_Assistant.Dialogs;
+using Battle_Assistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.ObjectModel;
 
 namespace Battle_Assistant.ViewModels
 {

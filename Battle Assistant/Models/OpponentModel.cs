@@ -1,13 +1,5 @@
-﻿using Battle_Assistant.Common;
-using Battle_Assistant.Helpers;
-using Battle_Assistant.Watchers;
+﻿using Battle_Assistant.Watchers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace Battle_Assistant.Models
 {

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Battle_Assistant.Helpers;
+using Battle_Assistant.Models;
+using System;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Battle_Assistant.Models;
-using Battle_Assistant.Helpers;
 
 namespace Battle_Assistant.DialogModels
 {

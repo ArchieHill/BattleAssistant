@@ -100,4 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Admin\Documents\SideProjects\Battle-Assistant\Battle Assistant\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Admin\Documents\SideProjects\Battle-Assistant\Battle Assistant\.editorconfig" />
+  </ItemGroup>
 </Project>

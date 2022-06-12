@@ -1,13 +1,35 @@
-﻿using Battle_Assistant.Common;
+﻿// App.xaml.cs
+//
+// Copyright (c) 2022 Archie Hill
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using Battle_Assistant.Common;
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Battle_Assistant.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
 using Windows.Graphics;
 using WinRT.Interop;
 
@@ -89,7 +111,7 @@ namespace Battle_Assistant
             var size = new SizeInt32();
             size.Width = width;
             size.Height = height;
-            appWindow.Resize(size);    
+            appWindow.Resize(size);
         }
 
         /// <summary>
@@ -118,7 +140,7 @@ namespace Battle_Assistant
                 SettingsHelper.SaveWindowSize(size.Width, size.Height);
             }
 
-            if(args.DidPositionChange)
+            if (args.DidPositionChange)
             {
                 var position = sender.Position;
                 SettingsHelper.SaveWindowPosition(position.X, position.Y);
@@ -128,7 +150,7 @@ namespace Battle_Assistant
         /// <summary>
         /// Checks each battle to see if there is a new file to move for the battle
         /// </summary>
-        private void UpdateAllBattles()
+        private static void UpdateAllBattles()
         {
             foreach (BattleModel battle in Battles)
             {

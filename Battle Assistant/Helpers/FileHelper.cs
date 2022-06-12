@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -111,6 +112,19 @@ namespace Battle_Assistant.Helpers
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
             return int.Parse(fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
+        }
+
+        /// <summary>
+        /// Checks if the file has its three numbers at the end
+        /// </summary>
+        /// <param name="path">The file path being checked</param>
+        /// <returns>If the file is valid</returns>
+        public static bool CheckFileIsValid(string path)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(path);
+            string fileNumbers = fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR);
+            return Regex.IsMatch(fileNumbers, "/d/d/d");
+
         }
 
         /// <summary>

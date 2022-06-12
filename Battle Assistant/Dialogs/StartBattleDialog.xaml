@@ -13,6 +13,9 @@
     IsPrimaryButtonEnabled="False">
 
     <StackPanel Spacing="24">
+        <InfoBar x:Name="DialogInfoBar" 
+                 IsOpen="False"/>
+        
         <!-- Battle File Input -->
         <StackPanel>
             <TextBlock>Battle File</TextBlock>

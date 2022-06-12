@@ -24,7 +24,7 @@ namespace Battle_Assistant.Dialogs
     /// </summary>
     public sealed partial class StartBattleDialog : ContentDialog
     {
-        private StartBattleDialogModel DialogModel { get; } = new StartBattleDialogModel();
+        private StartBattleDialogModel DialogModel { get; set; } 
 
         private bool GameAndOpponentExist;
 
@@ -34,6 +34,7 @@ namespace Battle_Assistant.Dialogs
         public StartBattleDialog()
         {
             this.InitializeComponent();
+            DialogModel = new StartBattleDialogModel(DialogInfoBar);
             DataContext = DialogModel;
             Loaded += StartBattleDialog_Loaded;
             GameAndOpponentExist = false;

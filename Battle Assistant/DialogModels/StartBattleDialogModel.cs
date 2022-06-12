@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -16,6 +17,7 @@ namespace Battle_Assistant.DialogModels
     public class StartBattleDialogModel
     {
         public GameModel SelectedGame { get; set; }
+
         public OpponentModel SelectedOpponent { get; set; }
 
         private ObservableCollection<GameModel> games;
@@ -47,16 +49,20 @@ namespace Battle_Assistant.DialogModels
                 }
             }
         }
-        public BattleModel Battle { get; set; } 
+
+        public BattleModel Battle { get; set; }
+
+        private InfoBar dialogInfoBar;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public StartBattleDialogModel()
+        public StartBattleDialogModel(InfoBar dialogInfoBar)
         {
             Battle = new BattleModel();
             Games = App.Games;
             Opponents = App.Opponents;
+            this.dialogInfoBar = dialogInfoBar;
         }
 
         /// <summary>
@@ -71,7 +77,17 @@ namespace Battle_Assistant.DialogModels
             StorageFile file = await filePicker.PickSingleFileAsync();
             if(file != null)
             {
-                Battle.BattleFile = file.Path;
+                if (FileHelper.CheckFileIsValid(file.Path))
+                {
+                    Battle.BattleFile = file.Path;
+                }
+                else
+                {
+                    dialogInfoBar.Severity = InfoBarSeverity.Error;
+                    dialogInfoBar.Title = "Invalid file";
+                    dialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
+                    dialogInfoBar.IsOpen = true;
+                }
             }
         }
 

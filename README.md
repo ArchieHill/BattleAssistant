@@ -13,4 +13,4 @@ This is a project using Microsofts WinUI3 framework to create a application that
 - The ability to manage mulitple battles with multiple opponents in multiple combat mission games
 
 ## Why this project was made
-This project was mainly made for my own benefit as I wanted an excuse to learn C# and how to make a modern desktop application. I choose this specific idea as I believed Combat Mission Helper wasn't being developed any more and I thought there were areas that could be improved upon and it was a perfect excuse to make something. 
+This project was mainly made for my own benefit as I wanted an excuse to learn C# and how to make a modern desktop application. I choose this specific idea as Combat Mission Helper isn't being developed anymore and I thought there were areas that could be improved upon. 

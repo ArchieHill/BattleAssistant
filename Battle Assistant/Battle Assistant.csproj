@@ -19,7 +19,7 @@
     <AppxPackageDir>C:\Users\Admin\Documents\SideProjects\Output\</AppxPackageDir>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <AppxBundle>Auto</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
   </PropertyGroup>

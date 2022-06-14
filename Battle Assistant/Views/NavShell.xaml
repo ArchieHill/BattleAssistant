@@ -28,6 +28,7 @@
         <NavigationView x:Name="NavView" Grid.Row="1"
                          Loaded="NavView_Loaded"
                          ItemInvoked="NavView_ItemInvoked"
+                         IsBackButtonVisible="Collapsed"
                          BackRequested="NavView_BackRequested"
                          IsTabStop="False"
                          CompactModeThresholdWidth="0">

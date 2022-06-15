@@ -140,7 +140,7 @@ namespace Battle_Assistant.Helpers
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
             string fileNumbers = fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR);
-            return Regex.IsMatch(fileNumbers, "/d/d/d");
+            return Regex.IsMatch(fileNumbers, @"\d\d\d");
 
         }
 

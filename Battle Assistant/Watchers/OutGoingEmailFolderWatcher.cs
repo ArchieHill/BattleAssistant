@@ -49,6 +49,11 @@ namespace Battle_Assistant.Watchers
         override
         protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
+            //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
+            if(Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
+            {
+                return;
+            }
             //Rename the file in the incoming email folder to show that that file is waiting on opponent
             File.Move(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\~" + Path.GetFileName(battle.BattleFile));
             File.Delete(battle.BattleFile);

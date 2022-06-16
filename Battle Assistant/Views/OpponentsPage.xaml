@@ -9,12 +9,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="24,12,24,0" Spacing="12">
+    <StackPanel Style="{StaticResource FrameStackPanel}">
         <Button Content="Add Opponent" Click="AddOpponent_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Opponents, Mode=OneWay}">
             <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="12"/>
+                <StackLayout Orientation="Vertical"/>
             </ItemsRepeater.Layout>
             
             <DataTemplate x:DataType="models:OpponentModel">
@@ -24,8 +24,8 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Spacing="24">
-                            <StackPanel Spacing="8">
+                        <StackPanel Style="{StaticResource ListStackPanel}">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Shared Drive</TextBlock>
                                 <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
                             </StackPanel>

@@ -13,7 +13,7 @@
     IsPrimaryButtonEnabled="False">
 
     <ScrollViewer>
-        <StackPanel Spacing="24">
+        <StackPanel Style="{StaticResource ListStackPanel}">
             <InfoBar x:Name="DialogInfoBar" 
                  IsOpen="False"/>
 

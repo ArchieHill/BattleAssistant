@@ -13,7 +13,7 @@
     IsPrimaryButtonEnabled="False">
 
     <ScrollViewer>
-        <StackPanel Spacing="24">
+        <StackPanel Style="{StaticResource ListStackPanel}">
             <!-- Opponent Name Input -->
             <TextBox Header="Opponents Name" 
                  x:Name="OpponentName"
@@ -22,7 +22,7 @@
                  Text="{Binding Opponent.Name, Mode=TwoWay}"/>
 
             <!-- Shared Directory Input-->
-            <StackPanel Spacing="8">
+            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>The Shared Drive</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox PlaceholderText="Shared Drive Path" Text="{Binding Opponent.SharedDir, Mode=OneWay}" Width="380"/>

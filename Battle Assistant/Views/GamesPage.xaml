@@ -9,12 +9,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="24,12,24,0" Spacing="12">
+    <StackPanel Style="{StaticResource FrameStackPanel}">
         <Button Content="Add Game" Click="AddGame_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Games, Mode=OneWay}">
             <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="12"/>
+                <StackLayout Orientation="Vertical"/>
             </ItemsRepeater.Layout>
 
             <DataTemplate x:DataType="models:GameModel">
@@ -24,18 +24,18 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Spacing="24">
-                            <StackPanel Spacing="8">
+                        <StackPanel Style="{StaticResource ListStackPanel}">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Game Directory</TextBlock>
                                 <TextBlock Text="{Binding GameDir, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Incoming Email Folder</TextBlock>
                                 <TextBlock Text="{Binding IncomingEmailFolder, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Outgoing Email Folder</TextBlock>
                                 <TextBlock Text="{Binding OutgoingEmailFolder, Mode=OneWay}"/>
                             </StackPanel>

@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="24,12,24,0" Spacing="12">
+    <StackPanel Style="{StaticResource FrameStackPanel}">
         <TextBlock FontSize="18">
                     Version: 
                     <Run Text="{Binding Version}" FontWeight="Bold" />

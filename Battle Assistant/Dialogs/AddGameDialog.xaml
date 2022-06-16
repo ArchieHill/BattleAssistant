@@ -13,12 +13,12 @@
     IsPrimaryButtonEnabled="False">
 
     <ScrollViewer>
-        <StackPanel Spacing="24">
+        <StackPanel Style="{StaticResource ListStackPanel}">
             <InfoBar x:Name="DialogInfoBar" 
                  IsOpen="False"/>
 
             <!-- Game Directory Input -->
-            <StackPanel Spacing="8">
+            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>Game Directory</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox PlaceholderText="The folder that contains its Game Files folder" Text="{Binding Game.GameDir, Mode=OneWay}" Width="380"/>

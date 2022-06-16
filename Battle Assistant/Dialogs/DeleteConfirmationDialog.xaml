@@ -10,7 +10,7 @@
     PrimaryButtonText="Delete"
     CloseButtonText="Cancel">
 
-    <StackPanel Spacing="24">
+    <StackPanel Style="{StaticResource ListStackPanel}">
         <TextBlock>Are you sure you want to delete this?</TextBlock>
     </StackPanel>
 </ContentDialog>

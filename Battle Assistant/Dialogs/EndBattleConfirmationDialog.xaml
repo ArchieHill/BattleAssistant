@@ -11,7 +11,7 @@
     CloseButtonText="Cancel"
     PrimaryButtonClick="EndBattle_Click">
 
-    <StackPanel Spacing="24">
+    <StackPanel Style="{StaticResource ListStackPanel}">
         <CheckBox Content="Clean all folders" Checked="CleanUp_Checked" Unchecked="CleanUp_Unchecked"></CheckBox>
         <TextBlock>Are you sure you want to end the battle?</TextBlock>
     </StackPanel>

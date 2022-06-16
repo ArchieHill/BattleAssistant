@@ -9,12 +9,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="24,12,24,0" Spacing="12">
+    <StackPanel Style="{StaticResource FrameStackPanel}">
         <Button Content="Start Battle" Click="StartBattle_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Battles, Mode=OneWay}">
             <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="12"/>
+                <StackLayout Orientation="Vertical"/>
             </ItemsRepeater.Layout>
 
             <DataTemplate x:DataType="models:BattleModel">
@@ -27,33 +27,33 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Spacing="24">
-                            <StackPanel Spacing="8">
+                        <StackPanel Style="{StaticResource ListStackPanel}">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Status</TextBlock>
                                 <TextBlock Text="{Binding Status, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Last Action</TextBlock>
                                 <TextBlock Text="{Binding LastAction, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Opponent</TextBlock>
                                 <TextBlock Text="{Binding Opponent, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>CM Game</TextBlock>
                                 <TextBlock Text="{Binding Game, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Auto Cleaning</TextBlock>
                                 <TextBlock Text="{Binding AutoClean, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <StackPanel Spacing="8">
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Current File Number</TextBlock>
                                 <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
                             </StackPanel>

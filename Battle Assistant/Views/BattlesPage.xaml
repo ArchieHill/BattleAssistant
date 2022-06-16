@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Style="{StaticResource FrameStackPanel}">
-        <Button Content="Start Battle" Click="StartBattle_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
+        <Button Content="Start Battle" Click="StartBattle_Click" HorizontalAlignment="Stretch" FontSize="20" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Battles, Mode=OneWay}">
             <ItemsRepeater.Layout>

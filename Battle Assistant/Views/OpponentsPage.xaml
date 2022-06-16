@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Style="{StaticResource FrameStackPanel}">
-        <Button Content="Add Opponent" Click="AddOpponent_Click" HorizontalAlignment="Stretch" FontSize="16" Height="56"/>
+        <Button Content="Add Opponent" Click="AddOpponent_Click" HorizontalAlignment="Stretch" FontSize="20" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Opponents, Mode=OneWay}">
             <ItemsRepeater.Layout>

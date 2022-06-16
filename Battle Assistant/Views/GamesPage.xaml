@@ -14,7 +14,7 @@
 
         <ItemsRepeater ItemsSource="{Binding Games, Mode=OneWay}">
             <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical"/>
+                <StackLayout Orientation="Vertical" Spacing="12"/>
             </ItemsRepeater.Layout>
 
             <DataTemplate x:DataType="models:GameModel">

@@ -13,7 +13,7 @@
                     Version: 
                     <Run Text="{Binding Version}" FontWeight="Bold" />
         </TextBlock>
-        
+
         <TextBlock FontSize="18">Attributions</TextBlock>
         <RichTextBlock>
             <Paragraph Margin="0,0,0,8">

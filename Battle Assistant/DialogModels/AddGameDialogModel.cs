@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 using System;
-using System.Threading.Tasks;
 using System.IO;
+using System.Threading.Tasks;
 using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -61,7 +61,7 @@ namespace Battle_Assistant.DialogModels
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                if(Directory.Exists(folder.Path + "\\Game Files"))
+                if (Directory.Exists(folder.Path + "\\Game Files"))
                 {
                     Game.GameDir = folder.Path;
                 }
@@ -72,7 +72,7 @@ namespace Battle_Assistant.DialogModels
                     dialogInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
                     dialogInfoBar.IsOpen = true;
                 }
-                
+
             }
         }
 

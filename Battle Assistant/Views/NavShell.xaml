@@ -18,7 +18,7 @@
            HorizontalAlignment="Left" 
            Width="32" Height="32" 
            Margin="8,0,0,8"/>
-           <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
+            <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
                TextWrapping="NoWrap"
                
                VerticalAlignment="Center"
@@ -52,11 +52,11 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-    
+
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.FooterMenuItems>
-            
+
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>

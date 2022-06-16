@@ -50,7 +50,7 @@ namespace Battle_Assistant.Watchers
         protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
             //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
-            if(Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
+            if (Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
             {
                 return;
             }

@@ -16,7 +16,7 @@
             <ItemsRepeater.Layout>
                 <StackLayout Orientation="Vertical" Spacing="12"/>
             </ItemsRepeater.Layout>
-            
+
             <DataTemplate x:DataType="models:OpponentModel">
                 <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Expander.Header>
@@ -29,7 +29,7 @@
                                 <TextBlock>Shared Drive</TextBlock>
                                 <TextBlock Text="{Binding SharedDir, Mode=OneWay}"/>
                             </StackPanel>
-                            
+
                             <Button Content="Delete" Click="Delete_Click" Tag="{Binding Index, Mode=OneWay}" HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Expander.Content>

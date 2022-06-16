@@ -9,20 +9,20 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
+            <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="AppTitleBar">
-            <Image Source="/Assets/Square44x44Logo.targetsize-24.png"
+            <Image Source="/Assets/Square44x44Logo.targetsize-32.png"
            HorizontalAlignment="Left" 
-           Width="20" Height="20" 
-           Margin="5,0"/>
+           Width="32" Height="32" 
+           Margin="8,0,0,8"/>
            <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
                TextWrapping="NoWrap"
-               Style="{StaticResource CaptionTextBlockStyle}" 
+               
                VerticalAlignment="Center"
-               Margin="28,0,0,0"/>
+               Margin="48,0,0,0"/>
         </Grid>
 
         <NavigationView x:Name="NavView" Grid.Row="1"

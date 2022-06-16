@@ -13,7 +13,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="AppTitleBar" Background="{ThemeResource AppBarBackgroundThemeBrush}">
+        <Grid x:Name="AppTitleBar">
             <Image Source="/Assets/Square44x44Logo.targetsize-24.png"
            HorizontalAlignment="Left" 
            Width="20" Height="20" 

@@ -21,9 +21,6 @@
             <Style x:Key="LabelContentStackPanel" TargetType="StackPanel">
                 <Setter Property="Spacing" Value="8"/>
             </Style>
-            <Style TargetType="ItemsRepeater">
-                <Setter Property="Spacing" Value="12"/>
-            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

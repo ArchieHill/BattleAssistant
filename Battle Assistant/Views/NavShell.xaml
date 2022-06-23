@@ -15,23 +15,24 @@
 
         <Grid x:Name="AppTitleBar">
             <Image Source="/Assets/Square44x44Logo.targetsize-32.png"
-           HorizontalAlignment="Left" 
-           Width="32" Height="32" 
-           Margin="8,0,0,8"/>
-            <TextBlock x:Name="AppTitleTextBlock" Text="Battle Assistant"
-               TextWrapping="NoWrap"
-               
-               VerticalAlignment="Center"
-               Margin="48,0,0,0"/>
+                   HorizontalAlignment="Left" 
+                   Width="32" Height="32" 
+                   Margin="8,0,0,8"/>
+            
+            <TextBlock x:Name="AppTitleTextBlock" 
+                       Text="Battle Assistant"
+                       TextWrapping="NoWrap"
+                       VerticalAlignment="Center"
+                       Margin="48,0,0,0"/>
         </Grid>
 
         <NavigationView x:Name="NavView" Grid.Row="1"
-                         Loaded="NavView_Loaded"
-                         ItemInvoked="NavView_ItemInvoked"
-                         IsBackButtonVisible="Collapsed"
-                         BackRequested="NavView_BackRequested"
-                         IsTabStop="False"
-                         CompactModeThresholdWidth="0">
+                        Loaded="NavView_Loaded"
+                        ItemInvoked="NavView_ItemInvoked"
+                        IsBackButtonVisible="Collapsed"
+                        BackRequested="NavView_BackRequested"
+                        IsTabStop="False"
+                        CompactModeThresholdWidth="0">
 
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Battles" Tag="battles">

@@ -3,7 +3,19 @@
 ## Summary
 This is a project using Microsofts WinUI3 framework to create a application that supports the Combat Mission games play by email system. This is achieved by automating the process of moving files from the incoming email folder and outgoing email folder of a combat mission game and the shared drive of the opponent. This project took inspiration from Combat Mission Helper in what initial features to add.
 
-![Games page of application](https://user-images.githubusercontent.com/94839295/173244233-a67004bc-9ed4-4806-a1ad-41616582397d.png)
+![Games Page Image](https://user-images.githubusercontent.com/94839295/175392448-bdb0f9dc-3658-444c-95e8-489fe7a0c355.png)
+
+## Installation Instructions
+YOU NEED WINDOWS 10 OR 11 TO USE THIS APPLICATION
+1. Go to the latest release and download the .zip folder called Battle Assitant_x.x.x_x64.zip
+2. Unzip the folder anywhere on your computer
+3. For first time installation you need to install the certificate, if your updating you don't need to install the certificate again
+4. Double click on the .cer file and install it to you computer, you need to select place all certificates in the following store and then browse to the Trusted Roots Certification Authorities folder
+5. Double click on the .msxi file to install the application
+
+## Dev Installation Instructions
+1. Clone the git repo onto your computer and modify the code you want to change
+2. Create a pull request with the modified code and explain why the code changes have been made. If it fixes an issue add the issue into the description of the pull request
 
 ## Features
 - A modern nice looking UI

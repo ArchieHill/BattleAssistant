@@ -22,7 +22,19 @@
 
         <StackPanel Style="{StaticResource LabelContentStackPanel}">
             <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Task Bar</TextBlock>
-            <CheckBox x:Name="FlashIconCheckbox" Content="Icon flash with new turn" Checked="FlashIcon_Checked" Unchecked="FlashIcon_Unchecked"></CheckBox>
+
+            <CheckBox x:Name="FlashIconCheckbox" 
+                      Content="Icon flash with new turn" 
+                      Checked="FlashIcon_Checked" 
+                      Unchecked="FlashIcon_Unchecked"/>
+
+            <NumberBox x:Name="FlashAmountNumberbox" 
+                       Header="Icon flash amount" 
+                       Value="{Binding FlashAmount, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" 
+                       SmallChange="1" LargeChange="5" 
+                       Minimum="1" Maximum="50"
+                       HorizontalAlignment="Left"/>
         </StackPanel>
     </StackPanel>
 </Page>

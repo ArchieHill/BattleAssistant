@@ -71,7 +71,7 @@ namespace Battle_Assistant.Helpers
                     //Flash the icon in the task bar to notify the user the app has a turn for them
                     var flash = FLASHWINFO.Create();
                     flash.hwnd = App.Hwnd;
-                    flash.uCount = 5;
+                    flash.uCount = SettingsHelper.GetFlashAmount();
                     flash.dwFlags = FlashWindowFlags.FLASHW_TRAY;
                     FlashWindowEx(ref flash);
                 }

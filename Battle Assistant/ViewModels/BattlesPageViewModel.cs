@@ -33,7 +33,7 @@ namespace Battle_Assistant.ViewModels
     /// <summary>
     /// Battle page view model
     /// </summary>
-    public sealed class BattlesPageViewModel
+    public class BattlesPageViewModel
     {
         public ObservableCollection<BattleModel> Battles { get; set; } = App.Battles;
 

@@ -22,6 +22,7 @@
 
 using System.Linq;
 using Battle_Assistant.Helpers;
+using Battle_Assistant.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -35,13 +36,17 @@ namespace Battle_Assistant.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private SettingsPageViewModel viewModel;
+
         /// <summary>
         /// Constructor
         /// </summary>
         public SettingsPage()
-        {
-            this.InitializeComponent();
+        {  
+            viewModel = new SettingsPageViewModel();
+            DataContext = viewModel;
             Loaded += SettingsPage_Loaded;
+            this.InitializeComponent();   
         }
 
         /// <summary>
@@ -55,6 +60,7 @@ namespace Battle_Assistant.Views
             (ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
 
             FlashIconCheckbox.IsChecked = SettingsHelper.GetFlashIcon();
+            viewModel.FlashAmount = SettingsHelper.GetFlashAmount();
         }
 
         /// <summary>

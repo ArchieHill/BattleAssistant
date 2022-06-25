@@ -43,6 +43,7 @@ namespace Battle_Assistant.Helpers
         private const string WINDOW_POSITION_SETTING = "position";
 
         private const string FLASH_TASK_BAR = "flashTaskBar";
+        private const string FLASH_AMOUNT = "flashAmount";
 
         /// <summary>
         /// Saves the theme
@@ -89,6 +90,15 @@ namespace Battle_Assistant.Helpers
         }
 
         /// <summary>
+        /// Saves the flash amount for the flash icon
+        /// </summary>
+        /// <param name="flashAmount">The amount of times the icon flashes</param>
+        public static void SaveFlashAmount(int flashAmount)
+        {
+            localSettings.Values[FLASH_AMOUNT] = flashAmount;
+        }
+
+        /// <summary>
         /// Loads all the settings, used at application start
         /// </summary>
         public static void LoadSettings()
@@ -131,6 +141,20 @@ namespace Battle_Assistant.Helpers
                 return (bool)flashTaskBar;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Gets the flash amount for the flash icon
+        /// </summary>
+        /// <returns>int of the setting, defaults to 5 is setting is null</returns>
+        public static int GetFlashAmount()
+        {
+            int? flashAmount = (int?)localSettings.Values[FLASH_AMOUNT];
+            if(flashAmount != null)
+            {
+                return (int)flashAmount;
+            }
+            return 5;
         }
     }
 }

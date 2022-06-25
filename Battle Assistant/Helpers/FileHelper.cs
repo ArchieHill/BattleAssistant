@@ -26,6 +26,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Battle_Assistant.Common;
 using Battle_Assistant.Models;
+using static PInvoke.User32;
 
 namespace Battle_Assistant.Helpers
 {
@@ -48,6 +49,13 @@ namespace Battle_Assistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
+                
+                battle.BattleFile = fileInIncomingEmailPath;
+
+                battle.Status = Status.YOUR_TURN;
+                battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
+                StorageHelper.UpdateBattleFile();
+
                 if (battle.AutoClean)
                 {
                     //Find the old file in the incoming email folder and delete it
@@ -57,11 +65,16 @@ namespace Battle_Assistant.Helpers
                         File.Delete(oldFileInIncomingEmail);
                     }
                 }
-                battle.BattleFile = fileInIncomingEmailPath;
-
-                battle.Status = Status.YOUR_TURN;
-                battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
-                StorageHelper.UpdateBattleFile();
+               
+                if (SettingsHelper.GetFlashIcon())
+                {
+                    //Flash the icon in the task bar to notify the user the app has a turn for them
+                    var flash = FLASHWINFO.Create();
+                    flash.hwnd = App.Hwnd;
+                    flash.uCount = 5;
+                    flash.dwFlags = FlashWindowFlags.FLASHW_TRAY;
+                    FlashWindowEx(ref flash);
+                }
             }
             catch (Exception e)
             {

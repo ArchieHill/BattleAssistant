@@ -48,7 +48,7 @@ namespace Battle_Assistant.Dialogs
         }
 
         /// <summary>
-        /// Clenup checkbox checked event
+        /// Cleanup checkbox checked event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

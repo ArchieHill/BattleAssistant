@@ -53,9 +53,9 @@ namespace Battle_Assistant
 
         public static IntPtr Hwnd { get; set; }
 
-        private static WindowId windowId;
+        public static AppWindow AppWindow { get; set; }
 
-        private static AppWindow appWindow;
+        private static WindowId windowId;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -71,7 +71,7 @@ namespace Battle_Assistant
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             InitialiseWindow();
         }
@@ -87,13 +87,13 @@ namespace Battle_Assistant
             MainWindow = new NavShell();
             Hwnd = WindowNative.GetWindowHandle(MainWindow);
             windowId = Win32Interop.GetWindowIdFromWindow(Hwnd);
-            appWindow = AppWindow.GetFromWindowId(windowId);
+            AppWindow = AppWindow.GetFromWindowId(windowId);
 
             //Load settings
             SettingsHelper.LoadSettings();
 
             //We set this after the load settings so we don't waste time writing the sizes to the settings that we just loaded
-            appWindow.Changed += AppWindow_Changed;
+            AppWindow.Changed += AppWindow_Changed;
 
             //Checks if battles have changed whilst the application has been closed
             UpdateAllBattles();
@@ -111,7 +111,7 @@ namespace Battle_Assistant
             var size = new SizeInt32();
             size.Width = width;
             size.Height = height;
-            appWindow.Resize(size);
+            AppWindow.Resize(size);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Battle_Assistant
             var position = new PointInt32();
             position.X = x;
             position.Y = y;
-            appWindow.Move(position);
+            AppWindow.Move(position);
         }
 
         /// <summary>

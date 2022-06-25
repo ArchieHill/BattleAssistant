@@ -11,13 +11,18 @@
 
     <StackPanel Style="{StaticResource FrameStackPanel}">
         <StackPanel Style="{StaticResource LabelContentStackPanel}">
-            <TextBlock FontSize="18">Application Theme</TextBlock>
+            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Application Theme</TextBlock>
 
             <StackPanel x:Name="ThemePanel">
                 <RadioButton Content="Light" Tag="Light" Checked="OnThemeModeChecked"/>
                 <RadioButton Content="Dark" Tag="Dark" Checked="OnThemeModeChecked"/>
                 <RadioButton Content="Use System Settings" Tag="Default" Checked="OnThemeModeChecked"/>
             </StackPanel>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource LabelContentStackPanel}">
+            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Task Bar</TextBlock>
+            <CheckBox x:Name="FlashIconCheckbox" Content="Icon flash with new turn" Checked="FlashIcon_Checked" Unchecked="FlashIcon_Unchecked"></CheckBox>
         </StackPanel>
     </StackPanel>
 </Page>

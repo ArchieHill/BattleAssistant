@@ -42,6 +42,8 @@ namespace Battle_Assistant.Helpers
         private const string Y_POSITION_SETTING = "Y";
         private const string WINDOW_POSITION_SETTING = "position";
 
+        private const string FLASH_TASK_BAR = "flashTaskBar";
+
         /// <summary>
         /// Saves the theme
         /// </summary>
@@ -78,6 +80,15 @@ namespace Battle_Assistant.Helpers
         }
 
         /// <summary>
+        /// Saves the flash icon in task bar setting
+        /// </summary>
+        /// <param name="flashIcon">The flash icon in task bar flag</param>
+        public static void SaveFlashIcon(bool flashIcon)
+        {
+            localSettings.Values[FLASH_TASK_BAR] = flashIcon;
+        }
+
+        /// <summary>
         /// Loads all the settings, used at application start
         /// </summary>
         public static void LoadSettings()
@@ -108,6 +119,18 @@ namespace Battle_Assistant.Helpers
             }
         }
 
-
+        /// <summary>
+        /// Get the flash icon in the task bar setting
+        /// </summary>
+        /// <returns>bool of the setting, defaults to true is setting is null</returns>
+        public static bool GetFlashIcon()
+        {
+            bool? flashTaskBar = (bool?)localSettings.Values[FLASH_TASK_BAR];
+            if(flashTaskBar != null)
+            {
+                return (bool)flashTaskBar;
+            }
+            return true;
+        }
     }
 }

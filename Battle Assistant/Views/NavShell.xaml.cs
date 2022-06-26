@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -82,6 +83,11 @@ namespace Battle_Assistant.Views
             // NavView doesn't load any page by default, so load home page.
             NavView.SelectedItem = NavView.MenuItems[0];
             NavView_Navigate("battles", new EntranceNavigationTransitionInfo());
+
+            if (!SettingsHelper.GetTipsExplained())
+            {
+                GamesPageTeachingTip.IsOpen = true;
+            }
         }
 
         /// <summary>
@@ -193,5 +199,10 @@ namespace Battle_Assistant.Views
             }
         }
 
+        private void GamesPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
+        {
+            OpponentsPageTeachingTip.IsOpen = true;
+            SettingsHelper.SaveTipsExplained(true);
+        }
     }
 }

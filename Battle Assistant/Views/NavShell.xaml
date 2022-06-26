@@ -41,17 +41,18 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="Games" Tag="games">
+                <NavigationViewItem x:Name="GamesPage" Content="Games" Tag="games">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <NavigationViewItem Content="Opponents" Tag="opponents">
+                <NavigationViewItem x:Name="OpponentPage" Content="Opponents" Tag="opponents">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="/Assets/userIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
@@ -62,5 +63,17 @@
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>
         </NavigationView>
+
+        <!-- Teaching tips take up no layout space -->
+        <TeachingTip x:Name="GamesPageTeachingTip"
+                     Target="{x:Bind GamesPage}"
+                     Title="Add a game"
+                     Subtitle="A game needs to be added before a battle can be started"
+                     Closed="GamesPageTeachingTip_Closed"/>
+        
+        <TeachingTip x:Name="OpponentsPageTeachingTip"
+                     Target="{x:Bind OpponentPage}"
+                     Title="Add an opponent"
+                     Subtitle="An opponent needs to be added before a battle can be started"/>
     </Grid>
 </Window>

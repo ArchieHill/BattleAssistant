@@ -41,7 +41,7 @@ namespace Battle_Assistant.ViewModels
         /// Constructor
         /// </summary>
         public GamesPageViewModel()
-        {
+        { 
 
         }
 
@@ -62,7 +62,18 @@ namespace Battle_Assistant.ViewModels
         /// <param name="index"></param>
         public async void DeleteGame(int index, XamlRoot root)
         {
-            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog();
+            bool deleteAllowed = true;
+
+            foreach (BattleModel battle in App.Battles)
+            {
+                if(battle.Game.Name == Games[index].Name)
+                {
+                    deleteAllowed = false;
+                    break;
+                }
+            }
+
+            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(deleteAllowed);
             dialog.XamlRoot = root;
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)

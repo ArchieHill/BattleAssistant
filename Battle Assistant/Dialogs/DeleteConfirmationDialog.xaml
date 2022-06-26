@@ -10,7 +10,8 @@
     PrimaryButtonText="Delete"
     CloseButtonText="Cancel">
 
-    <StackPanel Style="{StaticResource ListStackPanel}">
+    <StackPanel>
+        <InfoBar x:Name="DialogInfoBar" IsOpen="False"/>
         <TextBlock>Are you sure you want to delete this?</TextBlock>
     </StackPanel>
 </ContentDialog>

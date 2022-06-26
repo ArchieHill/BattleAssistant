@@ -41,9 +41,9 @@ namespace Battle_Assistant.Views
         /// </summary>
         public OpponentsPage()
         {
-            ViewModel = new OpponentsPageViewModel();
-            DataContext = ViewModel;
             this.InitializeComponent();
+            ViewModel = new OpponentsPageViewModel();
+            DataContext = ViewModel;    
         }
 
         /// <summary>

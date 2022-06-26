@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using Battle_Assistant.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -32,12 +34,31 @@ namespace Battle_Assistant.Dialogs
     /// </summary>
     public sealed partial class DeleteConfirmationDialog : ContentDialog
     {
+        private bool deleteAllowed;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public DeleteConfirmationDialog()
+        public DeleteConfirmationDialog(bool deleteAllowed)
         {
             this.InitializeComponent();
+            this.deleteAllowed = deleteAllowed;
+            Loaded += Dialog_Loaded;
+        }
+
+        private void Dialog_Loaded(object sender, RoutedEventArgs args)
+        {
+            foreach(BattleModel battle in App.Battles)
+            {
+                if (!deleteAllowed)
+                {
+                    DialogInfoBar.Severity = InfoBarSeverity.Error;
+                    DialogInfoBar.Title = "Cannot Delete";
+                    DialogInfoBar.Message = "Cannot be deleted as a battle has this, end the battles to allow this to be deleted";
+                    DialogInfoBar.IsOpen = true;
+                    IsPrimaryButtonEnabled = false;
+                }
+            }
         }
     }
 }

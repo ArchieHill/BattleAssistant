@@ -94,6 +94,10 @@ namespace Battle_Assistant.Dialogs
             {
                 IsPrimaryButtonEnabled = true;
             }
+            else
+            {
+                IsPrimaryButtonEnabled = false;
+            }
         }
 
         private void AutoClean_Checked(object sender, RoutedEventArgs e)

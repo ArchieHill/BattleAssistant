@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using Battle_Assistant.DialogModels;
+using Battle_Assistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -82,9 +83,27 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         private void CheckInputs()
         {
-            if (DialogModel.Opponent.SharedDir != null && OpponentName.Text != "")
+            bool opponentNameUnique = true;
+            foreach (OpponentModel opponent in App.Opponents)
+            {
+                if(opponent.Name == OpponentName.Text)
+                {
+                    DialogInfoBar.Severity = InfoBarSeverity.Error;
+                    DialogInfoBar.Title = "Name not unique";
+                    DialogInfoBar.Message = "The opponents name isn't unique";
+                    DialogInfoBar.IsOpen = true;
+                    opponentNameUnique = false;
+                    break;
+                }
+            }
+            
+            if (DialogModel.Opponent.SharedDir != null && OpponentName.Text != "" && opponentNameUnique)
             {
                 IsPrimaryButtonEnabled = true;
+            }
+            else
+            {
+                IsPrimaryButtonEnabled = false;
             }
         }
     }

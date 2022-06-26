@@ -76,6 +76,10 @@ namespace Battle_Assistant.Dialogs
             {
                 IsPrimaryButtonEnabled = true;
             }
+            else
+            {
+                IsPrimaryButtonEnabled = false;
+            }
         }
     }
 }

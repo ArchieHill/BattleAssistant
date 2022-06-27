@@ -10,7 +10,7 @@ YOU NEED WINDOWS 10 OR 11 TO USE THIS APPLICATION
 1. Go to the latest release and download the .zip folder called Battle Assitant_x.x.x_x64.zip
 2. Unzip the folder anywhere on your computer
 3. For first time installation you need to install the certificate, if your updating you don't need to install the certificate again
-4. Double click on the .cer file and install it to you computer, you need to select place all certificates in the following store and then browse to the Trusted Roots Certification Authorities folder
+4. Double click on the .cer file and install it to you computer, ensure you install it to your local machine instead of current user. When selecting where to store the certificate, you need to select place all certificates in the following store and then browse to the Trusted Roots Certification Authorities folder
 5. Double click on the .msxi file to install the application
 
 ## Dev Installation Instructions

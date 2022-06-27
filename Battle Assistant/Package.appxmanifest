@@ -9,11 +9,11 @@
   <Identity
     Name="Battle-Assistant"
     Publisher="CN=Dawntaker"
-    Version="1.0.0.0" />
+    Version="1.1.0.0" />
 
   <Properties>
     <DisplayName>Battle Assistant</DisplayName>
-    <PublisherDisplayName>Dawntaker</PublisherDisplayName>
+    <PublisherDisplayName>Archie Hill</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

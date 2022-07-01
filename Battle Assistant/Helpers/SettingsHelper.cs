@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
@@ -35,7 +36,9 @@ namespace Battle_Assistant.Helpers
         private const string THEME_SETTING = "theme";
 
         private const string WIDTH_SETTING = "width";
+        private const int MIN_WIDTH = 1000;
         private const string HEIGHT_SETTING = "height";
+        private const int MIN_HEIGHT = 550;
         private const string WINDOW_SIZE_SETTING = "windowSize";
 
         private const string X_POSITION_SETTING = "X";
@@ -63,6 +66,17 @@ namespace Battle_Assistant.Helpers
         /// <param name="height">The window height</param>
         public static void SaveWindowSize(int width, int height)
         {
+            //Attempt to fix a bug where the window would bug out
+            if (width < MIN_WIDTH)
+            {
+                width = MIN_WIDTH;
+            }
+
+            if(height < MIN_HEIGHT)
+            {
+                height = MIN_HEIGHT;
+            }
+
             ApplicationDataCompositeValue windowSize = new ApplicationDataCompositeValue();
             windowSize[WIDTH_SETTING] = width;
             windowSize[HEIGHT_SETTING] = height;

@@ -42,9 +42,9 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         public AddOpponentDialog()
         {
+            this.InitializeComponent();
             DialogModel = new AddOpponentDialogModel();
             DataContext = DialogModel;
-            this.InitializeComponent();
         }
 
         /// <summary>

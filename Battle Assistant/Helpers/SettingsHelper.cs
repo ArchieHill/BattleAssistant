@@ -141,8 +141,6 @@ namespace Battle_Assistant.Helpers
             {
                 int width = (int)windowSize[WIDTH_SETTING];
                 int height = (int)windowSize[HEIGHT_SETTING];
-                Debug.WriteLine(width);
-                Debug.WriteLine(height);
                 if(width > MIN_WIDTH && height > MIN_HEIGHT)
                 {
                     App.SetWindowSize(width, height);
@@ -155,7 +153,10 @@ namespace Battle_Assistant.Helpers
             {
                 int x = (int)windowPosition[X_POSITION_SETTING];
                 int y = (int)windowPosition[Y_POSITION_SETTING];
-                App.SetWindowPosition(x, y);
+                if(x >= 0 && y >= 0)
+                {
+                    App.SetWindowPosition(x, y);
+                }
             }
         }
 

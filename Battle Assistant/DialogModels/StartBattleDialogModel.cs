@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,11 +37,50 @@ namespace Battle_Assistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public class StartBattleDialogModel
-    {
-        public GameModel SelectedGame { get; set; }
+    public class StartBattleDialogModel : INotifyPropertyChanged
+    { 
 
-        public OpponentModel SelectedOpponent { get; set; }
+        // A property changed event object
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notifies the page when a property has changed so the view can be updated
+        /// </summary>
+        /// <param name="propName">The property name</param>
+        protected void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+        private GameModel selectedGame;
+        public GameModel SelectedGame
+        {
+            get { return selectedGame; }
+            set
+
+            {
+                if (selectedGame != value)
+                {
+                    selectedGame = value;
+                    NotifyPropertyChanged("SelectedGame");
+                }
+            }
+        }
+
+        private OpponentModel selectedOpponent;
+        public OpponentModel SelectedOpponent
+        {
+            get { return selectedOpponent; }
+            set
+
+            {
+                if (selectedOpponent != value)
+                {
+                    selectedOpponent = value;
+                    NotifyPropertyChanged("SelectedOpponent");
+                }
+            }
+        }
 
         private ObservableCollection<GameModel> games;
 
@@ -97,20 +137,64 @@ namespace Battle_Assistant.DialogModels
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
             filePicker.FileTypeFilter.Add(".ema");
             StorageFile file = await filePicker.PickSingleFileAsync();
+
             if (file != null)
             {
-                if (FileHelper.CheckFileIsValid(file.Path))
-                {
-                    Battle.BattleFile = file.Path;
-                }
-                else
+                if (!FileHelper.CheckFileIsValid(file.Path))
                 {
                     dialogInfoBar.Severity = InfoBarSeverity.Error;
                     dialogInfoBar.Title = "Invalid file";
                     dialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
                     dialogInfoBar.IsOpen = true;
                 }
+
+                Battle.BattleFile = file.Path;
+
+                string fileDir = Path.GetDirectoryName(file.Path);
+                if (Path.GetFileName(fileDir) == "Outgoing Email" || Path.GetFileName(fileDir) == "Incoming Email")
+                {
+                    AutoSelectGame(fileDir, file.Path);
+                }
+                else
+                {
+                    AutoSelectOpponent(fileDir, file.Path);
+                }
             }
+        }
+
+        private void AutoSelectGame(string fileDir, string path)
+        {
+            foreach (GameModel game in Games)
+            {
+                if (fileDir.Contains(game.Name))
+                {
+                    SelectedGame = game;
+                    return;
+                }
+            }
+
+            //If the game can't be found create a new game
+            GameModel newGame = new GameModel(Path.GetDirectoryName(Path.GetDirectoryName(fileDir)));
+            App.AddGame(newGame);
+            SelectedGame = newGame;
+        }
+
+        private void AutoSelectOpponent(string fileDir, string path)
+        {
+            //Try and find if the opponent already exists for this shared directory
+            foreach (OpponentModel opponent in Opponents)
+            {
+                if (opponent.SharedDir == fileDir)
+                {
+                    SelectedOpponent = opponent;
+                    return;
+                }
+            }
+
+            //If the opponent can't be found create a new opponent
+            OpponentModel newOpponent = new OpponentModel(Path.GetFileName(fileDir), fileDir);
+            App.AddOpponent(newOpponent);
+            SelectedOpponent = newOpponent;
         }
 
         /// <summary>

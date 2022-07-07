@@ -101,6 +101,21 @@ namespace Battle_Assistant
             MainWindow.Activate();
         }
 
+        public static void AddOpponent(OpponentModel opponent)
+        {
+            Opponents.Add(opponent);
+            //Assign its index so we know where to look to delete it
+            opponent.Index = Opponents.IndexOf(opponent);
+            StorageHelper.UpdateOpponentFile();
+        }
+
+        public static void AddGame(GameModel game)
+        {
+            Games.Add(game);
+            //Assign its index so we know where to look to delete it
+            game.Index = Games.IndexOf(game);
+            StorageHelper.UpdateGameFile();
+        }
         /// <summary>
         /// Resizes the application window
         /// </summary>

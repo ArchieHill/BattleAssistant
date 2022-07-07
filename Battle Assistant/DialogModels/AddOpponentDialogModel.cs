@@ -65,11 +65,7 @@ namespace Battle_Assistant.DialogModels
         /// </summary>
         public void AddOpponent()
         {
-            App.Opponents.Add(Opponent);
-            //Assign its index so we know where to look to delete it
-            Opponent.Index = App.Opponents.IndexOf(Opponent);
-            StorageHelper.UpdateOpponentFile();
+            App.AddOpponent(Opponent);
         }
-
     }
 }

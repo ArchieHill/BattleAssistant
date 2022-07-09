@@ -46,7 +46,7 @@ namespace Battle_Assistant.Views
             this.InitializeComponent();
             viewModel = new SettingsPageViewModel(FlashAmountBox, AutoCreateOpponentSwitch, AutoCreateGameSwitch);
             DataContext = viewModel;
-            Loaded += SettingsPage_Loaded; 
+            Loaded += SettingsPage_Loaded;
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace Battle_Assistant.Views
         {
             this.InitializeComponent();
             ViewModel = new GamesPageViewModel();
-            DataContext = ViewModel; 
+            DataContext = ViewModel;
         }
 
         /// <summary>

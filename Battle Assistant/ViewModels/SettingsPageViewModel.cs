@@ -1,4 +1,4 @@
-﻿// SetttingsPageViewModel.cs
+﻿// SettingsPageViewModel.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml.Controls;
 
@@ -69,7 +64,7 @@ namespace Battle_Assistant.ViewModels
             get { return flashIcon; }
             set
             {
-                if(flashIcon != value)
+                if (flashIcon != value)
                 {
                     flashIcon = value;
                     SettingsHelper.SaveFlashIcon(flashIcon);
@@ -96,7 +91,7 @@ namespace Battle_Assistant.ViewModels
             }
             set
             {
-                if(flashAmount != value)
+                if (flashAmount != value)
                 {
                     flashAmount = value;
                     SettingsHelper.SaveFlashAmount(flashAmount);
@@ -117,7 +112,7 @@ namespace Battle_Assistant.ViewModels
                     SettingsHelper.SaveAutoSelectOpponent(autoSelectOpponent);
                     NotifyPropertyChanged("AutoSelectOpponent");
 
-                    if(autoSelectOpponent)
+                    if (autoSelectOpponent)
                     {
                         autoCreateOpponentSwitch.IsEnabled = true;
                     }

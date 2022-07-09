@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
@@ -171,7 +170,7 @@ namespace Battle_Assistant.Helpers
             {
                 int width = (int)windowSize[WIDTH_SETTING];
                 int height = (int)windowSize[HEIGHT_SETTING];
-                if(width > MIN_WIDTH && height > MIN_HEIGHT)
+                if (width > MIN_WIDTH && height > MIN_HEIGHT)
                 {
                     App.SetWindowSize(width, height);
                 }
@@ -183,7 +182,7 @@ namespace Battle_Assistant.Helpers
             {
                 int x = (int)windowPosition[X_POSITION_SETTING];
                 int y = (int)windowPosition[Y_POSITION_SETTING];
-                if(x >= 0 && y >= 0)
+                if (x >= 0 && y >= 0)
                 {
                     App.SetWindowPosition(x, y);
                 }
@@ -197,7 +196,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetAutoSelectOpponent()
         {
             bool? autoSelectOpponent = (bool?)localSettings.Values[AUTO_SELECT_OPPONENT];
-            if(autoSelectOpponent != null)
+            if (autoSelectOpponent != null)
             {
                 return (bool)autoSelectOpponent;
             }
@@ -212,7 +211,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetAutoCreateOpponent()
         {
             bool? autoCreateOpponent = (bool?)localSettings.Values[AUTO_CREATE_OPPONENT];
-            if(autoCreateOpponent != null)
+            if (autoCreateOpponent != null)
             {
                 return (bool)autoCreateOpponent;
             }
@@ -254,7 +253,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetFlashIcon()
         {
             bool? flashTaskBar = (bool?)localSettings.Values[FLASH_TASK_BAR];
-            if(flashTaskBar != null)
+            if (flashTaskBar != null)
             {
                 return (bool)flashTaskBar;
             }
@@ -268,7 +267,7 @@ namespace Battle_Assistant.Helpers
         public static int GetFlashAmount()
         {
             int? flashAmount = (int?)localSettings.Values[FLASH_AMOUNT];
-            if(flashAmount != null)
+            if (flashAmount != null)
             {
                 return (int)flashAmount;
             }
@@ -282,7 +281,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetTipsExplained()
         {
             bool? tipsExplained = (bool?)localSettings.Values[TIPS_EXPLAINED];
-            if(tipsExplained != null)
+            if (tipsExplained != null)
             {
                 return (bool)tipsExplained;
             }

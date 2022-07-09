@@ -22,7 +22,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Windows.Storage;
 using Windows.Storage.Pickers;

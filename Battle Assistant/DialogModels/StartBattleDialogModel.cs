@@ -38,7 +38,7 @@ namespace Battle_Assistant.DialogModels
     /// Start Battle Dialog Model
     /// </summary>
     public class StartBattleDialogModel : INotifyPropertyChanged
-    { 
+    {
 
         // A property changed event object
         public event PropertyChangedEventHandler PropertyChanged;

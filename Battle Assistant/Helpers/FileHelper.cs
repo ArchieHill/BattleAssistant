@@ -49,7 +49,7 @@ namespace Battle_Assistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
-                
+
                 battle.BattleFile = fileInIncomingEmailPath;
 
                 battle.Status = Status.YOUR_TURN;
@@ -65,7 +65,7 @@ namespace Battle_Assistant.Helpers
                         File.Delete(oldFileInIncomingEmail);
                     }
                 }
-               
+
                 if (SettingsHelper.GetFlashIcon())
                 {
                     //Flash the icon in the task bar to notify the user the app has a turn for them

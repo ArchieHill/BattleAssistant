@@ -86,7 +86,7 @@ namespace Battle_Assistant.Dialogs
             bool opponentNameUnique = true;
             foreach (OpponentModel opponent in App.Opponents)
             {
-                if(opponent.Name == OpponentName.Text)
+                if (opponent.Name == OpponentName.Text)
                 {
                     DialogInfoBar.Severity = InfoBarSeverity.Error;
                     DialogInfoBar.Title = "Name not unique";
@@ -96,7 +96,7 @@ namespace Battle_Assistant.Dialogs
                     break;
                 }
             }
-            
+
             if (DialogModel.Opponent.SharedDir != null && OpponentName.Text != "" && opponentNameUnique)
             {
                 IsPrimaryButtonEnabled = true;

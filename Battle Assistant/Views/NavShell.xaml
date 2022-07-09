@@ -74,6 +74,11 @@
         <TeachingTip x:Name="OpponentsPageTeachingTip"
                      Target="{x:Bind OpponentPage}"
                      Title="Add an opponent"
-                     Subtitle="An opponent needs to be added before a battle can be started"/>
+                     Subtitle="An opponent needs to be added before a battle can be started"
+                     Closed="OpponentsPageTeachingTip_Closed"/>
+
+        <TeachingTip x:Name="SettingsPageTeachingTip"
+                     Title="Check Settings"
+                     Subtitle="Remember to give settings a look, there are a fair few to customise the app to your preference."/>
     </Grid>
 </Window>

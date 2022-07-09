@@ -71,17 +71,6 @@ namespace Battle_Assistant.Helpers
         /// <param name="height">The window height</param>
         public static void SaveWindowSize(int width, int height)
         {
-            //Attempt to fix a bug where the window would bug out
-            if (width < MIN_WIDTH)
-            {
-                width = MIN_WIDTH;
-            }
-
-            if(height < MIN_HEIGHT)
-            {
-                height = MIN_HEIGHT;
-            }
-
             ApplicationDataCompositeValue windowSize = new ApplicationDataCompositeValue();
             windowSize[WIDTH_SETTING] = width;
             windowSize[HEIGHT_SETTING] = height;

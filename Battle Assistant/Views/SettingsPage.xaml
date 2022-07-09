@@ -23,16 +23,16 @@
         <StackPanel Style="{StaticResource LabelContentStackPanel}">
             <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Auto Selection and Creation</TextBlock>
 
-            <ToggleSwitch Header="Auto Select Opponent" IsOn="{Binding AutoSelectOpponent, Mode=TwoWay}"/>
-            <ToggleSwitch x:Name="AutoCreateOpponentSwitch" Header="Auto Create Opponent" IsOn="{Binding AutoCreateOpponent, Mode=TwoWay}" IsEnabled="False"/>
-            <ToggleSwitch Header="Auto Select Game" IsOn="{Binding AutoSelectGame, Mode=TwoWay}"/>
-            <ToggleSwitch x:Name="AutoCreateGameSwitch"  Header="Auto Create Game" IsOn="{Binding AutoCreateGame, Mode=TwoWay}" IsEnabled="False"/>
+            <ToggleSwitch Header="Auto Select Opponent" IsOn="{Binding AutoSelectOpponent, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the opponent when the battle file is selected when starting a battle."/>
+            <ToggleSwitch x:Name="AutoCreateOpponentSwitch" Header="Auto Create Opponent" IsOn="{Binding AutoCreateOpponent, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the opponent when selecting, it will create a new opponent." />
+            <ToggleSwitch Header="Auto Select Game" IsOn="{Binding AutoSelectGame, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the game when the battle file is selected when starting a battle."/>
+            <ToggleSwitch x:Name="AutoCreateGameSwitch"  Header="Auto Create Game" IsOn="{Binding AutoCreateGame, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the game when selecting, it will create a new game."/>
         </StackPanel>
 
         <StackPanel Style="{StaticResource LabelContentStackPanel}">
             <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Task Bar</TextBlock>
 
-            <ToggleSwitch Header="Flash Icon with New Turn" IsOn="{Binding FlashIcon, Mode=TwoWay}"/>
+            <ToggleSwitch Header="Flash Icon with New Turn" IsOn="{Binding FlashIcon, Mode=TwoWay}" ToolTipService.ToolTip="When a new turn is recieved and copied to the incoming folder, the app icon on the task bar flashes."/>
 
             <NumberBox x:Name="FlashAmountBox" 
                        Header="Icon flash amount" 

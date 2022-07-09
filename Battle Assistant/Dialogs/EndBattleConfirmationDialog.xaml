@@ -12,7 +12,7 @@
     PrimaryButtonClick="EndBattle_Click">
 
     <StackPanel Style="{StaticResource ListStackPanel}">
-        <CheckBox Content="Clean all folders" Checked="CleanUp_Checked" Unchecked="CleanUp_Unchecked"></CheckBox>
+        <CheckBox Content="Clean all folders" Checked="CleanUp_Checked" Unchecked="CleanUp_Unchecked" ToolTipService.ToolTip="Deletes all the battle files in incoming, outgoing and shared folders."/>
         <TextBlock>Are you sure you want to end the battle?</TextBlock>
     </StackPanel>
 </ContentDialog>

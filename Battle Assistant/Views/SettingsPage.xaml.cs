@@ -42,11 +42,11 @@ namespace Battle_Assistant.Views
         /// Constructor
         /// </summary>
         public SettingsPage()
-        {  
-            viewModel = new SettingsPageViewModel();
+        {
+            this.InitializeComponent();
+            viewModel = new SettingsPageViewModel(FlashAmountBox, AutoCreateOpponentSwitch, AutoCreateGameSwitch);
             DataContext = viewModel;
             Loaded += SettingsPage_Loaded;
-            this.InitializeComponent();   
         }
 
         /// <summary>
@@ -59,7 +59,12 @@ namespace Battle_Assistant.Views
             var currentTheme = (this.XamlRoot.Content as Grid).RequestedTheme.ToString();
             (ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
 
-            FlashIconCheckbox.IsChecked = SettingsHelper.GetFlashIcon();
+            viewModel.AutoSelectOpponent = SettingsHelper.GetAutoSelectOpponent();
+            viewModel.AutoCreateOpponent = SettingsHelper.GetAutoCreateOpponent();
+            viewModel.AutoSelectGame = SettingsHelper.GetAutoSelectGame();
+            viewModel.AutoCreateGame = SettingsHelper.GetAutoCreateGame();
+
+            viewModel.FlashIcon = SettingsHelper.GetFlashIcon();
             viewModel.FlashAmount = SettingsHelper.GetFlashAmount();
         }
 
@@ -76,26 +81,6 @@ namespace Battle_Assistant.Views
                 (App.MainWindow.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(selectedTheme);
                 SettingsHelper.SaveTheme(selectedTheme);
             }
-        }
-
-        /// <summary>
-        /// Flash Icon checked event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void FlashIcon_Checked(object sender, RoutedEventArgs args)
-        {
-            SettingsHelper.SaveFlashIcon(true);
-        }
-
-        /// <summary>
-        /// Flash Icon unchecked event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void FlashIcon_Unchecked(object sender, RoutedEventArgs args)
-        {
-            SettingsHelper.SaveFlashIcon(false);
         }
     }
 }

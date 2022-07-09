@@ -48,7 +48,7 @@ namespace Battle_Assistant.Dialogs
 
         private void Dialog_Loaded(object sender, RoutedEventArgs args)
         {
-            foreach(BattleModel battle in App.Battles)
+            foreach (BattleModel battle in App.Battles)
             {
                 if (!deleteAllowed)
                 {

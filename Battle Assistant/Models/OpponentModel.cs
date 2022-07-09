@@ -55,6 +55,11 @@ namespace Battle_Assistant.Models
             SharedDir = null;
         }
 
+        public OpponentModel(string name, string sharedDir) : base(name)
+        {
+            SharedDir = sharedDir;
+        }
+
         public void Dispose()
         {
             sDWatcher.Dispose();

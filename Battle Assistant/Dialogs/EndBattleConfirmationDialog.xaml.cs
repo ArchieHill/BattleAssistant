@@ -42,9 +42,9 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         public EndBattleConfirmationDialog(BattleModel battle)
         {
+            this.InitializeComponent();
             DialogModel = new EndBattleConfirmationDialogModel(battle);
             DataContext = DialogModel;
-            this.InitializeComponent();
         }
 
         /// <summary>

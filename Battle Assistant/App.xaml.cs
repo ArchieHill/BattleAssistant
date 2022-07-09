@@ -102,6 +102,30 @@ namespace Battle_Assistant
         }
 
         /// <summary>
+        /// Adds an opponent to the application
+        /// </summary>
+        /// <param name="opponent">The opponent model to add</param>
+        public static void AddOpponent(OpponentModel opponent)
+        {
+            Opponents.Add(opponent);
+            //Assign its index so we know where to look to delete it
+            opponent.Index = Opponents.IndexOf(opponent);
+            StorageHelper.UpdateOpponentFile();
+        }
+
+        /// <summary>
+        /// Adds a game to the application
+        /// </summary>
+        /// <param name="game">The game model to add</param>
+        public static void AddGame(GameModel game)
+        {
+            Games.Add(game);
+            //Assign its index so we know where to look to delete it
+            game.Index = Games.IndexOf(game);
+            StorageHelper.UpdateGameFile();
+        }
+
+        /// <summary>
         /// Resizes the application window
         /// </summary>
         /// <param name="width">The new width of the application</param>

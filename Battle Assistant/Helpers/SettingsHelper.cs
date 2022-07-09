@@ -35,12 +35,19 @@ namespace Battle_Assistant.Helpers
         private const string THEME_SETTING = "theme";
 
         private const string WIDTH_SETTING = "width";
+        private const int MIN_WIDTH = 1000;
         private const string HEIGHT_SETTING = "height";
+        private const int MIN_HEIGHT = 550;
         private const string WINDOW_SIZE_SETTING = "windowSize";
 
         private const string X_POSITION_SETTING = "X";
         private const string Y_POSITION_SETTING = "Y";
         private const string WINDOW_POSITION_SETTING = "position";
+
+        private const string AUTO_SELECT_OPPONENT = "autoSelectOpponent";
+        private const string AUTO_CREATE_OPPONENT = "autoCreateOpponent";
+        private const string AUTO_SELECT_GAME = "autoSelectGame";
+        private const string AUTO_CREATE_GAME = "autoCreateGame";
 
         private const string FLASH_TASK_BAR = "flashTaskBar";
         private const string FLASH_AMOUNT = "flashAmount";
@@ -80,6 +87,42 @@ namespace Battle_Assistant.Helpers
             windowPosition[X_POSITION_SETTING] = x;
             windowPosition[Y_POSITION_SETTING] = y;
             localSettings.Values[WINDOW_POSITION_SETTING] = windowPosition;
+        }
+
+        /// <summary>
+        /// Saves the auto select opponent
+        /// </summary>
+        /// <param name="autoSelect">The auto select value</param>
+        public static void SaveAutoSelectOpponent(bool autoSelect)
+        {
+            localSettings.Values[AUTO_SELECT_OPPONENT] = autoSelect;
+        }
+
+        /// <summary>
+        /// Saves the auto create opponent
+        /// </summary>
+        /// <param name="autoCreate">The auto create value</param>
+        public static void SaveAutoCreateOpponent(bool autoCreate)
+        {
+            localSettings.Values[AUTO_CREATE_OPPONENT] = autoCreate;
+        }
+
+        /// <summary>
+        /// Saves the auto select game
+        /// </summary>
+        /// <param name="autoSelect">The auto select value</param>
+        public static void SaveAutoSelectGame(bool autoSelect)
+        {
+            localSettings.Values[AUTO_SELECT_GAME] = autoSelect;
+        }
+
+        /// <summary>
+        /// Saves the auto create game
+        /// </summary>
+        /// <param name="autoCreate">The auto create value</param>
+        public static void SaveAutoCreateGame(bool autoCreate)
+        {
+            localSettings.Values[AUTO_CREATE_GAME] = autoCreate;
         }
 
         /// <summary>
@@ -127,7 +170,10 @@ namespace Battle_Assistant.Helpers
             {
                 int width = (int)windowSize[WIDTH_SETTING];
                 int height = (int)windowSize[HEIGHT_SETTING];
-                App.SetWindowSize(width, height);
+                if (width > MIN_WIDTH && height > MIN_HEIGHT)
+                {
+                    App.SetWindowSize(width, height);
+                }
             }
 
             //Sets the application window position
@@ -136,8 +182,68 @@ namespace Battle_Assistant.Helpers
             {
                 int x = (int)windowPosition[X_POSITION_SETTING];
                 int y = (int)windowPosition[Y_POSITION_SETTING];
-                App.SetWindowPosition(x, y);
+                if (x >= 0 && y >= 0)
+                {
+                    App.SetWindowPosition(x, y);
+                }
             }
+        }
+
+        /// <summary>
+        /// Get the auto select opponent setting
+        /// </summary>
+        /// <returns>bool of the setting, defaults to true is setting is null</returns>
+        public static bool GetAutoSelectOpponent()
+        {
+            bool? autoSelectOpponent = (bool?)localSettings.Values[AUTO_SELECT_OPPONENT];
+            if (autoSelectOpponent != null)
+            {
+                return (bool)autoSelectOpponent;
+            }
+            return true;
+        }
+
+
+        /// <summary>
+        /// Get the auto create opponent setting
+        /// </summary>
+        /// <returns>bool of the setting, defaults to false is setting is null</returns>
+        public static bool GetAutoCreateOpponent()
+        {
+            bool? autoCreateOpponent = (bool?)localSettings.Values[AUTO_CREATE_OPPONENT];
+            if (autoCreateOpponent != null)
+            {
+                return (bool)autoCreateOpponent;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Get the auto select game setting
+        /// </summary>
+        /// <returns>bool of the setting, defaults to true is setting is null</returns>
+        public static bool GetAutoSelectGame()
+        {
+            bool? autoSelectGame = (bool?)localSettings.Values[AUTO_SELECT_GAME];
+            if (autoSelectGame != null)
+            {
+                return (bool)autoSelectGame;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Get the auto create game setting
+        /// </summary>
+        /// <returns>bool of the setting, defaults to false is setting is null</returns>
+        public static bool GetAutoCreateGame()
+        {
+            bool? autoCreateGame = (bool?)localSettings.Values[AUTO_CREATE_GAME];
+            if (autoCreateGame != null)
+            {
+                return (bool)autoCreateGame;
+            }
+            return false;
         }
 
         /// <summary>
@@ -147,7 +253,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetFlashIcon()
         {
             bool? flashTaskBar = (bool?)localSettings.Values[FLASH_TASK_BAR];
-            if(flashTaskBar != null)
+            if (flashTaskBar != null)
             {
                 return (bool)flashTaskBar;
             }
@@ -161,7 +267,7 @@ namespace Battle_Assistant.Helpers
         public static int GetFlashAmount()
         {
             int? flashAmount = (int?)localSettings.Values[FLASH_AMOUNT];
-            if(flashAmount != null)
+            if (flashAmount != null)
             {
                 return (int)flashAmount;
             }
@@ -175,7 +281,7 @@ namespace Battle_Assistant.Helpers
         public static bool GetTipsExplained()
         {
             bool? tipsExplained = (bool?)localSettings.Values[TIPS_EXPLAINED];
-            if(tipsExplained != null)
+            if (tipsExplained != null)
             {
                 return (bool)tipsExplained;
             }

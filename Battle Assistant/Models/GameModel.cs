@@ -88,6 +88,11 @@ namespace Battle_Assistant.Models
             OutgoingEmailFolder = null;
         }
 
+        public GameModel(string gameDir) : base()
+        {
+            GameDir = gameDir;
+        }
+
         /// <summary>
         /// Sets the email folders from the game directory folder
         /// </summary>

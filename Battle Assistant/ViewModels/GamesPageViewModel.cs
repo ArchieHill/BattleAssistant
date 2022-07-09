@@ -41,7 +41,7 @@ namespace Battle_Assistant.ViewModels
         /// Constructor
         /// </summary>
         public GamesPageViewModel()
-        { 
+        {
 
         }
 
@@ -66,7 +66,7 @@ namespace Battle_Assistant.ViewModels
 
             foreach (BattleModel battle in App.Battles)
             {
-                if(battle.Game.Name == Games[index].Name)
+                if (battle.Game.Name == Games[index].Name)
                 {
                     deleteAllowed = false;
                     break;

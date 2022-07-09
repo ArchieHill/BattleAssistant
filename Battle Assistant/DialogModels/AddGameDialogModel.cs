@@ -23,7 +23,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Battle_Assistant.Helpers;
 using Battle_Assistant.Models;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
@@ -81,10 +80,7 @@ namespace Battle_Assistant.DialogModels
         /// </summary>
         public void AddGame()
         {
-            App.Games.Add(Game);
-            //Assign its index so we know where to look to delete it
-            Game.Index = App.Games.IndexOf(Game);
-            StorageHelper.UpdateGameFile();
+            App.AddGame(Game);
         }
     }
 }

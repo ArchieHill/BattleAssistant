@@ -1,4 +1,4 @@
-﻿// SetttingsPageViewModel.cs
+﻿// SettingsPageViewModel.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -20,12 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml.Controls;
 
@@ -36,6 +31,24 @@ namespace Battle_Assistant.ViewModels
         // A property changed event object
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private NumberBox flashAmountBox;
+
+        private ToggleSwitch autoCreateOpponentSwitch;
+
+        private ToggleSwitch autoCreateGameSwitch;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="autoCreateOpponentSwitch"></param>
+        /// <param name="autoCreateGameSwitch"></param>
+        public SettingsPageViewModel(NumberBox flashAmountBox, ToggleSwitch autoCreateOpponentSwitch, ToggleSwitch autoCreateGameSwitch)
+        {
+            this.flashAmountBox = flashAmountBox;
+            this.autoCreateOpponentSwitch = autoCreateOpponentSwitch;
+            this.autoCreateGameSwitch = autoCreateGameSwitch;
+        }
+
         /// <summary>
         /// Notifies the page when a property has changed so the view can be updated
         /// </summary>
@@ -43,6 +56,30 @@ namespace Battle_Assistant.ViewModels
         protected void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
+        private bool flashIcon;
+        public bool FlashIcon
+        {
+            get { return flashIcon; }
+            set
+            {
+                if (flashIcon != value)
+                {
+                    flashIcon = value;
+                    SettingsHelper.SaveFlashIcon(flashIcon);
+                    NotifyPropertyChanged("FlashIcon");
+
+                    if (flashIcon)
+                    {
+                        flashAmountBox.IsEnabled = true;
+                    }
+                    else
+                    {
+                        flashAmountBox.IsEnabled = false;
+                    }
+                }
+            }
         }
 
         private int flashAmount;
@@ -54,11 +91,93 @@ namespace Battle_Assistant.ViewModels
             }
             set
             {
-                if(flashAmount != value)
+                if (flashAmount != value)
                 {
                     flashAmount = value;
                     SettingsHelper.SaveFlashAmount(flashAmount);
                     NotifyPropertyChanged("FlashAmount");
+                }
+            }
+        }
+
+        private bool autoSelectOpponent;
+        public bool AutoSelectOpponent
+        {
+            get { return autoSelectOpponent; }
+            set
+            {
+                if (autoSelectOpponent != value)
+                {
+                    autoSelectOpponent = value;
+                    SettingsHelper.SaveAutoSelectOpponent(autoSelectOpponent);
+                    NotifyPropertyChanged("AutoSelectOpponent");
+
+                    if (autoSelectOpponent)
+                    {
+                        autoCreateOpponentSwitch.IsEnabled = true;
+                    }
+                    else
+                    {
+                        AutoCreateOpponent = false;
+                        autoCreateGameSwitch.IsOn = false;
+                        autoCreateOpponentSwitch.IsEnabled = false;
+                    }
+                }
+            }
+        }
+
+        private bool autoCreateOpponent;
+        public bool AutoCreateOpponent
+        {
+            get { return autoCreateOpponent; }
+            set
+            {
+                if (autoCreateOpponent != value)
+                {
+                    autoCreateOpponent = value;
+                    SettingsHelper.SaveAutoCreateOpponent(autoCreateOpponent);
+                    NotifyPropertyChanged("AutoCreateOpponent");
+                }
+            }
+        }
+
+        private bool autoSelectGame;
+        public bool AutoSelectGame
+        {
+            get { return autoSelectGame; }
+            set
+            {
+                if (autoSelectGame != value)
+                {
+                    autoSelectGame = value;
+                    SettingsHelper.SaveAutoSelectGame(autoSelectGame);
+                    NotifyPropertyChanged("AutoSelectGame");
+
+                    if (autoSelectGame)
+                    {
+                        autoCreateGameSwitch.IsEnabled = true;
+                    }
+                    else
+                    {
+                        AutoCreateGame = false;
+                        autoCreateGameSwitch.IsOn = false;
+                        autoCreateGameSwitch.IsEnabled = false;
+                    }
+                }
+            }
+        }
+
+        private bool autoCreateGame;
+        public bool AutoCreateGame
+        {
+            get { return autoCreateGame; }
+            set
+            {
+                if (autoCreateGame != value && AutoSelectGame)
+                {
+                    autoCreateGame = value;
+                    SettingsHelper.SaveAutoCreateGame(autoCreateGame);
+                    NotifyPropertyChanged("AutoCreateGame");
                 }
             }
         }

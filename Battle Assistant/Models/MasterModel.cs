@@ -38,6 +38,12 @@ namespace Battle_Assistant.Models
             Index = -1;
         }
 
+        public MasterModel(string name)
+        {
+            Name = name;
+            Index = -1;
+        }
+
         /// <summary>
         /// Notifies the page when a property has changed so the view can be updated
         /// </summary>

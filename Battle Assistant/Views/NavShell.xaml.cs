@@ -202,6 +202,11 @@ namespace Battle_Assistant.Views
         private void GamesPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
         {
             OpponentsPageTeachingTip.IsOpen = true;
+        }
+
+        private void OpponentsPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
+        {
+            SettingsPageTeachingTip.IsOpen = true;
             SettingsHelper.SaveTipsExplained(true);
         }
     }

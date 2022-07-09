@@ -162,8 +162,14 @@ namespace Battle_Assistant.DialogModels
             }
         }
 
+        /// <summary>
+        /// Auto selects a game if the battle file is in a game folder
+        /// </summary>
+        /// <param name="fileDir"></param>
+        /// <param name="path"></param>
         private void AutoSelectGame(string fileDir, string path)
         {
+            //Try and find if the game already exists for the game directory found
             foreach (GameModel game in Games)
             {
                 if (fileDir.Contains(game.Name))
@@ -179,6 +185,11 @@ namespace Battle_Assistant.DialogModels
             SelectedGame = newGame;
         }
 
+        /// <summary>
+        /// Auto selects an opponent if its not in a game folder
+        /// </summary>
+        /// <param name="fileDir"></param>
+        /// <param name="path"></param>
         private void AutoSelectOpponent(string fileDir, string path)
         {
             //Try and find if the opponent already exists for this shared directory

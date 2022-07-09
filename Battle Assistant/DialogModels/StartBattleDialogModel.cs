@@ -153,11 +153,17 @@ namespace Battle_Assistant.DialogModels
                 string fileDir = Path.GetDirectoryName(file.Path);
                 if (Path.GetFileName(fileDir) == "Outgoing Email" || Path.GetFileName(fileDir) == "Incoming Email")
                 {
-                    AutoSelectGame(fileDir, file.Path);
+                    if (SettingsHelper.GetAutoSelectGame())
+                    {
+                        AutoSelectGame(fileDir, file.Path);
+                    }
                 }
                 else
                 {
-                    AutoSelectOpponent(fileDir, file.Path);
+                    if (SettingsHelper.GetAutoSelectOpponent())
+                    {
+                        AutoSelectOpponent(fileDir, file.Path);
+                    }
                 }
             }
         }
@@ -179,10 +185,13 @@ namespace Battle_Assistant.DialogModels
                 }
             }
 
-            //If the game can't be found create a new game
-            GameModel newGame = new GameModel(Path.GetDirectoryName(Path.GetDirectoryName(fileDir)));
-            App.AddGame(newGame);
-            SelectedGame = newGame;
+            if (SettingsHelper.GetAutoCreateGame())
+            {
+                //If the game can't be found create a new game
+                GameModel newGame = new GameModel(Path.GetDirectoryName(Path.GetDirectoryName(fileDir)));
+                App.AddGame(newGame);
+                SelectedGame = newGame;
+            }
         }
 
         /// <summary>
@@ -202,10 +211,13 @@ namespace Battle_Assistant.DialogModels
                 }
             }
 
-            //If the opponent can't be found create a new opponent
-            OpponentModel newOpponent = new OpponentModel(Path.GetFileName(fileDir), fileDir);
-            App.AddOpponent(newOpponent);
-            SelectedOpponent = newOpponent;
+            if (SettingsHelper.GetAutoCreateOpponent())
+            {
+                //If the opponent can't be found create a new opponent
+                OpponentModel newOpponent = new OpponentModel(Path.GetFileName(fileDir), fileDir);
+                App.AddOpponent(newOpponent);
+                SelectedOpponent = newOpponent;
+            }
         }
 
         /// <summary>

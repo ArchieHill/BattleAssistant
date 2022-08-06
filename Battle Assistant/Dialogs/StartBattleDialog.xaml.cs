@@ -99,25 +99,5 @@ namespace Battle_Assistant.Dialogs
                 IsPrimaryButtonEnabled = false;
             }
         }
-
-        /// <summary>
-        /// Sets the auto clean to true if checked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AutoClean_Checked(object sender, RoutedEventArgs e)
-        {
-            DialogModel.Battle.AutoClean = true;
-        }
-
-        /// <summary>
-        /// Sets the auto clean to false if unchecked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AutoClean_Unchecked(object sender, RoutedEventArgs e)
-        {
-            DialogModel.Battle.AutoClean = false;
-        }
     }
 }

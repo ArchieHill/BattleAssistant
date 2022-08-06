@@ -29,6 +29,10 @@
                     <Expander.Content>
                         <StackPanel Style="{StaticResource ListStackPanel}">
                             <StackPanel Style="{StaticResource LabelContentStackPanel}">
+                                <ToggleSwitch Header="Auto Clean" IsOn="{Binding AutoClean, Mode=TwoWay}" ToolTipService.ToolTip="Deletes the battle files as the battle progresses. Only deletes the battle files that contain your turn."/>
+                            </StackPanel>
+                                
+                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Status</TextBlock>
                                 <TextBlock Text="{Binding Status, Mode=OneWay}"/>
                             </StackPanel>

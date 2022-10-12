@@ -1,4 +1,4 @@
-﻿// OpponentModel.cs
+﻿// ObservableObject.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -20,49 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using Battle_Assistant.Watchers;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace Battle_Assistant.Models
+namespace Battle_Assistant.Common
 {
-    /// <summary>
-    /// Opponent model
-    /// </summary>
-    public class OpponentModel : MasterModel, IDisposable
+    public class ObservableObject : INotifyPropertyChanged
     {
-        private SharedDriveWatcher sDWatcher;
-
-        private string sharedDir;
-        public string SharedDir
-        {
-            get { return sharedDir; }
-            set
-            {
-                if (sharedDir != value)
-                {
-                    sharedDir = value;
-                    sDWatcher = new SharedDriveWatcher(sharedDir);
-                    NotifyPropertyChanged();
-                }
-            }
-        }
+        // A property changed event object
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Constructor
+        /// Notifies the page when a property has changed so the view can be updated
         /// </summary>
-        public OpponentModel() : base()
+        /// <param name="propName">The property name</param>
+        protected void NotifyPropertyChanged([CallerMemberName] string propName = "")
         {
-            SharedDir = null;
-        }
-
-        public OpponentModel(string name, string sharedDir) : base(name)
-        {
-            SharedDir = sharedDir;
-        }
-
-        public void Dispose()
-        {
-            sDWatcher.Dispose();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

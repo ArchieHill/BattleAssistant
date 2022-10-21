@@ -98,8 +98,8 @@ namespace Battle_Assistant.Models
         /// </summary>
         public void SetEmailFolders()
         {
-            IncomingEmailFolder = GameDir + "\\Game Files\\Incoming Email";
-            OutgoingEmailFolder = GameDir + "\\Game Files\\Outgoing Email";
+            IncomingEmailFolder = $@"{GameDir}\Game Files\Incoming Email";
+            OutgoingEmailFolder = $@"{GameDir}\Game Files\Outgoing Email";
         }
 
         public void Dispose()

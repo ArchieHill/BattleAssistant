@@ -158,12 +158,9 @@ namespace Battle_Assistant.DialogModels
                         AutoSelectGame(fileDir, file.Path);
                     }
                 }
-                else
+                else if (SettingsHelper.GetAutoSelectOpponent())
                 {
-                    if (SettingsHelper.GetAutoSelectOpponent())
-                    {
-                        AutoSelectOpponent(fileDir, file.Path);
-                    }
+                    AutoSelectOpponent(fileDir, file.Path);
                 }
             }
         }

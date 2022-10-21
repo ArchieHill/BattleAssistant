@@ -58,10 +58,7 @@ namespace Battle_Assistant.Dialogs
         private void StartBattleDialog_Loaded(object sender, RoutedEventArgs e)
         {
             //If at least one game and opponent exist then allow a battle to be started
-            if (DialogModel.Games.Count > 0 && DialogModel.Opponents.Count > 0)
-            {
-                GameAndOpponentExist = true;
-            }
+            GameAndOpponentExist = DialogModel.Games.Count > 0 && DialogModel.Opponents.Count > 0;
         }
 
         /// <summary>
@@ -90,14 +87,7 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         private void CheckInputs()
         {
-            if (DialogModel.Battle.BattleFile != null && GameAndOpponentExist)
-            {
-                IsPrimaryButtonEnabled = true;
-            }
-            else
-            {
-                IsPrimaryButtonEnabled = false;
-            }
+            IsPrimaryButtonEnabled = DialogModel.Battle.BattleFile != null && GameAndOpponentExist;
         }
     }
 }

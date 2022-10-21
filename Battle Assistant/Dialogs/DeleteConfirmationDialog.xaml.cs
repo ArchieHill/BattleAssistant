@@ -48,17 +48,14 @@ namespace Battle_Assistant.Dialogs
 
         private void Dialog_Loaded(object sender, RoutedEventArgs args)
         {
-            foreach (BattleModel battle in App.Battles)
+            if (!deleteAllowed)
             {
-                if (!deleteAllowed)
-                {
-                    DialogInfoBar.Severity = InfoBarSeverity.Error;
-                    DialogInfoBar.Title = "Cannot Delete";
-                    DialogInfoBar.Message = "Cannot be deleted as a battle has this, end the battles to allow this to be deleted";
-                    DialogInfoBar.IsOpen = true;
-                    IsPrimaryButtonEnabled = false;
-                }
-            }
+                DialogInfoBar.Severity = InfoBarSeverity.Error;
+                DialogInfoBar.Title = "Cannot Delete";
+                DialogInfoBar.Message = "Cannot be deleted as a battle has this, end the battles to allow this to be deleted";
+                DialogInfoBar.IsOpen = true;
+                IsPrimaryButtonEnabled = false;
+            }   
         }
     }
 }

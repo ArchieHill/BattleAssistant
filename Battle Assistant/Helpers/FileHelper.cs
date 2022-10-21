@@ -166,7 +166,7 @@ namespace Battle_Assistant.Helpers
         /// <returns>The full path of the constructed battle file</returns>
         public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
         {
-            return folderPath + "\\" + battleName + " " + number.ToString("D3") + ".ema";
+            return $@"{folderPath}\{battleName} {number.ToString("D3")}.ema";
         }
     }
 }

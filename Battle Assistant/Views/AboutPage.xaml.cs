@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using Microsoft.UI.Xaml.Controls;
+using Windows.ApplicationModel;
 
 namespace Battle_Assistant.Views
 {
@@ -33,8 +34,8 @@ namespace Battle_Assistant.Views
         {
             get
             {
-                var version = Windows.ApplicationModel.Package.Current.Id.Version;
-                return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+                PackageVersion version = Package.Current.Id.Version;
+                return $"{version.Major}.{version.Minor}.{version.Build}";
             }
         }
 

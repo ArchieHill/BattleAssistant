@@ -72,14 +72,7 @@ namespace Battle_Assistant.Dialogs
         /// </summary>
         private void CheckInputs()
         {
-            if (DialogModel.Game.GameDir != null)
-            {
-                IsPrimaryButtonEnabled = true;
-            }
-            else
-            {
-                IsPrimaryButtonEnabled = false;
-            }
+            IsPrimaryButtonEnabled = DialogModel.Game.GameDir != null;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Battle_Assistant.Views
         /// <param name="args"></param>
         private void SettingsPage_Loaded(object sender, RoutedEventArgs args)
         {
-            var currentTheme = (this.XamlRoot.Content as Grid).RequestedTheme.ToString();
+            string currentTheme = (this.XamlRoot.Content as Grid).RequestedTheme.ToString();
             (ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
 
             viewModel.AutoSelectOpponent = SettingsHelper.GetAutoSelectOpponent();
@@ -75,7 +75,7 @@ namespace Battle_Assistant.Views
         /// <param name="args"></param>
         private void OnThemeModeChecked(object sender, RoutedEventArgs args)
         {
-            var selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
+            string selectedTheme = ((RadioButton)sender)?.Tag?.ToString();
             if (selectedTheme != null)
             {
                 (App.MainWindow.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(selectedTheme);

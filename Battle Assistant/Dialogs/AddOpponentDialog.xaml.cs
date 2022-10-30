@@ -97,14 +97,7 @@ namespace Battle_Assistant.Dialogs
                 }
             }
 
-            if (DialogModel.Opponent.SharedDir != null && OpponentName.Text != "" && opponentNameUnique)
-            {
-                IsPrimaryButtonEnabled = true;
-            }
-            else
-            {
-                IsPrimaryButtonEnabled = false;
-            }
+            IsPrimaryButtonEnabled = DialogModel.Opponent.SharedDir != null && OpponentName.Text != "" && opponentNameUnique;
         }
     }
 }

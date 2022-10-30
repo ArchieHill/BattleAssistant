@@ -42,7 +42,7 @@ namespace Battle_Assistant.Models
                 {
                     sharedDir = value;
                     sDWatcher = new SharedDriveWatcher(sharedDir);
-                    NotifyPropertyChanged("SharedDir");
+                    NotifyPropertyChanged();
                 }
             }
         }

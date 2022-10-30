@@ -1,4 +1,4 @@
-﻿// AboutPage.xaml.cs
+﻿// ObservableObject.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -20,29 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Microsoft.UI.Xaml.Controls;
-using Windows.ApplicationModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace Battle_Assistant.Views
+namespace Battle_Assistant.Common
 {
-    /// <summary>
-    /// An about page for the application
-    /// </summary>
-    public sealed partial class AboutPage : Page
+    public class ObservableObject : INotifyPropertyChanged
     {
-        public string Version
-        {
-            get
-            {
-                PackageVersion version = Package.Current.Id.Version;
-                return $"{version.Major}.{version.Minor}.{version.Build}";
-            }
-        }
+        // A property changed event object
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public AboutPage()
+        /// <summary>
+        /// Notifies the page when a property has changed so the view can be updated
+        /// </summary>
+        /// <param name="propName">The property name</param>
+        protected void NotifyPropertyChanged([CallerMemberName] string propName = "")
         {
-            this.InitializeComponent();
-            DataContext = this;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

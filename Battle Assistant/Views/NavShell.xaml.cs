@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -67,6 +66,7 @@ namespace Battle_Assistant.Views
         ("battles", typeof(BattlesPage)),
         ("games", typeof(GamesPage)),
         ("opponents", typeof(OpponentsPage)),
+        ("gettingStarted", typeof(GettingStartedPage)),
         ("about", typeof(AboutPage)),
         };
 
@@ -83,11 +83,6 @@ namespace Battle_Assistant.Views
             // NavView doesn't load any page by default, so load home page.
             NavView.SelectedItem = NavView.MenuItems[0];
             NavView_Navigate("battles", new EntranceNavigationTransitionInfo());
-
-            if (!SettingsHelper.GetTipsExplained())
-            {
-                GamesPageTeachingTip.IsOpen = true;
-            }
         }
 
         /// <summary>
@@ -103,7 +98,7 @@ namespace Battle_Assistant.Views
             }
             else if (args.InvokedItemContainer != null)
             {
-                var navItemTag = args.InvokedItemContainer.Tag.ToString();
+                string navItemTag = args.InvokedItemContainer.Tag.ToString();
                 NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
         }
@@ -127,10 +122,10 @@ namespace Battle_Assistant.Views
             }
             // Get the page type before navigation so you can prevent duplicate
             // entries in the backstack.
-            var preNavPageType = ContentFrame.CurrentSourcePageType;
+            Type preNavPageType = ContentFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            if (_page != null && !Equals(preNavPageType, _page))
             {
                 ContentFrame.Navigate(_page, null, transitionInfo);
             }
@@ -192,22 +187,9 @@ namespace Battle_Assistant.Views
                     .OfType<NavigationViewItem>()
                     .First(n => n.Tag.Equals(item.Tag));
 
-
-
                 NavView.Header =
                     ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
-        }
-
-        private void GamesPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            OpponentsPageTeachingTip.IsOpen = true;
-        }
-
-        private void OpponentsPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            SettingsPageTeachingTip.IsOpen = true;
-            SettingsHelper.SaveTipsExplained(true);
         }
     }
 }

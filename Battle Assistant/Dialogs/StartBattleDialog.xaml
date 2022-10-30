@@ -18,7 +18,7 @@
                  IsOpen="False"/>
 
             <!-- Battle File Input -->
-            <StackPanel>
+            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>Battle File</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox Text="{Binding Battle.BattleFile, Mode=OneWay}" Width="380"/>
@@ -26,7 +26,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <CheckBox Content="Auto clean folders" Checked="AutoClean_Checked" Unchecked="AutoClean_Unchecked" ToolTipService.ToolTip="Deletes the battle files as the battle progresses. Only deletes the battle files that contain your turn."/>
+            <ToggleSwitch Header="Auto Clean" IsOn="{Binding Battle.AutoClean, Mode=TwoWay}" ToolTipService.ToolTip="Deletes the battle files as the battle progresses. Only deletes the battle files that contain your turn."/>
 
             <!-- Opponent Input -->
             <ComboBox Header="Opponent" PlaceholderText="No Opponents Added" 

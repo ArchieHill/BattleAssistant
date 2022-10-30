@@ -20,17 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.ComponentModel;
+using Battle_Assistant.Common;
 using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Battle_Assistant.ViewModels
 {
-    public class SettingsPageViewModel : INotifyPropertyChanged
+    public class SettingsPageViewModel : ObservableObject
     {
-        // A property changed event object
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private NumberBox flashAmountBox;
 
         private ToggleSwitch autoCreateOpponentSwitch;
@@ -49,15 +46,6 @@ namespace Battle_Assistant.ViewModels
             this.autoCreateGameSwitch = autoCreateGameSwitch;
         }
 
-        /// <summary>
-        /// Notifies the page when a property has changed so the view can be updated
-        /// </summary>
-        /// <param name="propName">The property name</param>
-        protected void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         private bool flashIcon;
         public bool FlashIcon
         {
@@ -68,7 +56,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     flashIcon = value;
                     SettingsHelper.SaveFlashIcon(flashIcon);
-                    NotifyPropertyChanged("FlashIcon");
+                    NotifyPropertyChanged();
 
                     if (flashIcon)
                     {
@@ -95,7 +83,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     flashAmount = value;
                     SettingsHelper.SaveFlashAmount(flashAmount);
-                    NotifyPropertyChanged("FlashAmount");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -110,7 +98,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     autoSelectOpponent = value;
                     SettingsHelper.SaveAutoSelectOpponent(autoSelectOpponent);
-                    NotifyPropertyChanged("AutoSelectOpponent");
+                    NotifyPropertyChanged();
 
                     if (autoSelectOpponent)
                     {
@@ -136,7 +124,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     autoCreateOpponent = value;
                     SettingsHelper.SaveAutoCreateOpponent(autoCreateOpponent);
-                    NotifyPropertyChanged("AutoCreateOpponent");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -151,7 +139,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     autoSelectGame = value;
                     SettingsHelper.SaveAutoSelectGame(autoSelectGame);
-                    NotifyPropertyChanged("AutoSelectGame");
+                    NotifyPropertyChanged();
 
                     if (autoSelectGame)
                     {
@@ -177,7 +165,7 @@ namespace Battle_Assistant.ViewModels
                 {
                     autoCreateGame = value;
                     SettingsHelper.SaveAutoCreateGame(autoCreateGame);
-                    NotifyPropertyChanged("AutoCreateGame");
+                    NotifyPropertyChanged();
                 }
             }
         }

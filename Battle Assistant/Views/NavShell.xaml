@@ -12,7 +12,8 @@
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
+        <!-- App title bar section -->
         <Grid x:Name="AppTitleBar">
             <Image Source="/Assets/Square44x44Logo.targetsize-32.png"
                    HorizontalAlignment="Left" 
@@ -25,7 +26,8 @@
                        VerticalAlignment="Center"
                        Margin="48,0,0,0"/>
         </Grid>
-
+        
+        <!-- Navigation bar section -->
         <NavigationView x:Name="NavView" Grid.Row="1"
                         Loaded="NavView_Loaded"
                         ItemInvoked="NavView_ItemInvoked"
@@ -37,48 +39,33 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Battles" Tag="battles">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/swordsIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/swordsIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem x:Name="GamesPage" Content="Games" Tag="games">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/joystickIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem x:Name="OpponentPage" Content="Opponents" Tag="opponents">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/userIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/userIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
+                <NavigationViewItem Icon="GoToStart" Content="Getting Started" Tag="gettingStarted"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.FooterMenuItems>
 
+            <!-- Content section -->
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>
         </NavigationView>
-
-        <!-- Teaching tips take up no layout space -->
-        <TeachingTip x:Name="GamesPageTeachingTip"
-                     Target="{x:Bind GamesPage}"
-                     Title="Add a game"
-                     Subtitle="A game needs to be added before a battle can be started"
-                     Closed="GamesPageTeachingTip_Closed"/>
-        
-        <TeachingTip x:Name="OpponentsPageTeachingTip"
-                     Target="{x:Bind OpponentPage}"
-                     Title="Add an opponent"
-                     Subtitle="An opponent needs to be added before a battle can be started"
-                     Closed="OpponentsPageTeachingTip_Closed"/>
-
-        <TeachingTip x:Name="SettingsPageTeachingTip"
-                     Title="Check Settings"
-                     Subtitle="Remember to give settings a look, there are a fair few to customise the app to your preference."/>
     </Grid>
 </Window>

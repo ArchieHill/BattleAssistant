@@ -45,7 +45,7 @@ namespace Battle_Assistant.Helpers
         /// <param name="battle">The battle that has its file being copied</param>
         public static void CopyToIncomingEmail(BattleModel battle)
         {
-            string fileInIncomingEmailPath = battle.Game.IncomingEmailFolder + "\\" + Path.GetFileName(battle.BattleFile);
+            string fileInIncomingEmailPath = $@"{battle.Game.IncomingEmailFolder}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
@@ -89,7 +89,7 @@ namespace Battle_Assistant.Helpers
         /// <param name="battle">The battle that has its file being copied</param>
         public static void CopyToSharedDrive(BattleModel battle)
         {
-            string fileInSharedDrivePath = battle.Opponent.SharedDir + "\\" + Path.GetFileName(battle.BattleFile);
+            string fileInSharedDrivePath = $@"{battle.Opponent.SharedDir}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
@@ -117,7 +117,7 @@ namespace Battle_Assistant.Helpers
             }
             catch (Exception e)
             {
-                Debug.WriteLine("File failed to copy: " + e.Message);
+                Debug.WriteLine("File failed to copy: {0}", e.Message);
             }
 
         }
@@ -166,7 +166,7 @@ namespace Battle_Assistant.Helpers
         /// <returns>The full path of the constructed battle file</returns>
         public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
         {
-            return folderPath + "\\" + battleName + " " + number.ToString("D3") + ".ema";
+            return $@"{folderPath}\{battleName} {number.ToString("D3")}.ema";
         }
     }
 }

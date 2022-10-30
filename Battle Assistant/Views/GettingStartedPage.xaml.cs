@@ -1,4 +1,4 @@
-﻿// AddGameDialog.xaml.cs
+﻿// GettingStartedPage.xaml.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -20,59 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Battle_Assistant.DialogModels;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Battle_Assistant.Dialogs
+namespace Battle_Assistant.Views
 {
     /// <summary>
-    /// A content dialog to add a game
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddGameDialog : ContentDialog
+    public sealed partial class GettingStartedPage : Page
     {
-        private AddGameDialogModel DialogModel { get; set; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public AddGameDialog()
+        public GettingStartedPage()
         {
             this.InitializeComponent();
-            DialogModel = new AddGameDialogModel(DialogInfoBar);
-            DataContext = DialogModel;
-        }
-
-        /// <summary>
-        /// Add Game Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void AddGame_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            DialogModel.AddGame();
-        }
-
-        /// <summary>
-        /// Select Game Directory Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void SelectGameDir_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogModel.SelectGameDir();
-            CheckInputs();
-        }
-
-        /// <summary>
-        /// Checks the inputs to enable the primary button
-        /// </summary>
-        private void CheckInputs()
-        {
-            IsPrimaryButtonEnabled = DialogModel.Game.GameDir != null;
         }
     }
 }

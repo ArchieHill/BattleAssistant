@@ -52,8 +52,6 @@ namespace Battle_Assistant.Helpers
         private const string FLASH_TASK_BAR = "flashTaskBar";
         private const string FLASH_AMOUNT = "flashAmount";
 
-        private const string TIPS_EXPLAINED = "tipsExplained";
-
         /// <summary>
         /// Saves the theme
         /// </summary>
@@ -141,15 +139,6 @@ namespace Battle_Assistant.Helpers
         public static void SaveFlashAmount(int flashAmount)
         {
             localSettings.Values[FLASH_AMOUNT] = flashAmount;
-        }
-
-        /// <summary>
-        /// Saves the tips explained flag
-        /// </summary>
-        /// <param name="tipsExplained"></param>
-        public static void SaveTipsExplained(bool tipsExplained)
-        {
-            localSettings.Values[TIPS_EXPLAINED] = tipsExplained;
         }
 
         /// <summary>
@@ -272,20 +261,6 @@ namespace Battle_Assistant.Helpers
                 return (int)flashAmount;
             }
             return 5;
-        }
-
-        /// <summary>
-        /// Gets the tips explained flag
-        /// </summary>
-        /// <returns>bool of the tips explained, defaults to false</returns>
-        public static bool GetTipsExplained()
-        {
-            bool? tipsExplained = (bool?)localSettings.Values[TIPS_EXPLAINED];
-            if (tipsExplained != null)
-            {
-                return (bool)tipsExplained;
-            }
-            return false;
         }
     }
 }

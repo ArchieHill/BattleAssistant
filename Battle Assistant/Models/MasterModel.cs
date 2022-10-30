@@ -20,15 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.ComponentModel;
+using Battle_Assistant.Common;
 
 namespace Battle_Assistant.Models
 {
-    public abstract class MasterModel : INotifyPropertyChanged
+    public abstract class MasterModel : ObservableObject
     {
-        // A property changed event object
-        public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -44,15 +41,6 @@ namespace Battle_Assistant.Models
             Index = -1;
         }
 
-        /// <summary>
-        /// Notifies the page when a property has changed so the view can be updated
-        /// </summary>
-        /// <param name="propName">The property name</param>
-        protected void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         private string name;
         public string Name
         {
@@ -62,7 +50,7 @@ namespace Battle_Assistant.Models
                 if (name != value)
                 {
                     name = value;
-                    NotifyPropertyChanged("Name");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -76,7 +64,7 @@ namespace Battle_Assistant.Models
                 if (index != value)
                 {
                     index = value;
-                    NotifyPropertyChanged("Index");
+                    NotifyPropertyChanged();
                 }
             }
         }

@@ -58,12 +58,17 @@ namespace Battle_Assistant.DialogModels
             }
         }
 
+        /// <summary>
+        /// Deletes all the save files with the battles name
+        /// </summary>
+        /// <param name="folderPath">The folder being cleaned</param>
         private async void CleanFolder(string folderPath)
         {
             StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(folderPath);
             foreach (StorageFile file in await folder.GetFilesAsync())
             {
-                if (battle.Name == FileHelper.GetFileDisplayName(file.Path))
+                string fileDisplayName = FileHelper.GetFileDisplayName(file.Path);
+                if (battle.Name == fileDisplayName || battle.Name == "~" + fileDisplayName)
                 {
                     await file.DeleteAsync();
                 }

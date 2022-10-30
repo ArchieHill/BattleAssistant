@@ -1,0 +1,122 @@
+﻿<Page
+    x:Class="Battle_Assistant.Views.GettingStartedPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Battle_Assistant.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Style="{StaticResource FrameStackPanel}">
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Adding an Game</TextBlock>
+
+        <RichTextBlock> 
+            <Paragraph Margin="0,0,0,12">
+                Before starting a battle with your opponent you first need to add the combat mission game the battle will use and your opponent.
+            </Paragraph>
+            <Paragraph>
+                Navigate to the games page and click Add Game.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/AddGameDialog.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                The dialog will appear asking you to select the folder that contains the Game Files folder of the combat mission game. Click select folder and select the folder.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/SelectingGameFolder.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                Here I am selecting the Cold War folder in my Documents, as this is the folder that contains my Cold War Game Files folder as shown below.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/GameFolderContents.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                Once the file is selected click Add Game, the dialog will disappear and the Cold War item will show in the list.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/AddGamePage.png" Stretch="None"/>
+
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Adding an Opponent</TextBlock>
+        
+        <RichTextBlock>
+            <Paragraph>
+                Next go to the opponent's page and click Add Opponent.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/AddOpponentDialog.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                The dialog will appear. You can name your opponent whatever you want. Then click Select Folder and select the shared drive folder.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/SharedDriveSelection.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph Margin="0,0,0,12">
+                Here I’m selecting a Dropbox folder that me and Stardekk share. Other shared folders like Google Drive can also be selected.
+            </Paragraph>
+            <Paragraph>
+                Next click Add Opponent and your opponent will be added to the list.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/AddOpponentPage.png" Stretch="None"/>
+
+        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Starting the Battle</TextBlock>
+
+        <RichTextBlock>
+            <Paragraph Margin="0,0,0,12">
+                Finally go to the Battles page and click Start Battle.
+            </Paragraph>
+            <Paragraph>
+                The dialog opens and the first thing to do is select the battle file.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/StartBattleDialog.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                This is the combat mission save file generated from the game. You should select it from either your outgoing email folder or the shared drive you have with your opponent.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/BattleFileSelection.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph Margin="0,0,0,12">
+                Here I’m selecting a battle file from the shared drive.
+            </Paragraph>
+            <Paragraph Margin="0,0,0,12">
+                Turning on auto clean will automatically delete your files as the battle progresses to ensure you don’t run out of space in the shared folder.
+            </Paragraph>
+            <Paragraph Margin="0,0,0,12">
+                Select your opponent from its dropdown box and the game you're playing from its dropdown box.
+            </Paragraph>
+            <Paragraph>
+                Once that’s done click start battle.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Source="/Assets/GettingStartedImages/StartBattlePage.png" Stretch="None"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                If the file was in the shared drive the application will copy the file to your incoming email folder and tell you it's your turn, if it was in the outgoing email folder it will move it to the shared drive and assume it’s your opponent's turn.
+            </Paragraph>
+        </RichTextBlock>
+    </StackPanel>
+</Page>

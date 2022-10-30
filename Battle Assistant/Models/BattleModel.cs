@@ -39,7 +39,7 @@ namespace Battle_Assistant.Models
                 if (status != value)
                 {
                     status = value;
-                    NotifyPropertyChanged("Status");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace Battle_Assistant.Models
                 if (lastAction != value)
                 {
                     lastAction = value;
-                    NotifyPropertyChanged("LastAction");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace Battle_Assistant.Models
                 {
                     battleFile = value;
                     SetVarsFromGameFile(battleFile);
-                    NotifyPropertyChanged("BattleFile");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace Battle_Assistant.Models
                 if (currentFileNum != value)
                 {
                     currentFileNum = value;
-                    NotifyPropertyChanged("CurrentFileNum");
+                    NotifyPropertyChanged();
                 }
             }
         }

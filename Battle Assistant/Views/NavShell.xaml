@@ -54,7 +54,7 @@
                         <BitmapIcon UriSource="/Assets/Icons/userIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                
+
                 <!-- Help pages section -->
                 <NavigationViewItem x:Name="NavViewHelpSection" Icon="Help" Content="Help" Tag="help">
                     <NavigationViewItem.MenuItems>
@@ -71,13 +71,13 @@
                                 <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        
+
                         <NavigationViewItem Content="Opponents Page" Tag="helpOpponents">
                             <NavigationViewItem.Icon>
                                 <BitmapIcon UriSource="/Assets/userIcon.png"/>
                             </NavigationViewItem.Icon>
                         </NavigationViewItem>
-                        
+
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -85,28 +85,11 @@
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.FooterMenuItems>
-            
+
             <!-- Content section -->
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>
         </NavigationView>
-
-        <!-- Teaching tips take up no layout space -->
-        <TeachingTip x:Name="GamesPageTeachingTip"
-                     Target="{x:Bind GamesPage}"
-                     Title="Add a game"
-                     Subtitle="A game needs to be added before a battle can be started"
-                     Closed="GamesPageTeachingTip_Closed"/>
-        
-        <TeachingTip x:Name="OpponentsPageTeachingTip"
-                     Target="{x:Bind OpponentPage}"
-                     Title="Add an opponent"
-                     Subtitle="An opponent needs to be added before a battle can be started"
-                     Closed="OpponentsPageTeachingTip_Closed"/>
-
-        <TeachingTip x:Name="SettingsPageTeachingTip"
-                     Title="Check Settings"
-                     Subtitle="Remember to give settings a look, there are a fair few to customise the app to your preference."/>
     </Grid>
 </Window>

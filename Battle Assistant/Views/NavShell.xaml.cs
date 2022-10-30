@@ -88,11 +88,6 @@ namespace Battle_Assistant.Views
             // NavView doesn't load any page by default, so load home page.
             NavView.SelectedItem = NavView.MenuItems[0];
             NavView_Navigate("battles", new EntranceNavigationTransitionInfo());
-
-            if (!SettingsHelper.GetTipsExplained())
-            {
-                GamesPageTeachingTip.IsOpen = true;
-            }
         }
 
         /// <summary>
@@ -201,17 +196,6 @@ namespace Battle_Assistant.Views
                 NavView.Header =
                     ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
-        }
-
-        private void GamesPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            OpponentsPageTeachingTip.IsOpen = true;
-        }
-
-        private void OpponentsPageTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            SettingsPageTeachingTip.IsOpen = true;
-            SettingsHelper.SaveTipsExplained(true);
         }
     }
 }

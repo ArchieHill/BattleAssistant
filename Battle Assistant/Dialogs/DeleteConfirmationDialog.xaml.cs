@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using Battle_Assistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -55,7 +54,7 @@ namespace Battle_Assistant.Dialogs
                 DialogInfoBar.Message = "Cannot be deleted as a battle has this, end the battles to allow this to be deleted";
                 DialogInfoBar.IsOpen = true;
                 IsPrimaryButtonEnabled = false;
-            }   
+            }
         }
     }
 }

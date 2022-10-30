@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.ComponentModel;
 using Battle_Assistant.Common;
 using Battle_Assistant.Helpers;
 using Microsoft.UI.Xaml.Controls;

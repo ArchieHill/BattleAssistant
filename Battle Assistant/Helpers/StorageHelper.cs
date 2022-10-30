@@ -123,7 +123,7 @@ namespace Battle_Assistant.Helpers
             catch (FileNotFoundException e)
             {
                 //With no file found, assume it doesn't exist and move on
-                Debug.WriteLine("File not found: " + e.Message);
+                Debug.WriteLine("File not found: {0}", e.Message);
                 return new ObservableCollection<T>();
             }
             catch (Exception e)

@@ -227,7 +227,7 @@ namespace Battle_Assistant.DialogModels
             App.Battles.Add(Battle);
             //Assign its index so we know where to look to delete it
             Battle.Index = App.Battles.IndexOf(Battle);
-            if (File.Exists(Battle.Game.OutgoingEmailFolder + "\\" + Path.GetFileName(Battle.BattleFile)))
+            if (File.Exists($@"{Battle.Game.OutgoingEmailFolder}\{Path.GetFileName(Battle.BattleFile)}"))
             {
                 FileHelper.CopyToSharedDrive(Battle);
             }

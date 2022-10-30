@@ -55,7 +55,7 @@ namespace Battle_Assistant.Watchers
                 return;
             }
             //Rename the file in the incoming email folder to show that that file is waiting on opponent
-            File.Move(battle.BattleFile, battle.Game.IncomingEmailFolder + "\\~" + Path.GetFileName(battle.BattleFile));
+            File.Move(battle.BattleFile, $@"{battle.Game.IncomingEmailFolder}\~{Path.GetFileName(battle.BattleFile)}");
             File.Delete(battle.BattleFile);
 
             battle.BattleFile = newBattleFilePath;

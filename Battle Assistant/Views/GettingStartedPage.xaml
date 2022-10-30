@@ -20,7 +20,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/AddGameDialog.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/AddGameDialog.png"/>
 
         <RichTextBlock>
             <Paragraph>
@@ -28,7 +28,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/SelectingGameFolder.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/SelectingGameFolder.png"/>
 
         <RichTextBlock>
             <Paragraph>
@@ -36,7 +36,15 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/GameFolderContents.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/SteamGameFilesLocation.png"/>
+
+        <RichTextBlock>
+            <Paragraph>
+                If you have the combat mission game on steam the folder need to be selected for the game will likely be somewhere around here.
+            </Paragraph>
+        </RichTextBlock>
+
+        <Image Style="{StaticResource Help Image}"  Source="/Assets/GettingStartedImages/GameFolderContents.png"/>
 
         <RichTextBlock>
             <Paragraph>
@@ -44,7 +52,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/AddGamePage.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/AddGamePage.png"/>
 
         <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Adding an Opponent</TextBlock>
         
@@ -54,7 +62,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/AddOpponentDialog.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/AddOpponentDialog.png"/>
 
         <RichTextBlock>
             <Paragraph>
@@ -62,7 +70,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/SharedDriveSelection.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/SharedDriveSelection.png"/>
 
         <RichTextBlock>
             <Paragraph Margin="0,0,0,12">
@@ -73,7 +81,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/AddOpponentPage.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/AddOpponentPage.png"/>
 
         <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Starting the Battle</TextBlock>
 
@@ -86,7 +94,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/StartBattleDialog.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/StartBattleDialog.png"/>
 
         <RichTextBlock>
             <Paragraph>
@@ -94,7 +102,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/BattleFileSelection.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/BattleFileSelection.png"/>
 
         <RichTextBlock>
             <Paragraph Margin="0,0,0,12">
@@ -111,7 +119,7 @@
             </Paragraph>
         </RichTextBlock>
 
-        <Image Source="/Assets/GettingStartedImages/StartBattlePage.png" Stretch="None"/>
+        <Image Style="{StaticResource Help Image}" Source="/Assets/GettingStartedImages/StartBattlePage.png"/>
 
         <RichTextBlock>
             <Paragraph>

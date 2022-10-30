@@ -60,18 +60,34 @@ namespace Battle_Assistant.DialogModels
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                if (Directory.Exists(folder.Path + "\\Game Files"))
-                {
-                    Game.GameDir = folder.Path;
-                }
-                else
+                if (!Directory.Exists($@"{folder.Path}\Game Files"))
                 {
                     dialogInfoBar.Severity = InfoBarSeverity.Error;
                     dialogInfoBar.Title = "Invalid folder";
                     dialogInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
                     dialogInfoBar.IsOpen = true;
+                    return;
                 }
 
+                if (!Directory.Exists($@"{folder.Path}\Game Files\Incoming Email"))
+                {
+                    dialogInfoBar.Severity = InfoBarSeverity.Error;
+                    dialogInfoBar.Title = "Invalid folder";
+                    dialogInfoBar.Message = "The folder selected doesn't contain an Incoming Email folder in the Game Files folder";
+                    dialogInfoBar.IsOpen = true;
+                    return;
+                }
+
+                if (!Directory.Exists($@"{folder.Path}\Game Files\Outgoing Email"))
+                {
+                    dialogInfoBar.Severity = InfoBarSeverity.Error;
+                    dialogInfoBar.Title = "Invalid folder";
+                    dialogInfoBar.Message = "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder";
+                    dialogInfoBar.IsOpen = true;
+                    return;
+                }
+
+                Game.GameDir = folder.Path;
             }
         }
 

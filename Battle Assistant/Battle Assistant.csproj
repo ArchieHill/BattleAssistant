@@ -29,6 +29,10 @@
     <None Remove="Dialogs\DeleteConfirmationDialog.xaml" />
     <None Remove="Dialogs\EndBattleConfirmationDialog.xaml" />
     <None Remove="Dialogs\StartBattleDialog.xaml" />
+    <None Remove="Views\HelpBattlesPage.xaml" />
+    <None Remove="Views\HelpPages\GettingStartedPage.xaml" />
+    <None Remove="Views\HelpPages\HelpGamesPage.xaml" />
+    <None Remove="Views\HelpPages\HelpOpponentsPage.xaml" />
     <None Remove="Views\NavShell.xaml" />
     <None Remove="Views\OpponentsPage.xaml" />
   </ItemGroup>
@@ -43,10 +47,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.124" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -106,5 +110,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Admin\Documents\SideProjects\Battle-Assistant\Battle Assistant\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPages\GettingStartedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPages\HelpOpponentsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPages\HelpGamesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HelpPages\HelpBattlesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\GettingStartedImages\" />
   </ItemGroup>
 </Project>

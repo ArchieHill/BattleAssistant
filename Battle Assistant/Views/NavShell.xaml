@@ -12,7 +12,8 @@
             <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
+        <!-- App title bar section -->
         <Grid x:Name="AppTitleBar">
             <Image Source="/Assets/Square44x44Logo.targetsize-32.png"
                    HorizontalAlignment="Left" 
@@ -25,7 +26,8 @@
                        VerticalAlignment="Center"
                        Margin="48,0,0,0"/>
         </Grid>
-
+        
+        <!-- Navigation bar section -->
         <NavigationView x:Name="NavView" Grid.Row="1"
                         Loaded="NavView_Loaded"
                         ItemInvoked="NavView_ItemInvoked"
@@ -37,28 +39,54 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Battles" Tag="battles">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/swordsIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/swordsIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem x:Name="GamesPage" Content="Games" Tag="games">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/joystickIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
                 <NavigationViewItem x:Name="OpponentPage" Content="Opponents" Tag="opponents">
                     <NavigationViewItem.Icon>
-                        <BitmapIcon UriSource="/Assets/userIcon.png"/>
+                        <BitmapIcon UriSource="/Assets/Icons/userIcon.png"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                
+                <!-- Help pages section -->
+                <NavigationViewItem x:Name="NavViewHelpSection" Icon="Help" Content="Help" Tag="help">
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Icon="GoToStart" Content="Getting Started" Tag="gettingStarted"/>
 
+                        <NavigationViewItem Content="Battles Page" Tag="helpBattles">
+                            <NavigationViewItem.Icon>
+                                <BitmapIcon UriSource="/Assets/swordsIcon.png"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+
+                        <NavigationViewItem Content="Games Page" Tag="helpGames">
+                            <NavigationViewItem.Icon>
+                                <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        
+                        <NavigationViewItem Content="Opponents Page" Tag="helpOpponents">
+                            <NavigationViewItem.Icon>
+                                <BitmapIcon UriSource="/Assets/userIcon.png"/>
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
                 <NavigationViewItem Icon="Library" Content="About" Tag="about"/>
             </NavigationView.FooterMenuItems>
-
+            
+            <!-- Content section -->
             <ScrollViewer>
                 <Frame x:Name="ContentFrame" NavigationFailed="ContentFrame_NavigationFailed"/>
             </ScrollViewer>

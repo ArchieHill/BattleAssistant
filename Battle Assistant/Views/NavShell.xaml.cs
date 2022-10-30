@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Battle_Assistant.Helpers;
+using Battle_Assistant.Views.HelpPages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -67,6 +68,10 @@ namespace Battle_Assistant.Views
         ("battles", typeof(BattlesPage)),
         ("games", typeof(GamesPage)),
         ("opponents", typeof(OpponentsPage)),
+        ("gettingStarted", typeof(GettingStartedPage)),
+        ("helpBattles", typeof(HelpBattlesPage)),
+        ("helpGames", typeof(HelpGamesPage)),
+        ("helpOpponents", typeof(HelpOpponentsPage)),
         ("about", typeof(AboutPage)),
         };
 
@@ -103,7 +108,7 @@ namespace Battle_Assistant.Views
             }
             else if (args.InvokedItemContainer != null)
             {
-                var navItemTag = args.InvokedItemContainer.Tag.ToString();
+                string navItemTag = args.InvokedItemContainer.Tag.ToString();
                 NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
         }
@@ -127,10 +132,10 @@ namespace Battle_Assistant.Views
             }
             // Get the page type before navigation so you can prevent duplicate
             // entries in the backstack.
-            var preNavPageType = ContentFrame.CurrentSourcePageType;
+            Type preNavPageType = ContentFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            if (_page != null && !Equals(preNavPageType, _page))
             {
                 ContentFrame.Navigate(_page, null, transitionInfo);
             }
@@ -185,14 +190,13 @@ namespace Battle_Assistant.Views
 
                 //Get all the menu items including the footer menu items
                 var navItems = NavView.MenuItems.Select(i => (NavigationViewItem)i).ToList();
+                navItems.AddRange(NavViewHelpSection.MenuItems.Select(i => (NavigationViewItem)i));
                 navItems.AddRange(NavView.FooterMenuItems.Select(i => (NavigationViewItem)i));
 
                 //Find and set the selected nav item
                 NavView.SelectedItem = navItems
                     .OfType<NavigationViewItem>()
                     .First(n => n.Tag.Equals(item.Tag));
-
-
 
                 NavView.Header =
                     ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();

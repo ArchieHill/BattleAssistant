@@ -69,9 +69,6 @@ namespace Battle_Assistant.Views
         ("games", typeof(GamesPage)),
         ("opponents", typeof(OpponentsPage)),
         ("gettingStarted", typeof(GettingStartedPage)),
-        ("helpBattles", typeof(HelpBattlesPage)),
-        ("helpGames", typeof(HelpGamesPage)),
-        ("helpOpponents", typeof(HelpOpponentsPage)),
         ("about", typeof(AboutPage)),
         };
 
@@ -185,7 +182,6 @@ namespace Battle_Assistant.Views
 
                 //Get all the menu items including the footer menu items
                 var navItems = NavView.MenuItems.Select(i => (NavigationViewItem)i).ToList();
-                navItems.AddRange(NavViewHelpSection.MenuItems.Select(i => (NavigationViewItem)i));
                 navItems.AddRange(NavView.FooterMenuItems.Select(i => (NavigationViewItem)i));
 
                 //Find and set the selected nav item

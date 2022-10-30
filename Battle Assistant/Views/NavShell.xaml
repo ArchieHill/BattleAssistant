@@ -55,31 +55,7 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
 
-                <!-- Help pages section -->
-                <NavigationViewItem x:Name="NavViewHelpSection" Icon="Help" Content="Help" Tag="help">
-                    <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Icon="GoToStart" Content="Getting Started" Tag="gettingStarted"/>
-
-                        <NavigationViewItem Content="Battles Page" Tag="helpBattles">
-                            <NavigationViewItem.Icon>
-                                <BitmapIcon UriSource="/Assets/swordsIcon.png"/>
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-
-                        <NavigationViewItem Content="Games Page" Tag="helpGames">
-                            <NavigationViewItem.Icon>
-                                <BitmapIcon UriSource="/Assets/joystickIcon.png"/>
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-
-                        <NavigationViewItem Content="Opponents Page" Tag="helpOpponents">
-                            <NavigationViewItem.Icon>
-                                <BitmapIcon UriSource="/Assets/userIcon.png"/>
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-
-                    </NavigationViewItem.MenuItems>
-                </NavigationViewItem>
+                <NavigationViewItem Icon="GoToStart" Content="Getting Started" Tag="gettingStarted"/>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>

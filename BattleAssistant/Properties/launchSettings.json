@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Battle-Assistant (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Battle-Assistant (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

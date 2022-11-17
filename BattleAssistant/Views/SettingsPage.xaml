@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="BattleAssistant.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BattleAssistant.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <StackPanel Style="{StaticResource FrameStackPanel}">
+        <StackPanel Style="{StaticResource LabelContentStackPanel}">
+            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Application Theme</TextBlock>
+
+            <StackPanel x:Name="ThemePanel">
+                <RadioButton Content="Light" Tag="Light" Checked="OnThemeModeChecked"/>
+                <RadioButton Content="Dark" Tag="Dark" Checked="OnThemeModeChecked"/>
+                <RadioButton Content="Use System Settings" Tag="Default" Checked="OnThemeModeChecked"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource LabelContentStackPanel}">
+            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Auto Selection and Creation</TextBlock>
+
+            <ToggleSwitch Header="Auto Select Opponent" IsOn="{Binding AutoSelectOpponent, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the opponent when the battle file is selected when starting a battle."/>
+            <ToggleSwitch x:Name="AutoCreateOpponentSwitch" Header="Auto Create Opponent" IsOn="{Binding AutoCreateOpponent, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the opponent when selecting, it will create a new opponent." />
+            <ToggleSwitch Header="Auto Select Game" IsOn="{Binding AutoSelectGame, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the game when the battle file is selected when starting a battle."/>
+            <ToggleSwitch x:Name="AutoCreateGameSwitch"  Header="Auto Create Game" IsOn="{Binding AutoCreateGame, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the game when selecting, it will create a new game."/>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource LabelContentStackPanel}">
+            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Task Bar</TextBlock>
+
+            <ToggleSwitch Header="Flash Icon with New Turn" IsOn="{Binding FlashIcon, Mode=TwoWay}" ToolTipService.ToolTip="When a new turn is recieved and copied to the incoming folder, the app icon on the task bar flashes."/>
+
+            <NumberBox x:Name="FlashAmountBox" 
+                       Header="Icon flash amount" 
+                       Value="{Binding FlashAmount, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" 
+                       SmallChange="1" LargeChange="5" 
+                       Minimum="1" Maximum="50"
+                       HorizontalAlignment="Left"
+                       IsEnabled="False"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -102,7 +102,7 @@ namespace BattleAssistant.DialogModels
 
         public BattleModel Battle { get; set; }
 
-        private InfoBar dialogInfoBar;
+        private readonly InfoBar DialogInfoBar;
 
         /// <summary>
         /// Constructor
@@ -112,7 +112,7 @@ namespace BattleAssistant.DialogModels
             Battle = new BattleModel();
             Games = App.Games;
             Opponents = App.Opponents;
-            this.dialogInfoBar = dialogInfoBar;
+            DialogInfoBar = dialogInfoBar;
         }
 
         /// <summary>
@@ -130,10 +130,10 @@ namespace BattleAssistant.DialogModels
             {
                 if (!FileHelper.CheckFileIsValid(file.Path))
                 {
-                    dialogInfoBar.Severity = InfoBarSeverity.Error;
-                    dialogInfoBar.Title = "Invalid file";
-                    dialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
-                    dialogInfoBar.IsOpen = true;
+                    DialogInfoBar.Severity = InfoBarSeverity.Error;
+                    DialogInfoBar.Title = "Invalid file";
+                    DialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
+                    DialogInfoBar.IsOpen = true;
                 }
 
                 Battle.BattleFile = file.Path;

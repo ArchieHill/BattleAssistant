@@ -3,14 +3,10 @@
 
 name: WinUI 3 MSIX app
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: release
 
 jobs:
-
+  #Build the packages
   build:
 
     strategy:
@@ -64,10 +60,11 @@ jobs:
         Appx_Package_Dir: Packages\
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
-
-    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload MSIX package
-      uses: actions/upload-artifact@v2
-      with:
-        name: MSIX Package
-        path: ${{ env.Solution_Name }}\\Packages
+        
+    # Upload the packages
+    - name: Upload builds
+      uses: fnkr/github-action-ghr@v1.3
+      env:
+        GHR_COMPRESS: zip
+        GHR_PATH: ${{ env.Solution_Name }}\\Packages
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

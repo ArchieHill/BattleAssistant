@@ -26,6 +26,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -37,21 +38,8 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public class StartBattleDialogModel : INotifyPropertyChanged
+    public class StartBattleDialogModel : ObservableObject
     {
-
-        // A property changed event object
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Notifies the page when a property has changed so the view can be updated
-        /// </summary>
-        /// <param name="propName">The property name</param>
-        protected void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         private GameModel selectedGame;
         public GameModel SelectedGame
         {

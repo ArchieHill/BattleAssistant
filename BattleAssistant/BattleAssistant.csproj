@@ -22,7 +22,7 @@
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <PackageCertificateKeyFile>Battle Assistant_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>BattleAssistant_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BattleAssistant_TemporaryKey_Base64.txt" />

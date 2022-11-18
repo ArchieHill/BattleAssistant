@@ -53,10 +53,9 @@ namespace BattleAssistant.Helpers
                 //Backup the game file if the option is selected
                 if (battle.Backup)
                 {
-                    string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string gameBackupFolder = $@"{docPath}\Battlefront\Combat Mission\Battle Backups\{battle.Name}";
-                    Directory.CreateDirectory(gameBackupFolder);
-                    File.Copy(battle.BattleFile, $@"{gameBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
+                    string battleBackupFolder = $@"{SettingsHelper.GetBackupFolderPath()}\{battle.Name}";
+                    Directory.CreateDirectory(battleBackupFolder);
+                    File.Copy(battle.BattleFile, $@"{battleBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
                 }
                 
                 battle.BattleFile = fileInIncomingEmailPath;

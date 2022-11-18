@@ -82,5 +82,10 @@ namespace BattleAssistant.Views
                 SettingsHelper.SaveTheme(selectedTheme);
             }
         }
+
+        private async void SelectBackupFolder_Click(object sender, RoutedEventArgs e)
+        {
+            await viewModel.SelectBackupFolder();
+        }
     }
 }

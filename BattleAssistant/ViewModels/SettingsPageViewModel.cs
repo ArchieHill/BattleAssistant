@@ -20,9 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.ComponentModel;
+using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using System;
 
 namespace BattleAssistant.ViewModels
 {
@@ -44,6 +49,24 @@ namespace BattleAssistant.ViewModels
             this.flashAmountBox = flashAmountBox;
             this.autoCreateOpponentSwitch = autoCreateOpponentSwitch;
             this.autoCreateGameSwitch = autoCreateGameSwitch;
+            BackupFolderPath = SettingsHelper.GetBackupFolderPath();
+        }
+
+
+        /// <summary>
+        /// Opens a folder picker to get the user to select the shared drive folder
+        /// </summary>
+        /// <returns>The folders path</returns>
+        public async Task SelectBackupFolder()
+        {
+            FolderPicker folderPicker = new FolderPicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
+            folderPicker.FileTypeFilter.Add("*");
+            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
+            {
+                BackupFolderPath = folder.Path;
+            }
         }
 
         private bool flashIcon;
@@ -57,15 +80,7 @@ namespace BattleAssistant.ViewModels
                     flashIcon = value;
                     SettingsHelper.SaveFlashIcon(flashIcon);
                     NotifyPropertyChanged();
-
-                    if (flashIcon)
-                    {
-                        flashAmountBox.IsEnabled = true;
-                    }
-                    else
-                    {
-                        flashAmountBox.IsEnabled = false;
-                    }
+                    flashAmountBox.IsEnabled = flashIcon;
                 }
             }
         }
@@ -100,15 +115,11 @@ namespace BattleAssistant.ViewModels
                     SettingsHelper.SaveAutoSelectOpponent(autoSelectOpponent);
                     NotifyPropertyChanged();
 
-                    if (autoSelectOpponent)
-                    {
-                        autoCreateOpponentSwitch.IsEnabled = true;
-                    }
-                    else
+                    autoCreateOpponentSwitch.IsEnabled = autoSelectOpponent;
+                    if(!autoSelectOpponent)
                     {
                         AutoCreateOpponent = false;
                         autoCreateGameSwitch.IsOn = false;
-                        autoCreateOpponentSwitch.IsEnabled = false;
                     }
                 }
             }
@@ -141,15 +152,11 @@ namespace BattleAssistant.ViewModels
                     SettingsHelper.SaveAutoSelectGame(autoSelectGame);
                     NotifyPropertyChanged();
 
-                    if (autoSelectGame)
-                    {
-                        autoCreateGameSwitch.IsEnabled = true;
-                    }
-                    else
+                    autoCreateGameSwitch.IsEnabled = autoSelectGame;
+                    if (!autoSelectGame)
                     {
                         AutoCreateGame = false;
                         autoCreateGameSwitch.IsOn = false;
-                        autoCreateGameSwitch.IsEnabled = false;
                     }
                 }
             }
@@ -165,6 +172,21 @@ namespace BattleAssistant.ViewModels
                 {
                     autoCreateGame = value;
                     SettingsHelper.SaveAutoCreateGame(autoCreateGame);
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string backupFolderPath;
+        public string BackupFolderPath
+        {
+            get { return backupFolderPath; }
+            set
+            {
+                if(backupFolderPath != value)
+                {
+                    backupFolderPath = value;
+                    SettingsHelper.SaveBackupFolderPath(backupFolderPath);
                     NotifyPropertyChanged();
                 }
             }

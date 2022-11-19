@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
@@ -43,6 +44,8 @@ namespace BattleAssistant.Helpers
         private const string X_POSITION_SETTING = "X";
         private const string Y_POSITION_SETTING = "Y";
         private const string WINDOW_POSITION_SETTING = "position";
+
+        private const string BACKUP_FOLDER_PATH = "backupFolderPath";
 
         private const string AUTO_SELECT_OPPONENT = "autoSelectOpponent";
         private const string AUTO_CREATE_OPPONENT = "autoCreateOpponent";
@@ -85,6 +88,15 @@ namespace BattleAssistant.Helpers
             windowPosition[X_POSITION_SETTING] = x;
             windowPosition[Y_POSITION_SETTING] = y;
             localSettings.Values[WINDOW_POSITION_SETTING] = windowPosition;
+        }
+
+        /// <summary>
+        /// Saves the backup folder path
+        /// </summary>
+        /// <param name="path">The path</param>
+        public static void SaveBackupFolderPath(string path)
+        {
+            localSettings.Values[BACKUP_FOLDER_PATH] = path;
         }
 
         /// <summary>
@@ -176,6 +188,21 @@ namespace BattleAssistant.Helpers
                     App.SetWindowPosition(x, y);
                 }
             }
+        }
+
+        /// <summary>
+        /// Get the backup folder path
+        /// </summary>
+        /// <returns>The folder path</returns>
+        public static string GetBackupFolderPath()
+        {
+            string backupFolderPath = (string)localSettings.Values[BACKUP_FOLDER_PATH];
+            if (backupFolderPath != null | backupFolderPath == "")
+            {
+                return backupFolderPath;
+            }
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            return $@"{docPath}\Battlefront\Combat Mission\Battle Backups";
         }
 
         /// <summary>

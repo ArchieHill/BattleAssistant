@@ -139,6 +139,10 @@ csharp_style_expression_bodied_local_functions = false:silent
 ###############################
 # VB Coding Conventions       #
 ###############################
+
+# IDE0057: Use range operator
+dotnet_diagnostic.IDE0057.severity = none
+
 [*.vb]
 # Modifier preferences
 visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:suggestion

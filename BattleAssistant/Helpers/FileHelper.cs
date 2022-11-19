@@ -57,7 +57,7 @@ namespace BattleAssistant.Helpers
                     Directory.CreateDirectory(battleBackupFolder);
                     File.Copy(battle.BattleFile, $@"{battleBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
                 }
-                
+
                 //Set the battle file to the new file location
                 battle.BattleFile = fileInIncomingEmailPath;
 
@@ -67,8 +67,8 @@ namespace BattleAssistant.Helpers
 
                 //Find the old file in the incoming email folder and delete it
                 string oldFileInIncomingEmail = ConstructBattleFilePath(
-                    battle.Game.IncomingEmailFolder, 
-                    $"~{battle.Name}", 
+                    battle.Game.IncomingEmailFolder,
+                    $"~{battle.Name}",
                     GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
 
                 if (File.Exists(oldFileInIncomingEmail))
@@ -103,11 +103,11 @@ namespace BattleAssistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
-                
+
                 //Find the old battle file in the outgoing email folder and delete it
                 string oldFileInOutgoingEmail = ConstructBattleFilePath(
-                    battle.Game.OutgoingEmailFolder, 
-                    battle.Name, 
+                    battle.Game.OutgoingEmailFolder,
+                    battle.Name,
                     GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
 
                 if (File.Exists(oldFileInOutgoingEmail))
@@ -117,8 +117,8 @@ namespace BattleAssistant.Helpers
 
                 //Find the old battle file in the shared drive and delete it
                 string oldFileInSharedDrive = ConstructBattleFilePath(
-                    battle.Opponent.SharedDir, 
-                    battle.Name, 
+                    battle.Opponent.SharedDir,
+                    battle.Name,
                     GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
 
                 //Find the old file in the incoming email folder and delete it
@@ -126,7 +126,7 @@ namespace BattleAssistant.Helpers
                 {
                     File.Delete(oldFileInSharedDrive);
                 }
-                
+
                 battle.BattleFile = fileInSharedDrivePath;
 
                 battle.Status = Status.WAITING;

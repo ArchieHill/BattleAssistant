@@ -20,14 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.ComponentModel;
+using System;
 using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using Microsoft.UI.Xaml.Controls;
-using Windows.Storage.Pickers;
 using Windows.Storage;
-using System;
+using Windows.Storage.Pickers;
 
 namespace BattleAssistant.ViewModels
 {
@@ -116,7 +115,7 @@ namespace BattleAssistant.ViewModels
                     NotifyPropertyChanged();
 
                     autoCreateOpponentSwitch.IsEnabled = autoSelectOpponent;
-                    if(!autoSelectOpponent)
+                    if (!autoSelectOpponent)
                     {
                         AutoCreateOpponent = false;
                         autoCreateGameSwitch.IsOn = false;
@@ -183,7 +182,7 @@ namespace BattleAssistant.ViewModels
             get { return backupFolderPath; }
             set
             {
-                if(backupFolderPath != value)
+                if (backupFolderPath != value)
                 {
                     backupFolderPath = value;
                     SettingsHelper.SaveBackupFolderPath(backupFolderPath);

@@ -12,7 +12,7 @@ YOU NEED WINDOWS 10 OR 11 TO USE THIS APPLICATION
 3. For first time installation you need to install the certificate, if your updating you don't need to install the certificate again.
 4. Double click on the .msxi file to install the application
 
-##Installing the certificate
+## Installing the certificate
 1. Double click on the .cer file and install it to you computer, ensure you install it to your local machine instead of current user. 
 2. If there is a page asking for a password for the private key, ignore it and click next.
 3. When selecting where to store the certificate, you need to select place all certificates in the following store and then browse to the Trusted People folder.

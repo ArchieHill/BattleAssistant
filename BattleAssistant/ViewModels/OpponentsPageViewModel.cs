@@ -31,7 +31,7 @@ using Microsoft.UI.Xaml.Controls;
 namespace BattleAssistant.ViewModels
 {
     /// <summary>
-    /// Opponent page view model
+    /// Opponents page view model
     /// </summary>
     public class OpponentsPageViewModel
     {

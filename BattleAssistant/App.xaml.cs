@@ -178,7 +178,7 @@ namespace BattleAssistant
         {
             foreach (BattleModel battle in Battles)
             {
-                if (battle.Status == Status.WAITING)
+                if (battle.Status == Status.Waiting)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
@@ -188,7 +188,7 @@ namespace BattleAssistant
                         FileHelper.CopyToIncomingEmail(battle);
                     }
                 }
-                else if (battle.Status == Status.YOUR_TURN)
+                else if (battle.Status == Status.YourTurn)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);

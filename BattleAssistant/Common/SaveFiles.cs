@@ -27,10 +27,10 @@ namespace BattleAssistant.Common
     /// </summary>
     public static class SaveFiles
     {
-        public const string GAMES = "games.json";
+        public const string Games = "games.json";
 
-        public const string BATTLES = "battles.json";
+        public const string Battles = "battles.json";
 
-        public const string OPPONENTS = "opponents.json";
+        public const string Opponents = "opponents.json";
     }
 }

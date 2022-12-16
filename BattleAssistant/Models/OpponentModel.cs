@@ -26,7 +26,7 @@ using BattleAssistant.Watchers;
 namespace BattleAssistant.Models
 {
     /// <summary>
-    /// Opponent model
+    /// Opponents model
     /// </summary>
     public class OpponentModel : MasterModel, IDisposable
     {

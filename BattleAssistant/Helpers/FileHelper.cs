@@ -35,10 +35,10 @@ namespace BattleAssistant.Helpers
     /// </summary>
     public static class FileHelper
     {
-        private const int FIRST_NUM_POS_SUBTRACTOR = -3;
-        private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
-        private const int PREVIOUS_TURN_SUBTRACTOR = -2;
-        private const int PREVIOUS_FILE_SUBTRACTOR = -1;
+        private const int FirstNumPosSubtractor = -3;
+        private const int LastFileNamePosSubtractor = -4;
+        private const int PreviousTurnSubtractor = -2;
+        private const int PreviousFileSubtractor = -1;
 
         /// <summary>
         /// Copies the battle file to the incoming email folder
@@ -53,15 +53,15 @@ namespace BattleAssistant.Helpers
 
                 battle.BattleFile = fileInIncomingEmailPath;
 
-                battle.Status = Status.YOUR_TURN;
-                battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
+                battle.Status = Status.YourTurn;
+                battle.LastAction = Actions.CopyToIncomingEmail;
                 StorageHelper.UpdateBattleFile();
 
                 //Find the old file in the incoming email folder and delete it
                 string oldFileInIncomingEmail = ConstructBattleFilePath(
                     battle.Game.IncomingEmailFolder,
                     $"~{battle.Name}",
-                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
+                    GetFileNumber(battle.BattleFile) + PreviousTurnSubtractor);
 
                 if (File.Exists(oldFileInIncomingEmail))
                 {
@@ -100,7 +100,7 @@ namespace BattleAssistant.Helpers
                 string oldFileInOutgoingEmail = ConstructBattleFilePath(
                     battle.Game.OutgoingEmailFolder,
                     battle.Name,
-                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
+                    GetFileNumber(battle.BattleFile) + PreviousTurnSubtractor);
 
                 if (File.Exists(oldFileInOutgoingEmail))
                 {
@@ -111,7 +111,7 @@ namespace BattleAssistant.Helpers
                 string oldFileInSharedDrive = ConstructBattleFilePath(
                     battle.Opponent.SharedDir,
                     battle.Name,
-                    GetFileNumber(battle.BattleFile) - PREVIOUS_FILE_SUBTRACTOR);
+                    GetFileNumber(battle.BattleFile) - PreviousFileSubtractor);
 
                 //Find the old file in the incoming email folder and delete it
                 if (File.Exists(oldFileInSharedDrive))
@@ -121,8 +121,8 @@ namespace BattleAssistant.Helpers
 
                 battle.BattleFile = fileInSharedDrivePath;
 
-                battle.Status = Status.WAITING;
-                battle.LastAction = Actions.COPY_TO_SHAREDDRIVE;
+                battle.Status = Status.Waiting;
+                battle.LastAction = Actions.CopyToSharedDrive;
                 StorageHelper.UpdateBattleFile();
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace BattleAssistant.Helpers
         public static string GetFileDisplayName(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            return fileName.Substring(0, fileName.Length + LAST_FILE_NAME_POS_SUBTRACTOR);
+            return fileName.Substring(0, fileName.Length + LastFileNamePosSubtractor);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace BattleAssistant.Helpers
         public static int GetFileNumber(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            return int.Parse(fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
+            return int.Parse(fileName.Substring(fileName.Length + FirstNumPosSubtractor));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace BattleAssistant.Helpers
         public static bool CheckFileIsValid(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            string fileNumbers = fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR);
+            string fileNumbers = fileName.Substring(fileName.Length + FirstNumPosSubtractor);
             return Regex.IsMatch(fileNumbers, @"\d\d\d");
 
         }

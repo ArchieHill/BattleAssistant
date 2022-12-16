@@ -48,7 +48,7 @@ namespace BattleAssistant.Dialogs
         }
 
         /// <summary>
-        /// Add Opponent Click Event
+        /// Add Opponents Click Event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

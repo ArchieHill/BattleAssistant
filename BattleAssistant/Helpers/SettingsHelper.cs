@@ -32,25 +32,26 @@ namespace BattleAssistant.Helpers
     public static class SettingsHelper
     {
         private static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        private const string THEME_SETTING = "theme";
+        private const string Theme = "theme";
 
-        private const string WIDTH_SETTING = "width";
-        private const int MIN_WIDTH = 1000;
-        private const string HEIGHT_SETTING = "height";
-        private const int MIN_HEIGHT = 550;
-        private const string WINDOW_SIZE_SETTING = "windowSize";
+        private const string Width = "width";
+        private const int MinWidth = 1000;
+        private const string Height = "height";
+        private const int MinHeight = 550;
+        private const string WindowSize = "windowSize";
 
-        private const string X_POSITION_SETTING = "X";
-        private const string Y_POSITION_SETTING = "Y";
-        private const string WINDOW_POSITION_SETTING = "position";
+        private const string XPosition = "X";
+        private const string YPosition = "Y";
+        private const string WindowPosition = "position";
 
-        private const string AUTO_SELECT_OPPONENT = "autoSelectOpponent";
-        private const string AUTO_CREATE_OPPONENT = "autoCreateOpponent";
-        private const string AUTO_SELECT_GAME = "autoSelectGame";
-        private const string AUTO_CREATE_GAME = "autoCreateGame";
+        private const string AutoSelectOpponent = "autoSelectOpponent";
+        private const string AutoCreateOpponent = "autoCreateOpponent";
 
-        private const string FLASH_TASK_BAR = "flashTaskBar";
-        private const string FLASH_AMOUNT = "flashAmount";
+        private const string AutoSelectGame = "autoSelectGame";
+        private const string AutoCreateGame = "autoCreateGame";
+
+        private const string FlashTaskBar = "flashTaskBar";
+        private const string FlashAmount = "flashAmount";
 
         /// <summary>
         /// Saves the theme
@@ -58,7 +59,7 @@ namespace BattleAssistant.Helpers
         /// <param name="theme">The theme string</param>
         public static void SaveTheme(string theme)
         {
-            localSettings.Values[THEME_SETTING] = theme;
+            localSettings.Values[Theme] = theme;
         }
 
         /// <summary>
@@ -69,9 +70,9 @@ namespace BattleAssistant.Helpers
         public static void SaveWindowSize(int width, int height)
         {
             ApplicationDataCompositeValue windowSize = new ApplicationDataCompositeValue();
-            windowSize[WIDTH_SETTING] = width;
-            windowSize[HEIGHT_SETTING] = height;
-            localSettings.Values[WINDOW_SIZE_SETTING] = windowSize;
+            windowSize[Width] = width;
+            windowSize[Height] = height;
+            localSettings.Values[WindowSize] = windowSize;
         }
 
         /// <summary>
@@ -82,9 +83,9 @@ namespace BattleAssistant.Helpers
         public static void SaveWindowPosition(int x, int y)
         {
             ApplicationDataCompositeValue windowPosition = new ApplicationDataCompositeValue();
-            windowPosition[X_POSITION_SETTING] = x;
-            windowPosition[Y_POSITION_SETTING] = y;
-            localSettings.Values[WINDOW_POSITION_SETTING] = windowPosition;
+            windowPosition[XPosition] = x;
+            windowPosition[YPosition] = y;
+            localSettings.Values[WindowPosition] = windowPosition;
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace BattleAssistant.Helpers
         /// <param name="autoSelect">The auto select value</param>
         public static void SaveAutoSelectOpponent(bool autoSelect)
         {
-            localSettings.Values[AUTO_SELECT_OPPONENT] = autoSelect;
+            localSettings.Values[AutoSelectOpponent] = autoSelect;
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace BattleAssistant.Helpers
         /// <param name="autoCreate">The auto create value</param>
         public static void SaveAutoCreateOpponent(bool autoCreate)
         {
-            localSettings.Values[AUTO_CREATE_OPPONENT] = autoCreate;
+            localSettings.Values[AutoCreateOpponent] = autoCreate;
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace BattleAssistant.Helpers
         /// <param name="autoSelect">The auto select value</param>
         public static void SaveAutoSelectGame(bool autoSelect)
         {
-            localSettings.Values[AUTO_SELECT_GAME] = autoSelect;
+            localSettings.Values[AutoSelectGame] = autoSelect;
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace BattleAssistant.Helpers
         /// <param name="autoCreate">The auto create value</param>
         public static void SaveAutoCreateGame(bool autoCreate)
         {
-            localSettings.Values[AUTO_CREATE_GAME] = autoCreate;
+            localSettings.Values[AutoCreateGame] = autoCreate;
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace BattleAssistant.Helpers
         /// <param name="flashIcon">The flash icon in task bar flag</param>
         public static void SaveFlashIcon(bool flashIcon)
         {
-            localSettings.Values[FLASH_TASK_BAR] = flashIcon;
+            localSettings.Values[FlashTaskBar] = flashIcon;
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace BattleAssistant.Helpers
         /// <param name="flashAmount">The amount of times the icon flashes</param>
         public static void SaveFlashAmount(int flashAmount)
         {
-            localSettings.Values[FLASH_AMOUNT] = flashAmount;
+            localSettings.Values[FlashAmount] = flashAmount;
         }
 
         /// <summary>
@@ -147,30 +148,30 @@ namespace BattleAssistant.Helpers
         public static void LoadSettings()
         {
             //Sets the application theme
-            string theme = (string)localSettings.Values[THEME_SETTING];
+            string theme = (string)localSettings.Values[Theme];
             if (theme != null)
             {
                 (App.MainWindow.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(theme);
             }
 
             //Sets the application window size
-            ApplicationDataCompositeValue windowSize = (ApplicationDataCompositeValue)localSettings.Values[WINDOW_SIZE_SETTING];
+            ApplicationDataCompositeValue windowSize = (ApplicationDataCompositeValue)localSettings.Values[WindowSize];
             if (windowSize != null)
             {
-                int width = (int)windowSize[WIDTH_SETTING];
-                int height = (int)windowSize[HEIGHT_SETTING];
-                if (width > MIN_WIDTH && height > MIN_HEIGHT)
+                int width = (int)windowSize[Width];
+                int height = (int)windowSize[Height];
+                if (width > MinWidth && height > MinHeight)
                 {
                     App.SetWindowSize(width, height);
                 }
             }
 
             //Sets the application window position
-            ApplicationDataCompositeValue windowPosition = (ApplicationDataCompositeValue)localSettings.Values[WINDOW_POSITION_SETTING];
+            ApplicationDataCompositeValue windowPosition = (ApplicationDataCompositeValue)localSettings.Values[WindowPosition];
             if (windowPosition != null)
             {
-                int x = (int)windowPosition[X_POSITION_SETTING];
-                int y = (int)windowPosition[Y_POSITION_SETTING];
+                int x = (int)windowPosition[XPosition];
+                int y = (int)windowPosition[YPosition];
                 if (x >= 0 && y >= 0)
                 {
                     App.SetWindowPosition(x, y);
@@ -184,7 +185,7 @@ namespace BattleAssistant.Helpers
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
         public static bool GetAutoSelectOpponent()
         {
-            bool? autoSelectOpponent = (bool?)localSettings.Values[AUTO_SELECT_OPPONENT];
+            bool? autoSelectOpponent = (bool?)localSettings.Values[AutoSelectOpponent];
             if (autoSelectOpponent != null)
             {
                 return (bool)autoSelectOpponent;
@@ -199,7 +200,7 @@ namespace BattleAssistant.Helpers
         /// <returns>bool of the setting, defaults to false is setting is null</returns>
         public static bool GetAutoCreateOpponent()
         {
-            bool? autoCreateOpponent = (bool?)localSettings.Values[AUTO_CREATE_OPPONENT];
+            bool? autoCreateOpponent = (bool?)localSettings.Values[AutoCreateOpponent];
             if (autoCreateOpponent != null)
             {
                 return (bool)autoCreateOpponent;
@@ -213,7 +214,7 @@ namespace BattleAssistant.Helpers
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
         public static bool GetAutoSelectGame()
         {
-            bool? autoSelectGame = (bool?)localSettings.Values[AUTO_SELECT_GAME];
+            bool? autoSelectGame = (bool?)localSettings.Values[AutoSelectGame];
             if (autoSelectGame != null)
             {
                 return (bool)autoSelectGame;
@@ -227,7 +228,7 @@ namespace BattleAssistant.Helpers
         /// <returns>bool of the setting, defaults to false is setting is null</returns>
         public static bool GetAutoCreateGame()
         {
-            bool? autoCreateGame = (bool?)localSettings.Values[AUTO_CREATE_GAME];
+            bool? autoCreateGame = (bool?)localSettings.Values[AutoCreateGame];
             if (autoCreateGame != null)
             {
                 return (bool)autoCreateGame;
@@ -241,7 +242,7 @@ namespace BattleAssistant.Helpers
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
         public static bool GetFlashIcon()
         {
-            bool? flashTaskBar = (bool?)localSettings.Values[FLASH_TASK_BAR];
+            bool? flashTaskBar = (bool?)localSettings.Values[FlashTaskBar];
             if (flashTaskBar != null)
             {
                 return (bool)flashTaskBar;
@@ -255,7 +256,7 @@ namespace BattleAssistant.Helpers
         /// <returns>int of the setting, defaults to 5 is setting is null</returns>
         public static int GetFlashAmount()
         {
-            int? flashAmount = (int?)localSettings.Values[FLASH_AMOUNT];
+            int? flashAmount = (int?)localSettings.Values[FlashAmount];
             if (flashAmount != null)
             {
                 return (int)flashAmount;

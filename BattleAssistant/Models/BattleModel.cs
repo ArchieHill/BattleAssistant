@@ -103,8 +103,8 @@ namespace BattleAssistant.Models
             AutoClean = false;
             Game = null;
             Opponent = null;
-            Status = Common.Status.NO_STATUS;
-            LastAction = Actions.NO_LAST_ACTION;
+            Status = Common.Status.NoStatus;
+            LastAction = Actions.NoLastAction;
         }
 
         /// <summary>

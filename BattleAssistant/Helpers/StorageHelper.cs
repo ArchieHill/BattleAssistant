@@ -45,9 +45,9 @@ namespace BattleAssistant.Helpers
         /// <returns></returns>
         public static async Task SaveAllAsync()
         {
-            await SaveModels(App.Games, SaveFiles.GAMES);
-            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
-            await SaveModels(App.Battles, SaveFiles.BATTLES);
+            await SaveModels(App.Games, SaveFiles.Games);
+            await SaveModels(App.Opponents, SaveFiles.Opponents);
+            await SaveModels(App.Battles, SaveFiles.Battles);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace BattleAssistant.Helpers
         /// <returns></returns>
         public static async Task LoadAllAsync()
         {
-            App.Games = await LoadModels<GameModel>(SaveFiles.GAMES);
-            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.OPPONENTS);
-            App.Battles = await LoadModels<BattleModel>(SaveFiles.BATTLES);
+            App.Games = await LoadModels<GameModel>(SaveFiles.Games);
+            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.Opponents);
+            App.Battles = await LoadModels<BattleModel>(SaveFiles.Battles);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateBattleFile()
         {
-            await SaveModels(App.Battles, SaveFiles.BATTLES);
+            await SaveModels(App.Battles, SaveFiles.Battles);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateGameFile()
         {
-            await SaveModels(App.Games, SaveFiles.GAMES);
+            await SaveModels(App.Games, SaveFiles.Games);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateOpponentFile()
         {
-            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
+            await SaveModels(App.Opponents, SaveFiles.Opponents);
         }
 
         /// <summary>

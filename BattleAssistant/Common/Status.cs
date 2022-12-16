@@ -27,10 +27,10 @@ namespace BattleAssistant.Common
     /// </summary>
     public static class Status
     {
-        public const string NO_STATUS = "No Status";
+        public const string NoStatus = "No Status";
 
-        public const string WAITING = "Waiting";
+        public const string Waiting = "Waiting";
 
-        public const string YOUR_TURN = "Your Turn";
+        public const string YourTurn = "Your Turn";
     }
 }

@@ -36,8 +36,9 @@ namespace BattleAssistant.Helpers
     public static class FileHelper
     {
         private const int FIRST_NUM_POS_SUBTRACTOR = -3;
-
         private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
+        private const int PREVIOUS_TURN_SUBTRACTOR = -2;
+        private const int PREVIOUS_FILE_SUBTRACTOR = -1;
 
         /// <summary>
         /// Copies the battle file to the incoming email folder
@@ -56,14 +57,15 @@ namespace BattleAssistant.Helpers
                 battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
                 StorageHelper.UpdateBattleFile();
 
-                if (battle.AutoClean)
+                //Find the old file in the incoming email folder and delete it
+                string oldFileInIncomingEmail = ConstructBattleFilePath(
+                    battle.Game.IncomingEmailFolder,
+                    $"~{battle.Name}",
+                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
+
+                if (File.Exists(oldFileInIncomingEmail))
                 {
-                    //Find the old file in the incoming email folder and delete it
-                    string oldFileInIncomingEmail = ConstructBattleFilePath(battle.Game.IncomingEmailFolder, "~" + battle.Name, GetFileNumber(battle.BattleFile) - 2);
-                    if (File.Exists(oldFileInIncomingEmail))
-                    {
-                        File.Delete(oldFileInIncomingEmail);
-                    }
+                    File.Delete(oldFileInIncomingEmail);
                 }
 
                 if (SettingsHelper.GetFlashIcon())
@@ -78,7 +80,7 @@ namespace BattleAssistant.Helpers
             }
             catch (Exception e)
             {
-                Debug.WriteLine("File failed to copy: " + e.Message);
+                Debug.WriteLine("File failed to copy: {0}", e.Message);
             }
 
         }
@@ -93,22 +95,30 @@ namespace BattleAssistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
-                if (battle.AutoClean)
-                {
-                    //Find the old battle file in the outgoing email folder and delete it
-                    string oldFileInOutgoingEmail = ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, GetFileNumber(battle.BattleFile) - 2);
-                    if (File.Exists(oldFileInOutgoingEmail))
-                    {
-                        File.Delete(oldFileInOutgoingEmail);
-                    }
 
-                    //Find the old battle file in the shared drive and delete it
-                    string oldFileInSharedDrive = ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, GetFileNumber(battle.BattleFile) - 2);
-                    if (File.Exists(oldFileInSharedDrive))
-                    {
-                        File.Delete(oldFileInSharedDrive);
-                    }
+                //Find the old battle file in the outgoing email folder and delete it
+                string oldFileInOutgoingEmail = ConstructBattleFilePath(
+                    battle.Game.OutgoingEmailFolder,
+                    battle.Name,
+                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
+
+                if (File.Exists(oldFileInOutgoingEmail))
+                {
+                    File.Delete(oldFileInOutgoingEmail);
                 }
+
+                //Find the old battle file in the shared drive and delete it
+                string oldFileInSharedDrive = ConstructBattleFilePath(
+                    battle.Opponent.SharedDir,
+                    battle.Name,
+                    GetFileNumber(battle.BattleFile) - PREVIOUS_FILE_SUBTRACTOR);
+
+                //Find the old file in the incoming email folder and delete it
+                if (File.Exists(oldFileInSharedDrive))
+                {
+                    File.Delete(oldFileInSharedDrive);
+                }
+
                 battle.BattleFile = fileInSharedDrivePath;
 
                 battle.Status = Status.WAITING;
@@ -166,7 +176,7 @@ namespace BattleAssistant.Helpers
         /// <returns>The full path of the constructed battle file</returns>
         public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
         {
-            return $@"{folderPath}\{battleName} {number.ToString("D3")}.ema";
+            return $@"{folderPath}\{battleName} {number:D3}.ema";
         }
     }
 }

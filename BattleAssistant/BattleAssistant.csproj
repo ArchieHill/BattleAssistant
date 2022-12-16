@@ -3,14 +3,14 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>Battle_Assistant</RootNamespace>
+    <RootNamespace>BattleAssistant</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
-    <PackageCertificateThumbprint>D7B36CE84E2D6609EE6FFEBA0DE2C926CB1FA416</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>99a3c523a4b56e21eb705fc2ada1faf8bf25a4fb</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
@@ -22,7 +22,7 @@
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <PackageCertificateKeyFile>Battle Assistant_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>BattleAssistant_PermanentKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BattleAssistant_TemporaryKey_Base64.txt" />

@@ -69,8 +69,7 @@ namespace BattleAssistant.Models
             }
         }
 
-        override
-        public string ToString()
+        public override string ToString()
         {
             return Name;
         }

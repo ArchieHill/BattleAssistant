@@ -139,19 +139,6 @@ namespace BattleAssistant
         }
 
         /// <summary>
-        /// Repositions the application window
-        /// </summary>
-        /// <param name="x">The x position on the screen</param>
-        /// <param name="y">The y position on the screen</param>
-        public static void SetWindowPosition(int x, int y)
-        {
-            var position = new PointInt32();
-            position.X = x;
-            position.Y = y;
-            AppWindow.Move(position);
-        }
-
-        /// <summary>
         /// App Window property change event
         /// </summary>
         /// <param name="sender">The app window</param>
@@ -162,12 +149,6 @@ namespace BattleAssistant
             {
                 var size = sender.Size;
                 SettingsHelper.SaveWindowSize(size.Width, size.Height);
-            }
-
-            if (args.DidPositionChange)
-            {
-                var position = sender.Position;
-                SettingsHelper.SaveWindowPosition(position.X, position.Y);
             }
         }
 

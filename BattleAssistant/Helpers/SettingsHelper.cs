@@ -40,10 +40,6 @@ namespace BattleAssistant.Helpers
         private const int MinHeight = 550;
         private const string WindowSize = "windowSize";
 
-        private const string XPosition = "X";
-        private const string YPosition = "Y";
-        private const string WindowPosition = "position";
-
         private const string AutoSelectOpponent = "autoSelectOpponent";
         private const string AutoCreateOpponent = "autoCreateOpponent";
 
@@ -73,19 +69,6 @@ namespace BattleAssistant.Helpers
             windowSize[Width] = width;
             windowSize[Height] = height;
             localSettings.Values[WindowSize] = windowSize;
-        }
-
-        /// <summary>
-        /// Saves the window position
-        /// </summary>
-        /// <param name="x">The windows x position</param>
-        /// <param name="y">The windows y position</param>
-        public static void SaveWindowPosition(int x, int y)
-        {
-            ApplicationDataCompositeValue windowPosition = new ApplicationDataCompositeValue();
-            windowPosition[XPosition] = x;
-            windowPosition[YPosition] = y;
-            localSettings.Values[WindowPosition] = windowPosition;
         }
 
         /// <summary>
@@ -163,18 +146,6 @@ namespace BattleAssistant.Helpers
                 if (width > MinWidth && height > MinHeight)
                 {
                     App.SetWindowSize(width, height);
-                }
-            }
-
-            //Sets the application window position
-            ApplicationDataCompositeValue windowPosition = (ApplicationDataCompositeValue)localSettings.Values[WindowPosition];
-            if (windowPosition != null)
-            {
-                int x = (int)windowPosition[XPosition];
-                int y = (int)windowPosition[YPosition];
-                if (x >= 0 && y >= 0)
-                {
-                    App.SetWindowPosition(x, y);
                 }
             }
         }

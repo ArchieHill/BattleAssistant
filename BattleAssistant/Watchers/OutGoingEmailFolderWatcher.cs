@@ -46,8 +46,7 @@ namespace BattleAssistant.Watchers
         /// </summary>
         /// <param name="battle">The battle the file is a part of</param>
         /// <param name="newBattleFilePath">The file path of the new battle file</param>
-        override
-        protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
+        protected override async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
             //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
             if (Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
@@ -59,12 +58,7 @@ namespace BattleAssistant.Watchers
             File.Delete(battle.BattleFile);
 
             battle.BattleFile = newBattleFilePath;
-            while (IsFileLocked(new FileInfo(battle.BattleFile)))
-            {
-                await Task.Delay(500);
-            }
-
-            FileHelper.CopyToSharedDrive(battle);
+            await FileHelper.CopyToSharedDriveAsync(battle);
         }
     }
 }

@@ -42,16 +42,10 @@ namespace BattleAssistant.Watchers
 
         }
 
-        override
-        protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
+        protected override async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
             battle.BattleFile = newBattleFilePath;
-            while (IsFileLocked(new FileInfo(battle.BattleFile)))
-            {
-                Debug.WriteLine("Waiting for file to unlock");
-                await Task.Delay(500);
-            }
-            FileHelper.CopyToIncomingEmail(battle);
+            await FileHelper.CopyToIncomingEmailAsync(battle);
         }
     }
 }

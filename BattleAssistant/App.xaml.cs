@@ -185,7 +185,7 @@ namespace BattleAssistant
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToIncomingEmail(battle);
+                        FileHelper.CopyToIncomingEmailAsync(battle);
                     }
                 }
                 else if (battle.Status == Status.YourTurn)
@@ -195,7 +195,7 @@ namespace BattleAssistant
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToSharedDrive(battle);
+                        FileHelper.CopyToSharedDriveAsync(battle);
                     }
                 }
             }

@@ -229,11 +229,11 @@ namespace BattleAssistant.DialogModels
             Battle.Index = App.Battles.IndexOf(Battle);
             if (File.Exists($@"{Battle.Game.OutgoingEmailFolder}\{Path.GetFileName(Battle.BattleFile)}"))
             {
-                FileHelper.CopyToSharedDrive(Battle);
+                FileHelper.CopyToSharedDriveAsync(Battle);
             }
             else
             {
-                FileHelper.CopyToIncomingEmail(Battle);
+                FileHelper.CopyToIncomingEmailAsync(Battle);
             }
         }
     }

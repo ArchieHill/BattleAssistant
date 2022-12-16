@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Models;
 using static PInvoke.User32;
@@ -44,8 +45,13 @@ namespace BattleAssistant.Helpers
         /// Copies the battle file to the incoming email folder
         /// </summary>
         /// <param name="battle">The battle that has its file being copied</param>
-        public static void CopyToIncomingEmail(BattleModel battle)
+        public static async Task CopyToIncomingEmailAsync(BattleModel battle)
         {
+            while (IsFileLocked(new FileInfo(battle.BattleFile)))
+            {
+                await Task.Delay(500);
+            }
+
             string fileInIncomingEmailPath = $@"{battle.Game.IncomingEmailFolder}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
@@ -65,6 +71,10 @@ namespace BattleAssistant.Helpers
 
                 if (File.Exists(oldFileInIncomingEmail))
                 {
+                    while (IsFileLocked(new FileInfo(oldFileInIncomingEmail)))
+                    {
+                        await Task.Delay(500);
+                    }
                     File.Delete(oldFileInIncomingEmail);
                 }
 
@@ -89,8 +99,13 @@ namespace BattleAssistant.Helpers
         /// Copies the battle file to the shared drive folder
         /// </summary>
         /// <param name="battle">The battle that has its file being copied</param>
-        public static void CopyToSharedDrive(BattleModel battle)
+        public static async Task CopyToSharedDriveAsync(BattleModel battle)
         {
+            while (IsFileLocked(new FileInfo(battle.BattleFile)))
+            {
+                await Task.Delay(500);
+            }
+
             string fileInSharedDrivePath = $@"{battle.Opponent.SharedDir}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
@@ -104,6 +119,10 @@ namespace BattleAssistant.Helpers
 
                 if (File.Exists(oldFileInOutgoingEmail))
                 {
+                    while (IsFileLocked(new FileInfo(oldFileInOutgoingEmail)))
+                    {
+                        await Task.Delay(500);
+                    }
                     File.Delete(oldFileInOutgoingEmail);
                 }
 
@@ -116,6 +135,10 @@ namespace BattleAssistant.Helpers
                 //Find the old file in the incoming email folder and delete it
                 if (File.Exists(oldFileInSharedDrive))
                 {
+                    while (IsFileLocked(new FileInfo(oldFileInSharedDrive)))
+                    {
+                        await Task.Delay(500);
+                    }
                     File.Delete(oldFileInSharedDrive);
                 }
 
@@ -177,6 +200,38 @@ namespace BattleAssistant.Helpers
         public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
         {
             return $@"{folderPath}\{battleName} {number:D3}.ema";
+        }
+
+        /// <summary>
+        /// Checks if the file is locked 
+        /// </summary>
+        /// <param name="file">The file that is being checked</param>
+        /// <returns>If the file is locked or not</returns>
+        private static bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open,
+                         FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }

@@ -77,38 +77,6 @@ namespace BattleAssistant.Watchers
         }
 
         /// <summary>
-        /// Checks if the file is locked 
-        /// </summary>
-        /// <param name="file">The file that is being checked</param>
-        /// <returns>If the file is locked or not</returns>
-        protected static bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = file.Open(FileMode.Open,
-                         FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-
-            //file is not locked
-            return false;
-        }
-
-        /// <summary>
         /// The task called when a file is created and is part of a battle
         /// </summary>
         /// <param name="battle">The battle the file is a part of</param>

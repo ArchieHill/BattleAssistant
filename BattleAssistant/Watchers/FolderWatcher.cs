@@ -41,9 +41,11 @@ namespace BattleAssistant.Watchers
         public FolderWatcher(string folderPath)
         {
 
-            Watcher = new FileSystemWatcher();
-            Watcher.Path = folderPath;
-            Watcher.Filter = "*.ema";
+            Watcher = new()
+            {
+                Path = folderPath,
+                Filter = "*.ema"
+            };
             Watcher.Created += new FileSystemEventHandler(File_Created);
             Watcher.EnableRaisingEvents = true;
         }

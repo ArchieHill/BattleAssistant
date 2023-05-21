@@ -132,7 +132,6 @@ namespace BattleAssistant.Helpers
                     battle.Name,
                     GetFileNumber(battle.BattleFile) - PreviousFileSubtractor);
 
-                //Find the old file in the incoming email folder and delete it
                 if (File.Exists(oldFileInSharedDrive))
                 {
                     while (IsFileLocked(new FileInfo(oldFileInSharedDrive)))
@@ -226,8 +225,7 @@ namespace BattleAssistant.Helpers
             }
             finally
             {
-                if (stream != null)
-                    stream.Close();
+                if (stream != null) { stream.Close(); }
             }
 
             //file is not locked

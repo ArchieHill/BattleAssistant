@@ -142,12 +142,12 @@ namespace BattleAssistant.DialogModels
                 {
                     if (SettingsHelper.GetAutoSelectGame())
                     {
-                        AutoSelectGame(fileDir, file.Path);
+                        AutoSelectGame(fileDir);
                     }
                 }
                 else if (SettingsHelper.GetAutoSelectOpponent())
                 {
-                    AutoSelectOpponent(fileDir, file.Path);
+                    AutoSelectOpponent(fileDir);
                 }
             }
         }
@@ -157,7 +157,7 @@ namespace BattleAssistant.DialogModels
         /// </summary>
         /// <param name="fileDir"></param>
         /// <param name="path"></param>
-        private void AutoSelectGame(string fileDir, string path)
+        private void AutoSelectGame(string fileDir)
         {
             //Try and find if the game already exists for the game directory found
             foreach (GameModel game in Games)
@@ -183,7 +183,7 @@ namespace BattleAssistant.DialogModels
         /// </summary>
         /// <param name="fileDir"></param>
         /// <param name="path"></param>
-        private void AutoSelectOpponent(string fileDir, string path)
+        private void AutoSelectOpponent(string fileDir)
         {
             //Try and find if the opponent already exists for this shared directory
             foreach (OpponentModel opponent in Opponents)

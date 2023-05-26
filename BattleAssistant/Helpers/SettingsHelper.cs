@@ -66,9 +66,11 @@ namespace BattleAssistant.Helpers
         /// <param name="height">The window height</param>
         public static void SaveWindowSize(int width, int height)
         {
-            ApplicationDataCompositeValue windowSize = new ApplicationDataCompositeValue();
-            windowSize[Width] = width;
-            windowSize[Height] = height;
+            ApplicationDataCompositeValue windowSize = new()
+            {
+                [Width] = width,
+                [Height] = height
+            };
             localSettings.Values[WindowSize] = windowSize;
         }
 
@@ -168,7 +170,7 @@ namespace BattleAssistant.Helpers
         /// <returns>The folder path</returns>
         public static string GetBackupFolderPath()
         {
-            string backupFolderPath = (string)localSettings.Values[BACKUP_FOLDER_PATH];
+            string backupFolderPath = (string)localSettings.Values[BackupFolderPath];
             if (backupFolderPath != null | backupFolderPath == "")
             {
                 return backupFolderPath;

@@ -132,9 +132,11 @@ namespace BattleAssistant
         /// <param name="height">The new height of the application</param>
         public static void SetWindowSize(int width, int height)
         {
-            var size = new SizeInt32();
-            size.Width = width;
-            size.Height = height;
+            var size = new SizeInt32
+            {
+                Width = width,
+                Height = height
+            };
             AppWindow.Resize(size);
         }
 

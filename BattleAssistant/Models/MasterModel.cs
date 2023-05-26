@@ -20,12 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using BattleAssistant.Common;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BattleAssistant.Models
 {
-    public abstract class MasterModel : ObservableObject
+    public abstract partial class MasterModel : ObservableObject
     {
+        [ObservableProperty]
+        private string name;
+
+        [ObservableProperty]
+        private int index;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -35,38 +41,14 @@ namespace BattleAssistant.Models
             Index = -1;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The name of the object</param>
         public MasterModel(string name)
         {
             Name = name;
             Index = -1;
-        }
-
-        private string name;
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        private int index;
-        public int Index
-        {
-            get { return index; }
-            set
-            {
-                if (index != value)
-                {
-                    index = value;
-                    NotifyPropertyChanged();
-                }
-            }
         }
 
         public override string ToString()

@@ -22,76 +22,39 @@
 
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BattleAssistant.Models
 {
     /// <summary>
     /// The battle model
     /// </summary>
-    public class BattleModel : MasterModel
+    public partial class BattleModel : MasterModel
     {
+        [ObservableProperty]
         private string status;
-        public string Status
-        {
-            get { return status; }
-            set
-            {
-                if (status != value)
-                {
-                    status = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
 
+        [ObservableProperty]
         private string lastAction;
-        public string LastAction
-        {
-            get { return lastAction; }
-            set
-            {
-                if (lastAction != value)
-                {
-                    lastAction = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
 
+        [ObservableProperty]
         private string battleFile;
-        public string BattleFile
-        {
-            get { return battleFile; }
-            set
-            {
-                if (battleFile != value)
-                {
-                    battleFile = value;
-                    SetVarsFromGameFile(battleFile);
-                    NotifyPropertyChanged();
-                }
-            }
-        }
 
+        [ObservableProperty]
         private int currentFileNum;
-        public int CurrentFileNum
-        {
-            get { return currentFileNum; }
-            set
-            {
-                if (currentFileNum != value)
-                {
-                    currentFileNum = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
 
-        public bool Backup { get; set; }
+        [ObservableProperty]
+        private bool backup;
 
         public GameModel Game { get; set; }
 
         public OpponentModel Opponent { get; set; }
+
+        partial void OnBattleFileChanged(string value)
+        {
+            Name = FileHelper.GetFileDisplayName(value);
+            CurrentFileNum = FileHelper.GetFileNumber(value);
+        }
 
         /// <summary>
         /// Constructor
@@ -105,16 +68,6 @@ namespace BattleAssistant.Models
             Opponent = null;
             Status = Common.Status.NoStatus;
             LastAction = Actions.NoLastAction;
-        }
-
-        /// <summary>
-        /// Sets the name and file number from the battle file
-        /// </summary>
-        /// <param name="battleFile">The battle file path</param>
-        public void SetVarsFromGameFile(string battleFile)
-        {
-            Name = FileHelper.GetFileDisplayName(battleFile);
-            CurrentFileNum = FileHelper.GetFileNumber(battleFile);
         }
     }
 }

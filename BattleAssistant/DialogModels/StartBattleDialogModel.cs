@@ -25,9 +25,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -37,37 +37,14 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public class StartBattleDialogModel : ObservableObject
+    public partial class StartBattleDialogModel : ObservableObject
     {
+        [ObservableProperty]
         private GameModel selectedGame;
-        public GameModel SelectedGame
-        {
-            get { return selectedGame; }
-            set
 
-            {
-                if (selectedGame != value)
-                {
-                    selectedGame = value;
-                    NotifyPropertyChanged("SelectedGame");
-                }
-            }
-        }
-
+        [ObservableProperty]
         private OpponentModel selectedOpponent;
-        public OpponentModel SelectedOpponent
-        {
-            get { return selectedOpponent; }
-            set
 
-            {
-                if (selectedOpponent != value)
-                {
-                    selectedOpponent = value;
-                    NotifyPropertyChanged("SelectedOpponent");
-                }
-            }
-        }
 
         private ObservableCollection<GameModel> games;
 

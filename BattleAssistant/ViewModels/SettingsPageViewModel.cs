@@ -24,13 +24,14 @@ using System;
 using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace BattleAssistant.ViewModels
 {
-    public class SettingsPageViewModel : ObservableObject
+    public partial class SettingsPageViewModel : ObservableObject
     {
         private NumberBox flashAmountBox;
 
@@ -68,127 +69,71 @@ namespace BattleAssistant.ViewModels
             }
         }
 
+        [ObservableProperty]
         private bool flashIcon;
-        public bool FlashIcon
+
+        partial void OnFlashIconChanged(bool value)
         {
-            get { return flashIcon; }
-            set
-            {
-                if (flashIcon != value)
-                {
-                    flashIcon = value;
-                    SettingsHelper.SaveFlashIcon(flashIcon);
-                    NotifyPropertyChanged();
-                    flashAmountBox.IsEnabled = flashIcon;
-                }
-            }
+            SettingsHelper.SaveFlashIcon(value);
+            flashAmountBox.IsEnabled = value;
         }
 
+        [ObservableProperty]
         private int flashAmount;
-        public int FlashAmount
+
+        partial void OnFlashAmountChanged(int value)
         {
-            get
-            {
-                return flashAmount;
-            }
-            set
-            {
-                if (flashAmount != value)
-                {
-                    flashAmount = value;
-                    SettingsHelper.SaveFlashAmount(flashAmount);
-                    NotifyPropertyChanged();
-                }
-            }
+            SettingsHelper.SaveFlashAmount(value);
         }
 
+        [ObservableProperty]
         private bool autoSelectOpponent;
-        public bool AutoSelectOpponent
-        {
-            get { return autoSelectOpponent; }
-            set
-            {
-                if (autoSelectOpponent != value)
-                {
-                    autoSelectOpponent = value;
-                    SettingsHelper.SaveAutoSelectOpponent(autoSelectOpponent);
-                    NotifyPropertyChanged();
 
-                    autoCreateOpponentSwitch.IsEnabled = autoSelectOpponent;
-                    if (!autoSelectOpponent)
-                    {
-                        AutoCreateOpponent = false;
-                        autoCreateGameSwitch.IsOn = false;
-                    }
-                }
+        partial void OnAutoSelectOpponentChanged(bool value)
+        {
+            SettingsHelper.SaveAutoSelectOpponent(value);
+            autoCreateOpponentSwitch.IsEnabled = value;
+            if(!value)
+            {
+                AutoCreateOpponent = false;
+                autoCreateGameSwitch.IsOn = false;
             }
         }
 
+        [ObservableProperty]
         private bool autoCreateOpponent;
-        public bool AutoCreateOpponent
+        partial void OnAutoCreateOpponentChanged(bool value)
         {
-            get { return autoCreateOpponent; }
-            set
-            {
-                if (autoCreateOpponent != value)
-                {
-                    autoCreateOpponent = value;
-                    SettingsHelper.SaveAutoCreateOpponent(autoCreateOpponent);
-                    NotifyPropertyChanged();
-                }
-            }
+            SettingsHelper.SaveAutoCreateOpponent(value);
         }
 
+        [ObservableProperty]
         private bool autoSelectGame;
-        public bool AutoSelectGame
-        {
-            get { return autoSelectGame; }
-            set
-            {
-                if (autoSelectGame != value)
-                {
-                    autoSelectGame = value;
-                    SettingsHelper.SaveAutoSelectGame(autoSelectGame);
-                    NotifyPropertyChanged();
 
-                    autoCreateGameSwitch.IsEnabled = autoSelectGame;
-                    if (!autoSelectGame)
-                    {
-                        AutoCreateGame = false;
-                        autoCreateGameSwitch.IsOn = false;
-                    }
-                }
+        partial void OnAutoSelectGameChanged(bool value)
+        {
+            SettingsHelper.SaveAutoSelectGame(value);
+            autoCreateGameSwitch.IsEnabled = value;
+            if (!value)
+            {
+                AutoCreateGame = false;
+                autoCreateGameSwitch.IsOn = false;
             }
         }
 
+        [ObservableProperty]
         private bool autoCreateGame;
-        public bool AutoCreateGame
+        partial void OnAutoCreateGameChanged(bool value)
         {
-            get { return autoCreateGame; }
-            set
-            {
-                if (autoCreateGame != value && AutoSelectGame)
-                {
-                    autoCreateGame = value;
-                    SettingsHelper.SaveAutoCreateGame(autoCreateGame);
-                    NotifyPropertyChanged();
-                }
-            }
+            SettingsHelper.SaveAutoCreateGame(value);
         }
 
+        [ObservableProperty]
         private string backupFolderPath;
-        public string BackupFolderPath
+
+        partial void OnBackupFolderPathChanged(string oldValue)
         {
-            get { return backupFolderPath; }
-            set
-            {
-                if (backupFolderPath != value)
-                {
-                    backupFolderPath = value;
-                    SettingsHelper.SaveBackupFolderPath(backupFolderPath);
-                    NotifyPropertyChanged();
-                }
-            }
+            SettingsHelper.SaveBackupFolderPath(oldValue);
         }
     }
 }

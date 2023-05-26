@@ -4,10 +4,9 @@
 name: WinUI 3 MSIX app
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
 
@@ -48,24 +47,22 @@ jobs:
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Decode the pfx
-      run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
-        $certificatePath = "GitHubActionsWorkflow.pfx"
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+      id: pfxFile
+      uses: timheuer/base64-to-file@v1.2
+      with:
+        filename: 'GitHubActionsWorkflow.pfx'
+        encodedString: ${{ secrets.BASE64_ENCODED_PFX }}
+
         
     # Create the app package by building and packaging the project
     - name: Create the app package
-      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
+      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile="${{ steps.pfxFile.outputs.filePath }}" /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
       env:
         Appx_Bundle: Never
         Appx_Package_Build_Mode: SideloadOnly
         Appx_Package_Dir: Packages\
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
-
-    # Remove the pfx
-    - name: Remove the pfx
-      run: Remove-Item -path GitHubActionsWorkflow.pfx
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload MSIX package

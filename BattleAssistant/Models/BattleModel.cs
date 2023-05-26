@@ -87,7 +87,7 @@ namespace BattleAssistant.Models
             }
         }
 
-        public bool AutoClean { get; set; }
+        public bool Backup { get; set; }
 
         public GameModel Game { get; set; }
 
@@ -100,7 +100,7 @@ namespace BattleAssistant.Models
         {
             Name = "";
             CurrentFileNum = 1;
-            AutoClean = false;
+            Backup = false;
             Game = null;
             Opponent = null;
             Status = Common.Status.NoStatus;

@@ -29,7 +29,7 @@
                     <Expander.Content>
                         <StackPanel Style="{StaticResource ListStackPanel}">
                             <StackPanel Style="{StaticResource LabelContentStackPanel}">
-                                <ToggleSwitch Header="Auto Clean" IsOn="{Binding AutoClean, Mode=TwoWay}" ToolTipService.ToolTip="Deletes the battle files as the battle progresses. Only deletes the battle files that contain your turn."/>
+                                <ToggleSwitch Header="Backup" IsOn="{Binding Backup, Mode=TwoWay}" ToolTipService.ToolTip="Backs up the games files to the backup folder location."/>
                             </StackPanel>
                                 
                             <StackPanel Style="{StaticResource LabelContentStackPanel}">

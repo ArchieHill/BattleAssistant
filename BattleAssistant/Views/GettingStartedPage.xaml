@@ -109,7 +109,7 @@
                 Here I’m selecting a battle file from the shared drive.
             </Paragraph>
             <Paragraph Margin="0,0,0,12">
-                Turning on auto clean will automatically delete your files as the battle progresses to ensure you don’t run out of space in the shared folder.
+                Turning on backup game files will automatically copy your files to the backup folder for later use. The backup folder location can be changed in the settings.
             </Paragraph>
             <Paragraph Margin="0,0,0,12">
                 Select your opponent from its dropdown box and the game you're playing from its dropdown box.

@@ -39,7 +39,6 @@ namespace BattleAssistant.Helpers
         private const int FirstNumPosSubtractor = -3;
         private const int LastFileNamePosSubtractor = -4;
         private const int PreviousTurnSubtractor = -2;
-        private const int PreviousFileSubtractor = -1;
 
         /// <summary>
         /// Copies the battle file to the incoming email folder
@@ -57,6 +56,15 @@ namespace BattleAssistant.Helpers
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
 
+                //Backup the game file if the option is selected
+                if (battle.Backup)
+                {
+                    string battleBackupFolder = $@"{SettingsHelper.GetBackupFolderPath()}\{battle.Name}";
+                    Directory.CreateDirectory(battleBackupFolder);
+                    File.Copy(battle.BattleFile, $@"{battleBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
+                }
+
+                //Set the battle file to the new file location
                 battle.BattleFile = fileInIncomingEmailPath;
 
                 battle.Status = Status.YourTurn;
@@ -130,7 +138,7 @@ namespace BattleAssistant.Helpers
                 string oldFileInSharedDrive = ConstructBattleFilePath(
                     battle.Opponent.SharedDir,
                     battle.Name,
-                    GetFileNumber(battle.BattleFile) - PreviousFileSubtractor);
+                    GetFileNumber(battle.BattleFile) + PreviousTurnSubtractor);
 
                 if (File.Exists(oldFileInSharedDrive))
                 {

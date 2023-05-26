@@ -22,10 +22,10 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using Microsoft.UI.Xaml.Controls;
@@ -37,21 +37,8 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public class StartBattleDialogModel : INotifyPropertyChanged
+    public class StartBattleDialogModel : ObservableObject
     {
-
-        // A property changed event object
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Notifies the page when a property has changed so the view can be updated
-        /// </summary>
-        /// <param name="propName">The property name</param>
-        protected void NotifyPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
         private GameModel selectedGame;
         public GameModel SelectedGame
         {
@@ -114,7 +101,7 @@ namespace BattleAssistant.DialogModels
 
         public BattleModel Battle { get; set; }
 
-        private InfoBar dialogInfoBar;
+        private readonly InfoBar DialogInfoBar;
 
         /// <summary>
         /// Constructor
@@ -124,7 +111,7 @@ namespace BattleAssistant.DialogModels
             Battle = new BattleModel();
             Games = App.Games;
             Opponents = App.Opponents;
-            this.dialogInfoBar = dialogInfoBar;
+            DialogInfoBar = dialogInfoBar;
         }
 
         /// <summary>
@@ -142,10 +129,10 @@ namespace BattleAssistant.DialogModels
             {
                 if (!FileHelper.CheckFileIsValid(file.Path))
                 {
-                    dialogInfoBar.Severity = InfoBarSeverity.Error;
-                    dialogInfoBar.Title = "Invalid file";
-                    dialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
-                    dialogInfoBar.IsOpen = true;
+                    DialogInfoBar.Severity = InfoBarSeverity.Error;
+                    DialogInfoBar.Title = "Invalid file";
+                    DialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
+                    DialogInfoBar.IsOpen = true;
                 }
 
                 Battle.BattleFile = file.Path;

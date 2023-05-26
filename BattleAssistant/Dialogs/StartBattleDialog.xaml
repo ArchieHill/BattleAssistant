@@ -26,7 +26,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <ToggleSwitch Header="Auto Clean" IsOn="{Binding Battle.AutoClean, Mode=TwoWay}" ToolTipService.ToolTip="Deletes the battle files as the battle progresses. Only deletes the battle files that contain your turn."/>
+            <ToggleSwitch Header="Backup Game Files" IsOn="{Binding Battle.Backup, Mode=TwoWay}" ToolTipService.ToolTip="Backs up the games files to the backup folder location."/>
 
             <!-- Opponent Input -->
             <ComboBox Header="Opponent" PlaceholderText="No Opponents Added" 

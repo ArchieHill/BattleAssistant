@@ -49,6 +49,7 @@ namespace BattleAssistant.Watchers
             };
             Watcher.Created += new FileSystemEventHandler(File_Created);
             Watcher.EnableRaisingEvents = true;
+            Log.Information($"Folder watcher on {folderPath} has started");
         }
 
         /// <summary>
@@ -58,8 +59,9 @@ namespace BattleAssistant.Watchers
         /// <param name="e">The file object</param>
         protected void File_Created(object sender, FileSystemEventArgs e)
         {
-            Log.Information("File creation detected");
+            Log.Information($"File creation detected {e.FullPath}");
             string createdFile = e.FullPath.Replace("-TEMP", "");
+
             foreach (BattleModel battle in App.Battles)
             {
                 if (battle.Name == FileHelper.GetFileDisplayName(createdFile) &&

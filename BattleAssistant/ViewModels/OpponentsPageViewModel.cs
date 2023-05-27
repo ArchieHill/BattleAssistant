@@ -51,8 +51,10 @@ namespace BattleAssistant.ViewModels
         /// <param name="root"></param>
         public async void AddOpponent(XamlRoot root)
         {
-            AddOpponentDialog dialog = new AddOpponentDialog();
-            dialog.XamlRoot = root;
+            AddOpponentDialog dialog = new()
+            {
+                XamlRoot = root
+            };
             await dialog.ShowAsync();
         }
 
@@ -73,8 +75,10 @@ namespace BattleAssistant.ViewModels
                 }
             }
 
-            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(deleteAllowed);
-            dialog.XamlRoot = root;
+            DeleteConfirmationDialog dialog = new(deleteAllowed)
+            {
+                XamlRoot = root
+            };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {

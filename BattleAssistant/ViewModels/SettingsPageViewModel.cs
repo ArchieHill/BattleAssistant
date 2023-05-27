@@ -131,9 +131,9 @@ namespace BattleAssistant.ViewModels
         [ObservableProperty]
         private string backupFolderPath;
 
-        partial void OnBackupFolderPathChanged(string oldValue)
+        partial void OnBackupFolderPathChanged(string value)
         {
-            SettingsHelper.SaveBackupFolderPath(oldValue);
+            SettingsHelper.SaveBackupFolderPath(value);
         }
     }
 }

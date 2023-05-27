@@ -51,8 +51,10 @@ namespace BattleAssistant.ViewModels
         /// <param name="root">The window root for the dialog</param>
         public async void StartBattle(XamlRoot root)
         {
-            StartBattleDialog dialog = new StartBattleDialog();
-            dialog.XamlRoot = root;
+            StartBattleDialog dialog = new StartBattleDialog
+            {
+                XamlRoot = root
+            };
             await dialog.ShowAsync();
         }
 
@@ -62,8 +64,10 @@ namespace BattleAssistant.ViewModels
         /// <param name="index"></param>
         public async void EndBattle(int index, XamlRoot root)
         {
-            EndBattleConfirmationDialog dialog = new EndBattleConfirmationDialog(Battles[index]);
-            dialog.XamlRoot = root;
+            EndBattleConfirmationDialog dialog = new(Battles[index])
+            {
+                XamlRoot = root
+            };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {

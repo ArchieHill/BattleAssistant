@@ -61,7 +61,6 @@ namespace BattleAssistant.Models
         /// </summary>
         public BattleModel() : base()
         {
-            Name = "";
             CurrentFileNum = 1;
             Backup = false;
             Game = null;

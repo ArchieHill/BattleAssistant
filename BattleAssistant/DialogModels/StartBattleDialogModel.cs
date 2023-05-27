@@ -184,7 +184,7 @@ namespace BattleAssistant.DialogModels
         /// <summary>
         /// Adds the battle to the list and updates the save file
         /// </summary>
-        public void StartBattle()
+        public async void StartBattle()
         {
             Battle.Game = SelectedGame;
             Battle.Opponent = SelectedOpponent;
@@ -193,11 +193,11 @@ namespace BattleAssistant.DialogModels
             Battle.Index = App.Battles.IndexOf(Battle);
             if (File.Exists($@"{Battle.Game.OutgoingEmailFolder}\{Path.GetFileName(Battle.BattleFile)}"))
             {
-                FileHelper.CopyToSharedDriveAsync(Battle);
+                await FileHelper.CopyToSharedDriveAsync(Battle);
             }
             else
             {
-                FileHelper.CopyToIncomingEmailAsync(Battle);
+                await FileHelper.CopyToIncomingEmailAsync(Battle);
             }
         }
     }

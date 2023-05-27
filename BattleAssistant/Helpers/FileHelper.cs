@@ -27,6 +27,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Models;
+using Serilog;
 using static PInvoke.User32;
 
 namespace BattleAssistant.Helpers
@@ -48,6 +49,7 @@ namespace BattleAssistant.Helpers
         {
             while (IsFileLocked(new FileInfo(battle.BattleFile)))
             {
+                Log.Debug($"Waiting for file to unlock: {battle.BattleFile}");
                 await Task.Delay(500);
             }
 
@@ -55,6 +57,7 @@ namespace BattleAssistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
+                Log.Information($"Copied {Path.GetFileName(battle.BattleFile)} to {fileInIncomingEmailPath}");
 
                 //Backup the game file if the option is selected
                 if (battle.Backup)
@@ -62,6 +65,7 @@ namespace BattleAssistant.Helpers
                     string battleBackupFolder = $@"{SettingsHelper.GetBackupFolderPath()}\{battle.Name}";
                     Directory.CreateDirectory(battleBackupFolder);
                     File.Copy(battle.BattleFile, $@"{battleBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
+                    Log.Information($"Backed up file {Path.GetFileName(battle.BattleFile)} to {battleBackupFolder}");
                 }
 
                 //Set the battle file to the new file location
@@ -81,9 +85,11 @@ namespace BattleAssistant.Helpers
                 {
                     while (IsFileLocked(new FileInfo(oldFileInIncomingEmail)))
                     {
+                        Log.Debug($"Waiting for file to unlock: {oldFileInIncomingEmail}");
                         await Task.Delay(500);
                     }
                     File.Delete(oldFileInIncomingEmail);
+                    Log.Information($"Deleted file {oldFileInIncomingEmail}");
                 }
 
                 if (SettingsHelper.GetFlashIcon())
@@ -96,9 +102,9 @@ namespace BattleAssistant.Helpers
                     FlashWindowEx(ref flash);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine("File failed to copy: {0}", e.Message);
+                Log.Error(ex, ex.Message);
             }
 
         }
@@ -111,6 +117,7 @@ namespace BattleAssistant.Helpers
         {
             while (IsFileLocked(new FileInfo(battle.BattleFile)))
             {
+                Log.Debug($"Waiting for file to unlock: {battle.BattleFile}");
                 await Task.Delay(500);
             }
 
@@ -118,6 +125,7 @@ namespace BattleAssistant.Helpers
             try
             {
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
+                Log.Information($"Copied {Path.GetFileName(battle.BattleFile)} to {fileInSharedDrivePath}");
 
                 //Find the old battle file in the outgoing email folder and delete it
                 string oldFileInOutgoingEmail = ConstructBattleFilePath(
@@ -129,9 +137,11 @@ namespace BattleAssistant.Helpers
                 {
                     while (IsFileLocked(new FileInfo(oldFileInOutgoingEmail)))
                     {
+                        Log.Debug($"Waiting for file to unlock: {oldFileInOutgoingEmail}");
                         await Task.Delay(500);
                     }
                     File.Delete(oldFileInOutgoingEmail);
+                    Log.Information($"Deleted file {oldFileInOutgoingEmail}");
                 }
 
                 //Find the old battle file in the shared drive and delete it
@@ -144,9 +154,11 @@ namespace BattleAssistant.Helpers
                 {
                     while (IsFileLocked(new FileInfo(oldFileInSharedDrive)))
                     {
+                        Log.Debug($"Waiting for file to unlock: {oldFileInSharedDrive}");
                         await Task.Delay(500);
                     }
                     File.Delete(oldFileInSharedDrive);
+                    Log.Information($"Deleted file {oldFileInSharedDrive}");
                 }
 
                 battle.BattleFile = fileInSharedDrivePath;
@@ -155,11 +167,10 @@ namespace BattleAssistant.Helpers
                 battle.LastAction = Actions.CopyToSharedDrive;
                 StorageHelper.UpdateBattleFile();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine("File failed to copy: {0}", e.Message);
+                Log.Error(ex, ex.Message);
             }
-
         }
 
         /// <summary>

@@ -27,6 +27,7 @@ using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Serilog;
 
 namespace BattleAssistant.ViewModels
 {
@@ -56,6 +57,7 @@ namespace BattleAssistant.ViewModels
                 XamlRoot = root
             };
             await dialog.ShowAsync();
+            Log.Information("Opponent added");
         }
 
         /// <summary>
@@ -86,6 +88,7 @@ namespace BattleAssistant.ViewModels
                 Opponents.RemoveAt(index);
                 UpdateIndexes();
                 StorageHelper.UpdateOpponentFile();
+                Log.Information("Opponent deleted");
             }
         }
 

@@ -30,7 +30,10 @@ using BattleAssistant.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Serilog;
+using Serilog.Events;
 using Windows.Graphics;
+using Windows.Media.AppBroadcasting;
 using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -57,6 +60,8 @@ namespace BattleAssistant
 
         private static WindowId windowId;
 
+       // public IHost Host { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -64,6 +69,15 @@ namespace BattleAssistant
         public App()
         {
             this.InitializeComponent();
+
+            string logsDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BattleAssistant", "Logs");           
+            Directory.CreateDirectory(logsDirectoryPath);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Debug()
+                .WriteTo.File(Path.Combine(logsDirectoryPath, "log.txt"), LogEventLevel.Information, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         /// <summary>
@@ -98,6 +112,7 @@ namespace BattleAssistant
             //Checks if battles have changed whilst the application has been closed
             UpdateAllBattles();
 
+            Log.Information("Application ready, activating main window");
             MainWindow.Activate();
         }
 
@@ -182,6 +197,7 @@ namespace BattleAssistant
                     }
                 }
             }
+            Log.Information("All battles updated");
         }
     }
 }

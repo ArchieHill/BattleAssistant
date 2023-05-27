@@ -25,6 +25,7 @@ using System.IO;
 using System.Threading.Tasks;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using Serilog;
 
 namespace BattleAssistant.Watchers
 {
@@ -44,6 +45,13 @@ namespace BattleAssistant.Watchers
 
         protected override async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
+            //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
+            if (Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
+            {
+                Log.Debug("File already processed");
+                return;
+            }
+
             battle.BattleFile = newBattleFilePath;
             await FileHelper.CopyToIncomingEmailAsync(battle);
         }

@@ -52,7 +52,7 @@ namespace BattleAssistant.Models
             OutgoingEmailFolder = $@"{GameDir}\Game Files\Outgoing Email";
         }
         
-        partial void OnIncomingEmailFolderChanged(string value)
+        partial void OnOutgoingEmailFolderChanged(string value)
         {
             oGEFWatcher = new(value);
         }

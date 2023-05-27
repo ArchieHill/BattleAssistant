@@ -157,7 +157,7 @@ namespace BattleAssistant
         /// <summary>
         /// Checks each battle to see if there is a new file to move for the battle
         /// </summary>
-        private static void UpdateAllBattles()
+        private static async void UpdateAllBattles()
         {
             foreach (BattleModel battle in Battles)
             {
@@ -168,7 +168,7 @@ namespace BattleAssistant
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToIncomingEmailAsync(battle);
+                        await FileHelper.CopyToIncomingEmailAsync(battle);
                     }
                 }
                 else if (battle.Status == Status.YourTurn)
@@ -178,7 +178,7 @@ namespace BattleAssistant
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToSharedDriveAsync(battle);
+                        await FileHelper.CopyToSharedDriveAsync(battle);
                     }
                 }
             }

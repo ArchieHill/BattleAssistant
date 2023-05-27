@@ -40,6 +40,7 @@ namespace BattleAssistant.Helpers
         private const int FirstNumPosSubtractor = -3;
         private const int LastFileNamePosSubtractor = -4;
         private const int PreviousTurnSubtractor = -2;
+        private const int PreviousFileSubtractor = -1;
 
         /// <summary>
         /// Copies the battle file to the incoming email folder
@@ -115,6 +116,20 @@ namespace BattleAssistant.Helpers
         /// <param name="battle">The battle that has its file being copied</param>
         public static async Task CopyToSharedDriveAsync(BattleModel battle)
         {
+            //Rename the file in the incoming email folder to show that that file is waiting on opponent
+            string incomingFilePath = ConstructBattleFilePath(
+                battle.Game.IncomingEmailFolder, 
+                battle.Name, 
+                GetFileNumber(battle.BattleFile) + PreviousFileSubtractor); 
+
+            if (File.Exists(incomingFilePath))
+            {
+                File.Move(incomingFilePath, $@"{battle.Game.IncomingEmailFolder}\~{Path.GetFileName(incomingFilePath)}");
+                File.Delete(battle.BattleFile);
+                Log.Information($"Renamed incoming email file to ~{Path.GetFileName(incomingFilePath)}");
+            }
+            
+
             while (IsFileLocked(new FileInfo(battle.BattleFile)))
             {
                 Log.Debug($"Waiting for file to unlock: {battle.BattleFile}");

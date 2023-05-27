@@ -52,13 +52,9 @@ namespace BattleAssistant.Watchers
             //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
             if (Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
             {
-                Log.Debug("File already processed");
+                Log.Debug($"File already processed: {newBattleFilePath}");
                 return;
             }
-            //Rename the file in the incoming email folder to show that that file is waiting on opponent
-            File.Move(battle.BattleFile, $@"{battle.Game.IncomingEmailFolder}\~{Path.GetFileName(battle.BattleFile)}");
-            File.Delete(battle.BattleFile);
-            Log.Information($"Renamed incoming email file to ~{Path.GetFileName(battle.BattleFile)}");
 
             battle.BattleFile = newBattleFilePath;
             await FileHelper.CopyToSharedDriveAsync(battle);

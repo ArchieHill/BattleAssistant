@@ -36,9 +36,7 @@ namespace BattleAssistant.Helpers
         private const string Theme = "theme";
 
         private const string Width = "width";
-        private const int MinWidth = 1000;
         private const string Height = "height";
-        private const int MinHeight = 550;
         private const string WindowSize = "windowSize";
 
         private const string AutoSelectOpponent = "autoSelectOpponent";
@@ -155,13 +153,13 @@ namespace BattleAssistant.Helpers
             {
                 int width = (int)windowSize[Width];
                 int height = (int)windowSize[Height];
-                if (width > MinWidth && height > MinHeight)
-                {
-                    App.SetWindowSize(width, height);
-                }
-            }
 
-            
+                App.SetWindowSize(width, height);
+            }
+            else
+            {
+                App.SetWindowSize(1000, 550);
+            }
         }
 
         /// <summary>

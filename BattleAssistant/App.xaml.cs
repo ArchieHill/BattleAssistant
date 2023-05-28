@@ -46,6 +46,9 @@ namespace BattleAssistant
     /// </summary>
     public partial class App : Application
     {
+        private const int MinHeight = 550;
+        private const int MinWidth = 800;
+
         public static ObservableCollection<BattleModel> Battles { get; set; }
 
         public static ObservableCollection<GameModel> Games { get; set; }
@@ -59,8 +62,6 @@ namespace BattleAssistant
         public static AppWindow AppWindow { get; set; }
 
         private static WindowId windowId;
-
-       // public IHost Host { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -165,6 +166,17 @@ namespace BattleAssistant
             if (args.DidSizeChange)
             {
                 var size = sender.Size;
+
+                if(size.Height < MinHeight)
+                {
+                    size.Height = MinHeight;
+                }
+
+                if (size.Width < MinWidth)
+                {
+                    size.Width = MinWidth;
+                }
+
                 SettingsHelper.SaveWindowSize(size.Width, size.Height);
             }
         }

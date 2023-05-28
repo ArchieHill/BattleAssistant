@@ -13,6 +13,8 @@ YOU NEED WINDOWS 10 OR 11 TO USE THIS APPLICATION
 4. Double click on the .msxi file to install the application
 
 ## Installing the certificate
+The reason for the manual installation of a certificate is because Microsoft have envisioned a future where applications require these to make them safer and more trustworthy, however in there attempts they've made it difficult for small independent developers like me to distribute applications with their latest UI software, as I can't get access to a certificate from a trusted authority that your average computer won't complain about a manual installation of one has to be performed to allow the app to run.  
+
 1. Double click on the .cer file and install it to you computer, ensure you install it to your local machine instead of current user. 
 2. If there is a page asking for a password for the private key, ignore it and click next.
 3. When selecting where to store the certificate, you need to select place all certificates in the following store and then browse to the Trusted People folder.

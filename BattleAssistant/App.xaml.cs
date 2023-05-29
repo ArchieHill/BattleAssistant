@@ -46,8 +46,8 @@ namespace BattleAssistant
     /// </summary>
     public partial class App : Application
     {
-        private const int MinHeight = 550;
-        private const int MinWidth = 800;
+        private const int MinHeight = 440;
+        private const int MinWidth = 650;
 
         public static ObservableCollection<BattleModel> Battles { get; set; }
 

@@ -53,11 +53,6 @@
                             </StackPanel>
 
                             <StackPanel Style="{StaticResource LabelContentStackPanel}">
-                                <TextBlock>Auto Cleaning</TextBlock>
-                                <TextBlock Text="{Binding AutoClean, Mode=OneWay}"/>
-                            </StackPanel>
-
-                            <StackPanel Style="{StaticResource LabelContentStackPanel}">
                                 <TextBlock>Current File Number</TextBlock>
                                 <TextBlock Text="{Binding CurrentFileNum, Mode=OneWay}"/>
                             </StackPanel>

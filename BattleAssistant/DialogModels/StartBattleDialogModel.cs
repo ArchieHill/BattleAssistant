@@ -25,9 +25,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -37,37 +37,14 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public class StartBattleDialogModel : ObservableObject
+    public partial class StartBattleDialogModel : ObservableObject
     {
+        [ObservableProperty]
         private GameModel selectedGame;
-        public GameModel SelectedGame
-        {
-            get { return selectedGame; }
-            set
 
-            {
-                if (selectedGame != value)
-                {
-                    selectedGame = value;
-                    NotifyPropertyChanged("SelectedGame");
-                }
-            }
-        }
-
+        [ObservableProperty]
         private OpponentModel selectedOpponent;
-        public OpponentModel SelectedOpponent
-        {
-            get { return selectedOpponent; }
-            set
 
-            {
-                if (selectedOpponent != value)
-                {
-                    selectedOpponent = value;
-                    NotifyPropertyChanged("SelectedOpponent");
-                }
-            }
-        }
 
         private ObservableCollection<GameModel> games;
 
@@ -142,12 +119,12 @@ namespace BattleAssistant.DialogModels
                 {
                     if (SettingsHelper.GetAutoSelectGame())
                     {
-                        AutoSelectGame(fileDir, file.Path);
+                        AutoSelectGame(fileDir);
                     }
                 }
                 else if (SettingsHelper.GetAutoSelectOpponent())
                 {
-                    AutoSelectOpponent(fileDir, file.Path);
+                    AutoSelectOpponent(fileDir);
                 }
             }
         }
@@ -157,7 +134,7 @@ namespace BattleAssistant.DialogModels
         /// </summary>
         /// <param name="fileDir"></param>
         /// <param name="path"></param>
-        private void AutoSelectGame(string fileDir, string path)
+        private void AutoSelectGame(string fileDir)
         {
             //Try and find if the game already exists for the game directory found
             foreach (GameModel game in Games)
@@ -183,7 +160,7 @@ namespace BattleAssistant.DialogModels
         /// </summary>
         /// <param name="fileDir"></param>
         /// <param name="path"></param>
-        private void AutoSelectOpponent(string fileDir, string path)
+        private void AutoSelectOpponent(string fileDir)
         {
             //Try and find if the opponent already exists for this shared directory
             foreach (OpponentModel opponent in Opponents)
@@ -207,7 +184,7 @@ namespace BattleAssistant.DialogModels
         /// <summary>
         /// Adds the battle to the list and updates the save file
         /// </summary>
-        public void StartBattle()
+        public async void StartBattle()
         {
             Battle.Game = SelectedGame;
             Battle.Opponent = SelectedOpponent;
@@ -216,11 +193,11 @@ namespace BattleAssistant.DialogModels
             Battle.Index = App.Battles.IndexOf(Battle);
             if (File.Exists($@"{Battle.Game.OutgoingEmailFolder}\{Path.GetFileName(Battle.BattleFile)}"))
             {
-                FileHelper.CopyToSharedDrive(Battle);
+                await FileHelper.CopyToSharedDriveAsync(Battle);
             }
             else
             {
-                FileHelper.CopyToIncomingEmail(Battle);
+                await FileHelper.CopyToIncomingEmailAsync(Battle);
             }
         }
     }

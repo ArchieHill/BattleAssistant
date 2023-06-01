@@ -27,6 +27,7 @@ using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Serilog;
 
 namespace BattleAssistant.ViewModels
 {
@@ -51,9 +52,12 @@ namespace BattleAssistant.ViewModels
         /// <param name="root"></param>
         public async void AddGame(XamlRoot root)
         {
-            AddGameDialog dialog = new AddGameDialog();
-            dialog.XamlRoot = root;
+            AddGameDialog dialog = new()
+            {
+                XamlRoot = root
+            };
             await dialog.ShowAsync();
+            Log.Information("Game added");
         }
 
         /// <summary>
@@ -73,8 +77,10 @@ namespace BattleAssistant.ViewModels
                 }
             }
 
-            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(deleteAllowed);
-            dialog.XamlRoot = root;
+            DeleteConfirmationDialog dialog = new(deleteAllowed)
+            {
+                XamlRoot = root
+            };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
@@ -82,6 +88,7 @@ namespace BattleAssistant.ViewModels
                 Games.RemoveAt(index);
                 UpdateIndexes();
                 StorageHelper.UpdateGameFile();
+                Log.Information("Game deleted");
             }
         }
 

@@ -29,7 +29,7 @@ using Windows.Storage.Pickers;
 namespace BattleAssistant.DialogModels
 {
     /// <summary>
-    /// Add Opponent Dialog Model
+    /// Add Opponents Dialog Model
     /// </summary>
     public class AddOpponentDialogModel
     {

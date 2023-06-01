@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Models;
 using Newtonsoft.Json;
+using Serilog;
 using Windows.Storage;
 
 namespace BattleAssistant.Helpers
@@ -45,9 +46,9 @@ namespace BattleAssistant.Helpers
         /// <returns></returns>
         public static async Task SaveAllAsync()
         {
-            await SaveModels(App.Games, SaveFiles.GAMES);
-            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
-            await SaveModels(App.Battles, SaveFiles.BATTLES);
+            await SaveModels(App.Games, SaveFiles.Games);
+            await SaveModels(App.Opponents, SaveFiles.Opponents);
+            await SaveModels(App.Battles, SaveFiles.Battles);
         }
 
         /// <summary>
@@ -56,9 +57,10 @@ namespace BattleAssistant.Helpers
         /// <returns></returns>
         public static async Task LoadAllAsync()
         {
-            App.Games = await LoadModels<GameModel>(SaveFiles.GAMES);
-            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.OPPONENTS);
-            App.Battles = await LoadModels<BattleModel>(SaveFiles.BATTLES);
+            App.Games = await LoadModels<GameModel>(SaveFiles.Games);
+            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.Opponents);
+            App.Battles = await LoadModels<BattleModel>(SaveFiles.Battles);
+            Log.Information("Loaded all save data");
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateBattleFile()
         {
-            await SaveModels(App.Battles, SaveFiles.BATTLES);
+            await SaveModels(App.Battles, SaveFiles.Battles);
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateGameFile()
         {
-            await SaveModels(App.Games, SaveFiles.GAMES);
+            await SaveModels(App.Games, SaveFiles.Games);
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         public static async void UpdateOpponentFile()
         {
-            await SaveModels(App.Opponents, SaveFiles.OPPONENTS);
+            await SaveModels(App.Opponents, SaveFiles.Opponents);
         }
 
         /// <summary>
@@ -120,17 +122,17 @@ namespace BattleAssistant.Helpers
                 }
                 return new ObservableCollection<T>();
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException ex)
             {
                 //With no file found, assume it doesn't exist and move on
-                Debug.WriteLine("File not found: {0}", e.Message);
+                Log.Warning(ex, "Save file not found, creating empty list");
                 return new ObservableCollection<T>();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                if (e.Source != null)
+                if (ex.Source != null)
                 {
-                    Debug.WriteLine("IOException source: {0}", e.Source);
+                    Log.Error("IOException source: {0}", ex.Source);
                 }
                 return new ObservableCollection<T>();
             }

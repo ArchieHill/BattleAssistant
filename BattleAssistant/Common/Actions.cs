@@ -27,10 +27,10 @@ namespace BattleAssistant.Common
     /// </summary>
     public static class Actions
     {
-        public const string NO_LAST_ACTION = "No Last Action";
+        public const string NoLastAction = "No Last Action";
 
-        public const string COPY_TO_SHAREDDRIVE = "Copied to Shared Drive";
+        public const string CopyToSharedDrive = "Copied to Shared Drive";
 
-        public const string COPY_TO_INCOMING_EMAIL = "Copied to Incoming Email";
+        public const string CopyToIncomingEmail = "Copied to Incoming Email";
     }
 }

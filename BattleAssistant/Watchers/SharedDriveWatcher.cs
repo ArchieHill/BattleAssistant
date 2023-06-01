@@ -25,6 +25,7 @@ using System.IO;
 using System.Threading.Tasks;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using Serilog;
 
 namespace BattleAssistant.Watchers
 {
@@ -42,16 +43,17 @@ namespace BattleAssistant.Watchers
 
         }
 
-        override
-        protected async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
+        protected override async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
         {
-            battle.BattleFile = newBattleFilePath;
-            while (IsFileLocked(new FileInfo(battle.BattleFile)))
+            //Sometimes multiple events will fire for the same task in quick succession, if the file is already the battle file then we know its already been processed
+            if (Path.GetFileName(battle.BattleFile) == Path.GetFileName(newBattleFilePath))
             {
-                Debug.WriteLine("Waiting for file to unlock");
-                await Task.Delay(500);
+                Log.Debug("File already processed");
+                return;
             }
-            FileHelper.CopyToIncomingEmail(battle);
+
+            battle.BattleFile = newBattleFilePath;
+            await FileHelper.CopyToIncomingEmailAsync(battle);
         }
     }
 }

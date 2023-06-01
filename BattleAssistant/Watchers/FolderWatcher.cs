@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using Serilog;
 
 namespace BattleAssistant.Watchers
 {
@@ -41,11 +42,14 @@ namespace BattleAssistant.Watchers
         public FolderWatcher(string folderPath)
         {
 
-            Watcher = new FileSystemWatcher();
-            Watcher.Path = folderPath;
-            Watcher.Filter = "*.ema";
+            Watcher = new()
+            {
+                Path = folderPath,
+                Filter = "*.ema"
+            };
             Watcher.Created += new FileSystemEventHandler(File_Created);
             Watcher.EnableRaisingEvents = true;
+            Log.Information($"Folder watcher on {folderPath} has started");
         }
 
         /// <summary>
@@ -55,7 +59,9 @@ namespace BattleAssistant.Watchers
         /// <param name="e">The file object</param>
         protected void File_Created(object sender, FileSystemEventArgs e)
         {
+            Log.Information($"File creation detected {e.FullPath}");
             string createdFile = e.FullPath.Replace("-TEMP", "");
+
             foreach (BattleModel battle in App.Battles)
             {
                 if (battle.Name == FileHelper.GetFileDisplayName(createdFile) &&
@@ -74,38 +80,6 @@ namespace BattleAssistant.Watchers
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Checks if the file is locked 
-        /// </summary>
-        /// <param name="file">The file that is being checked</param>
-        /// <returns>If the file is locked or not</returns>
-        protected static bool IsFileLocked(FileInfo file)
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = file.Open(FileMode.Open,
-                         FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-
-            //file is not locked
-            return false;
         }
 
         /// <summary>

@@ -27,11 +27,12 @@ using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Serilog;
 
 namespace BattleAssistant.ViewModels
 {
     /// <summary>
-    /// Opponent page view model
+    /// Opponents page view model
     /// </summary>
     public class OpponentsPageViewModel
     {
@@ -51,9 +52,12 @@ namespace BattleAssistant.ViewModels
         /// <param name="root"></param>
         public async void AddOpponent(XamlRoot root)
         {
-            AddOpponentDialog dialog = new AddOpponentDialog();
-            dialog.XamlRoot = root;
+            AddOpponentDialog dialog = new()
+            {
+                XamlRoot = root
+            };
             await dialog.ShowAsync();
+            Log.Information("Opponent added");
         }
 
         /// <summary>
@@ -73,8 +77,10 @@ namespace BattleAssistant.ViewModels
                 }
             }
 
-            DeleteConfirmationDialog dialog = new DeleteConfirmationDialog(deleteAllowed);
-            dialog.XamlRoot = root;
+            DeleteConfirmationDialog dialog = new(deleteAllowed)
+            {
+                XamlRoot = root
+            };
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
@@ -82,6 +88,7 @@ namespace BattleAssistant.ViewModels
                 Opponents.RemoveAt(index);
                 UpdateIndexes();
                 StorageHelper.UpdateOpponentFile();
+                Log.Information("Opponent deleted");
             }
         }
 

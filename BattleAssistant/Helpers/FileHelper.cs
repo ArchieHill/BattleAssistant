@@ -24,8 +24,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Models;
+using Serilog;
 using static PInvoke.User32;
 
 namespace BattleAssistant.Helpers
@@ -35,20 +37,33 @@ namespace BattleAssistant.Helpers
     /// </summary>
     public static class FileHelper
     {
-        private const int FIRST_NUM_POS_SUBTRACTOR = -3;
-        private const int LAST_FILE_NAME_POS_SUBTRACTOR = -4;
-        private const int PREVIOUS_TURN_SUBTRACTOR = -2;
+        private const int FirstNumPosSubtractor = -3;
+        private const int LastFileNamePosSubtractor = -4;
+        private const int PreviousTurnSubtractor = -2;
+        private const int PreviousFileSubtractor = -1;
 
         /// <summary>
-        /// Copies the battle file to the incoming email folder
+        /// Copies the battle file to the incoming email folder through the following steps
+        /// 1. Copies the new incoming battle file to the incoming email folder
+        /// 2. Copies the new incoming battle file to the backup folder if needed
+        /// 3. Deletes the previous incoming battle file in the incoming email
+        /// 4. Deletes the new incoming battle file from the shared drive
         /// </summary>
         /// <param name="battle">The battle that has its file being copied</param>
-        public static void CopyToIncomingEmail(BattleModel battle)
+        public static async Task CopyToIncomingEmailAsync(BattleModel battle)
         {
-            string fileInIncomingEmailPath = $@"{battle.Game.IncomingEmailFolder}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
+                //Copy the new incoming battle file to the incoming email folder
+                while (IsFileLocked(new FileInfo(battle.BattleFile)))
+                {
+                    Log.Debug($"Waiting for file to unlock: {battle.BattleFile}");
+                    await Task.Delay(500);
+                }
+
+                string fileInIncomingEmailPath = $@"{battle.Game.IncomingEmailFolder}\{Path.GetFileName(battle.BattleFile)}";
                 File.Copy(battle.BattleFile, fileInIncomingEmailPath, true);
+                Log.Information($"Copied {Path.GetFileName(battle.BattleFile)} to {fileInIncomingEmailPath}");
 
                 //Backup the game file if the option is selected
                 if (battle.Backup)
@@ -56,25 +71,36 @@ namespace BattleAssistant.Helpers
                     string battleBackupFolder = $@"{SettingsHelper.GetBackupFolderPath()}\{battle.Name}";
                     Directory.CreateDirectory(battleBackupFolder);
                     File.Copy(battle.BattleFile, $@"{battleBackupFolder}\{Path.GetFileName(battle.BattleFile)}", true);
+                    Log.Information($"Backed up file {Path.GetFileName(battle.BattleFile)} to {battleBackupFolder}");
                 }
+
+                //Delete new file in shared drive
+                File.Delete(battle.BattleFile);
+                Log.Information($"Deleted file {battle.BattleFile}");
 
                 //Set the battle file to the new file location
                 battle.BattleFile = fileInIncomingEmailPath;
-
-                battle.Status = Status.YOUR_TURN;
-                battle.LastAction = Actions.COPY_TO_INCOMING_EMAIL;
-                StorageHelper.UpdateBattleFile();
 
                 //Find the old file in the incoming email folder and delete it
                 string oldFileInIncomingEmail = ConstructBattleFilePath(
                     battle.Game.IncomingEmailFolder,
                     $"~{battle.Name}",
-                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
+                    GetFileNumber(battle.BattleFile) + PreviousTurnSubtractor);
 
                 if (File.Exists(oldFileInIncomingEmail))
                 {
+                    while (IsFileLocked(new FileInfo(oldFileInIncomingEmail)))
+                    {
+                        Log.Debug($"Waiting for file to unlock: {oldFileInIncomingEmail}");
+                        await Task.Delay(500);
+                    }
                     File.Delete(oldFileInIncomingEmail);
+                    Log.Information($"Deleted file {oldFileInIncomingEmail}");
                 }
+
+                battle.Status = Status.YourTurn;
+                battle.LastAction = Actions.CopyToIncomingEmail;
+                StorageHelper.UpdateBattleFile();
 
                 if (SettingsHelper.GetFlashIcon())
                 {
@@ -86,58 +112,61 @@ namespace BattleAssistant.Helpers
                     FlashWindowEx(ref flash);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine("File failed to copy: {0}", e.Message);
+                Log.Error(ex, ex.Message);
             }
 
         }
 
         /// <summary>
-        /// Copies the battle file to the shared drive folder
+        /// Copies the battle file to the shared drive folder through the following steps
+        /// 1. Rename the incoming file to ~incoming file
+        /// 2. Copy the new outgoing email file to the shared drive
+        /// 3. Delete the new outgoing email file in the outgoing email file
         /// </summary>
         /// <param name="battle">The battle that has its file being copied</param>
-        public static void CopyToSharedDrive(BattleModel battle)
+        public static async Task CopyToSharedDriveAsync(BattleModel battle)
         {
-            string fileInSharedDrivePath = $@"{battle.Opponent.SharedDir}\{Path.GetFileName(battle.BattleFile)}";
             try
             {
+                //Rename the file in the incoming email folder to show that that file is waiting on opponent
+                string incomingFilePath = ConstructBattleFilePath(
+                    battle.Game.IncomingEmailFolder,
+                    battle.Name,
+                    GetFileNumber(battle.BattleFile) + PreviousFileSubtractor);
+
+                if (File.Exists(incomingFilePath))
+                {
+                    File.Move(incomingFilePath, $@"{battle.Game.IncomingEmailFolder}\~{Path.GetFileName(incomingFilePath)}");
+                    File.Delete(battle.BattleFile);
+                    Log.Information($"Renamed incoming email file to ~{Path.GetFileName(incomingFilePath)}");
+                }
+
+                //Copy the new outgoing email file to the shared drive
+                while (IsFileLocked(new FileInfo(battle.BattleFile)))
+                {
+                    Log.Debug($"Waiting for file to unlock: {battle.BattleFile}");
+                    await Task.Delay(500);
+                }
+
+                string fileInSharedDrivePath = $@"{battle.Opponent.SharedDir}\{Path.GetFileName(battle.BattleFile)}";
                 File.Copy(battle.BattleFile, fileInSharedDrivePath, true);
+                Log.Information($"Copied {Path.GetFileName(battle.BattleFile)} to {fileInSharedDrivePath}");
 
-                //Find the old battle file in the outgoing email folder and delete it
-                string oldFileInOutgoingEmail = ConstructBattleFilePath(
-                    battle.Game.OutgoingEmailFolder,
-                    battle.Name,
-                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
-
-                if (File.Exists(oldFileInOutgoingEmail))
-                {
-                    File.Delete(oldFileInOutgoingEmail);
-                }
-
-                //Find the old battle file in the shared drive and delete it
-                string oldFileInSharedDrive = ConstructBattleFilePath(
-                    battle.Opponent.SharedDir,
-                    battle.Name,
-                    GetFileNumber(battle.BattleFile) + PREVIOUS_TURN_SUBTRACTOR);
-
-                //Find the old file in the incoming email folder and delete it
-                if (File.Exists(oldFileInSharedDrive))
-                {
-                    File.Delete(oldFileInSharedDrive);
-                }
+                //Delete the new outgoing email file from the outgoing email folder
+                File.Delete(battle.BattleFile);
+                Log.Information($"Deleted file {battle.BattleFile}");
 
                 battle.BattleFile = fileInSharedDrivePath;
-
-                battle.Status = Status.WAITING;
-                battle.LastAction = Actions.COPY_TO_SHAREDDRIVE;
+                battle.Status = Status.Waiting;
+                battle.LastAction = Actions.CopyToSharedDrive;
                 StorageHelper.UpdateBattleFile();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine("File failed to copy: {0}", e.Message);
+                Log.Error(ex, ex.Message);
             }
-
         }
 
         /// <summary>
@@ -148,7 +177,7 @@ namespace BattleAssistant.Helpers
         public static string GetFileDisplayName(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            return fileName.Substring(0, fileName.Length + LAST_FILE_NAME_POS_SUBTRACTOR);
+            return fileName.Substring(0, fileName.Length + LastFileNamePosSubtractor);
         }
 
         /// <summary>
@@ -159,7 +188,7 @@ namespace BattleAssistant.Helpers
         public static int GetFileNumber(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            return int.Parse(fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR));
+            return int.Parse(fileName.Substring(fileName.Length + FirstNumPosSubtractor));
         }
 
         /// <summary>
@@ -170,7 +199,7 @@ namespace BattleAssistant.Helpers
         public static bool CheckFileIsValid(string path)
         {
             string fileName = Path.GetFileNameWithoutExtension(path);
-            string fileNumbers = fileName.Substring(fileName.Length + FIRST_NUM_POS_SUBTRACTOR);
+            string fileNumbers = fileName.Substring(fileName.Length + FirstNumPosSubtractor);
             return Regex.IsMatch(fileNumbers, @"\d\d\d");
 
         }
@@ -185,6 +214,37 @@ namespace BattleAssistant.Helpers
         public static string ConstructBattleFilePath(string folderPath, string battleName, int number)
         {
             return $@"{folderPath}\{battleName} {number:D3}.ema";
+        }
+
+        /// <summary>
+        /// Checks if the file is locked 
+        /// </summary>
+        /// <param name="file">The file that is being checked</param>
+        /// <returns>If the file is locked or not</returns>
+        private static bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open,
+                         FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null) { stream.Close(); }
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }

@@ -30,7 +30,10 @@ using BattleAssistant.Views;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Serilog;
+using Serilog.Events;
 using Windows.Graphics;
+using Windows.Media.AppBroadcasting;
 using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -43,6 +46,9 @@ namespace BattleAssistant
     /// </summary>
     public partial class App : Application
     {
+        private const int MinHeight = 440;
+        private const int MinWidth = 650;
+
         public static ObservableCollection<BattleModel> Battles { get; set; }
 
         public static ObservableCollection<GameModel> Games { get; set; }
@@ -64,6 +70,15 @@ namespace BattleAssistant
         public App()
         {
             this.InitializeComponent();
+
+            string logsDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "BattleAssistant", "Logs");           
+            Directory.CreateDirectory(logsDirectoryPath);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Debug()
+                .WriteTo.File(Path.Combine(logsDirectoryPath, "log.txt"), LogEventLevel.Information, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         /// <summary>
@@ -98,6 +113,7 @@ namespace BattleAssistant
             //Checks if battles have changed whilst the application has been closed
             UpdateAllBattles();
 
+            Log.Information("Application ready, activating main window");
             MainWindow.Activate();
         }
 
@@ -132,23 +148,12 @@ namespace BattleAssistant
         /// <param name="height">The new height of the application</param>
         public static void SetWindowSize(int width, int height)
         {
-            var size = new SizeInt32();
-            size.Width = width;
-            size.Height = height;
+            var size = new SizeInt32
+            {
+                Width = width,
+                Height = height
+            };
             AppWindow.Resize(size);
-        }
-
-        /// <summary>
-        /// Repositions the application window
-        /// </summary>
-        /// <param name="x">The x position on the screen</param>
-        /// <param name="y">The y position on the screen</param>
-        public static void SetWindowPosition(int x, int y)
-        {
-            var position = new PointInt32();
-            position.X = x;
-            position.Y = y;
-            AppWindow.Move(position);
         }
 
         /// <summary>
@@ -161,44 +166,50 @@ namespace BattleAssistant
             if (args.DidSizeChange)
             {
                 var size = sender.Size;
-                SettingsHelper.SaveWindowSize(size.Width, size.Height);
-            }
 
-            if (args.DidPositionChange)
-            {
-                var position = sender.Position;
-                SettingsHelper.SaveWindowPosition(position.X, position.Y);
+                if(size.Height < MinHeight)
+                {
+                    size.Height = MinHeight;
+                }
+
+                if (size.Width < MinWidth)
+                {
+                    size.Width = MinWidth;
+                }
+
+                SettingsHelper.SaveWindowSize(size.Width, size.Height);
             }
         }
 
         /// <summary>
         /// Checks each battle to see if there is a new file to move for the battle
         /// </summary>
-        private static void UpdateAllBattles()
+        private static async void UpdateAllBattles()
         {
             foreach (BattleModel battle in Battles)
             {
-                if (battle.Status == Status.WAITING)
+                if (battle.Status == Status.Waiting)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToIncomingEmail(battle);
+                        await FileHelper.CopyToIncomingEmailAsync(battle);
                     }
                 }
-                else if (battle.Status == Status.YOUR_TURN)
+                else if (battle.Status == Status.YourTurn)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
                     string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        FileHelper.CopyToSharedDrive(battle);
+                        await FileHelper.CopyToSharedDriveAsync(battle);
                     }
                 }
             }
+            Log.Information("All battles updated");
         }
     }
 }

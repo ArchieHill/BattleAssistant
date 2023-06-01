@@ -22,29 +22,23 @@
 
 using System;
 using BattleAssistant.Watchers;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BattleAssistant.Models
 {
     /// <summary>
-    /// Opponent model
+    /// Opponents model
     /// </summary>
-    public class OpponentModel : MasterModel, IDisposable
+    public partial class OpponentModel : MasterModel, IDisposable
     {
         private SharedDriveWatcher sDWatcher;
 
+        [ObservableProperty]
         private string sharedDir;
-        public string SharedDir
+
+        partial void OnSharedDirChanged(string value)
         {
-            get { return sharedDir; }
-            set
-            {
-                if (sharedDir != value)
-                {
-                    sharedDir = value;
-                    sDWatcher = new SharedDriveWatcher(sharedDir);
-                    NotifyPropertyChanged();
-                }
-            }
+            sDWatcher = new(value);
         }
 
         /// <summary>
@@ -55,6 +49,11 @@ namespace BattleAssistant.Models
             SharedDir = null;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">The opponent's name</param>
+        /// <param name="sharedDir">The shared directory with the opponent</param>
         public OpponentModel(string name, string sharedDir) : base(name)
         {
             SharedDir = sharedDir;

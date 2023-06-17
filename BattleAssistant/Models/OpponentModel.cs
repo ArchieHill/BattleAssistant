@@ -61,7 +61,10 @@ namespace BattleAssistant.Models
 
         public void Dispose()
         {
-            sDWatcher.Dispose();
+            if(sDWatcher != null)
+            {
+                sDWatcher.Dispose();
+            }
         }
     }
 }

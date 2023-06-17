@@ -9,20 +9,22 @@
     Title="Start Battle"
     PrimaryButtonText="Start Battle"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="StartBattle_Click"
-    IsPrimaryButtonEnabled="False">
+    PrimaryButtonCommand="{Binding StartBattleCommand}"
+    IsPrimaryButtonEnabled="{Binding PrimaryButtonEnabled}">
 
     <ScrollViewer>
         <StackPanel Style="{StaticResource ListStackPanel}">
-            <InfoBar x:Name="DialogInfoBar" 
-                 IsOpen="False"/>
+            <InfoBar x:Name="errorInfoBar" IsOpen="False"/>
 
             <!-- Battle File Input -->
             <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>Battle File</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox Text="{Binding Battle.BattleFile, Mode=OneWay}" Width="380"/>
-                    <Button Content="Select File" Click="SelectFile_Click" Width="105"/>
+                    <Button Content="Select File" 
+                            Command="{Binding SelectBattleFileCommand}" 
+                            CommandParameter="{Binding ElementName=errorInfoBar}" 
+                            Width="105"/>
                 </StackPanel>
             </StackPanel>
 

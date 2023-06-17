@@ -21,10 +21,15 @@
 // SOFTWARE.
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
+using Serilog;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -33,70 +38,87 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Add Game Dialog Model
     /// </summary>
-    public class AddGameDialogModel
+    public partial class AddGameDialogModel : ObservableObject
     {
-        public GameModel Game { get; set; }
+        [ObservableProperty]
+        private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
 
-        private InfoBar dialogInfoBar;
+        [ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(AddGameCommand))]
+        private string gameDirectory;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public AddGameDialogModel(InfoBar dialogInfoBar)
-        {
-            Game = new GameModel();
-            this.dialogInfoBar = dialogInfoBar;
-        }
+        public AddGameDialogModel() {}
 
         /// <summary>
         /// Opens a folder picker for the user to select the games directory
         /// </summary>
         /// <returns>The path of the folder</returns>
-        public async Task SelectGameDir()
+        [RelayCommand]
+        private async Task SelectGameDirectory(InfoBar errorInfoBar)
         {
             FolderPicker folderPicker = new FolderPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
             folderPicker.FileTypeFilter.Add("*");
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+
+            //Validate folder path
             if (folder != null)
             {
                 if (!Directory.Exists($@"{folder.Path}\Game Files"))
                 {
-                    dialogInfoBar.Severity = InfoBarSeverity.Error;
-                    dialogInfoBar.Title = "Invalid folder";
-                    dialogInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
-                    dialogInfoBar.IsOpen = true;
+                    errorInfoBar.Severity = InfoBarSeverity.Error;
+                    errorInfoBar.Title = "Invalid folder";
+                    errorInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
+                    errorInfoBar.IsOpen = true;
+                    PrimaryButtonEnabled = false;
                     return;
                 }
 
                 if (!Directory.Exists($@"{folder.Path}\Game Files\Incoming Email"))
                 {
-                    dialogInfoBar.Severity = InfoBarSeverity.Error;
-                    dialogInfoBar.Title = "Invalid folder";
-                    dialogInfoBar.Message = "The folder selected doesn't contain an Incoming Email folder in the Game Files folder";
-                    dialogInfoBar.IsOpen = true;
+                    errorInfoBar.Severity = InfoBarSeverity.Error;
+                    errorInfoBar.Title = "Invalid folder";
+                    errorInfoBar.Message = "The folder selected doesn't contain an Incoming Email folder in the Game Files folder";
+                    errorInfoBar.IsOpen = true;
+                    PrimaryButtonEnabled = false;
                     return;
                 }
 
                 if (!Directory.Exists($@"{folder.Path}\Game Files\Outgoing Email"))
                 {
-                    dialogInfoBar.Severity = InfoBarSeverity.Error;
-                    dialogInfoBar.Title = "Invalid folder";
-                    dialogInfoBar.Message = "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder";
-                    dialogInfoBar.IsOpen = true;
+                    errorInfoBar.Severity = InfoBarSeverity.Error;
+                    errorInfoBar.Title = "Invalid folder";
+                    errorInfoBar.Message = "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder";
+                    errorInfoBar.IsOpen = true;
+                    PrimaryButtonEnabled = false;
                     return;
                 }
 
-                Game.GameDir = folder.Path;
+                GameDirectory = folder.Path;
+                PrimaryButtonEnabled = true;
             }
         }
 
         /// <summary>
         /// Adds the game to the list and updates the save file
         /// </summary>
-        public void AddGame()
+        //[RelayCommand(CanExecute = nameof(GameDirectoryIsValid))]
+        [RelayCommand]
+        private void AddGame()
         {
-            App.AddGame(Game);
+            App.AddGame(new GameModel(GameDirectory));
         }
+
+        /// <summary>
+        /// Returns if the folder path is valid or not
+        /// </summary>
+        /// <returns></returns>
+        //private bool GameDirectoryIsValid(GameDirectory)
+        //{
+        //    return GameDirectory is not null;
+        //}
     }
 }

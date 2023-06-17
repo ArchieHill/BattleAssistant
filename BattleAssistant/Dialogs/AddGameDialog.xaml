@@ -9,20 +9,22 @@
     Title="Add Game"
     PrimaryButtonText="Add Game"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="AddGame_Click"
-    IsPrimaryButtonEnabled="False">
+    PrimaryButtonCommand="{Binding AddGameCommand}"
+    IsPrimaryButtonEnabled="{Binding PrimaryButtonEnabled}">
 
     <ScrollViewer>
         <StackPanel Style="{StaticResource ListStackPanel}">
-            <InfoBar x:Name="DialogInfoBar" 
-                 IsOpen="False"/>
+            <InfoBar IsOpen="False" x:Name="errorInfoBar"/>
 
             <!-- Game Directory Input -->
             <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>Game Directory</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
-                    <TextBox PlaceholderText="The folder that contains its Game Files folder" Text="{Binding Game.GameDir, Mode=OneWay}" Width="380"/>
-                    <Button Content="Select Folder" Click="SelectGameDir_Click" Width="105"/>
+                    <TextBox PlaceholderText="The folder that contains its Game Files folder" Text="{Binding GameDirectory, Mode=OneWay}" Width="380"/>
+                    <Button Content="Select Folder" 
+                            Command="{Binding SelectGameDirectoryCommand}" 
+                            CommandParameter="{Binding ElementName=errorInfoBar}" 
+                            Width="105"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

@@ -23,6 +23,8 @@
 using System;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Windows.Storage;
 
 namespace BattleAssistant.DialogModels
@@ -30,11 +32,12 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// End Battle Confirmation Dialog Model
     /// </summary>
-    public class EndBattleConfirmationDialogModel
+    public partial class EndBattleConfirmationDialogModel : ObservableObject
     {
-        private BattleModel battle;
+        private readonly BattleModel battle;
 
-        public bool CleanUpFolders { get; set; }
+        [ObservableProperty]
+        private bool cleanUpFolders;
 
         /// <summary>
         /// Constructor
@@ -48,7 +51,8 @@ namespace BattleAssistant.DialogModels
         /// <summary>
         /// Ends the battle
         /// </summary>
-        public void EndBattle()
+        [RelayCommand]
+        private void EndBattle()
         {
             if (CleanUpFolders)
             {
@@ -74,7 +78,5 @@ namespace BattleAssistant.DialogModels
                 }
             }
         }
-
-
     }
 }

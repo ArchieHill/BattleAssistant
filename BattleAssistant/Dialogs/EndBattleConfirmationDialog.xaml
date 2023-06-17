@@ -9,10 +9,10 @@
     Title="End Battle Confirmation"
     PrimaryButtonText="End Battle"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="EndBattle_Click">
+    PrimaryButtonCommand="{Binding EndBattleCommand}">
 
     <StackPanel Style="{StaticResource ListStackPanel}">
-        <CheckBox Content="Clean all folders" Checked="CleanUp_Checked" Unchecked="CleanUp_Unchecked" ToolTipService.ToolTip="Deletes all the battle files in incoming, outgoing and shared folders."/>
+        <ToggleSwitch Header="Clean Up Folders" IsOn="{Binding CleanUpFolders, Mode=TwoWay}" ToolTipService.ToolTip="Deletes all the battle files in incoming, outgoing and shared folders."/>
         <TextBlock>Are you sure you want to end the battle?</TextBlock>
     </StackPanel>
 </ContentDialog>

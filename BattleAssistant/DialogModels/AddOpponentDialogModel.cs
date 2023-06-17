@@ -21,8 +21,12 @@
 // SOFTWARE.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -31,23 +35,33 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Add Opponents Dialog Model
     /// </summary>
-    public class AddOpponentDialogModel
+    public partial class AddOpponentDialogModel : ObservableValidator
     {
-        public OpponentModel Opponent { get; set; }
+        [ObservableProperty]
+        private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
+
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
+        private string opponentName;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddOpponentCommand))]
+        private string opponentSharedDirectory;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public AddOpponentDialogModel()
         {
-            Opponent = new OpponentModel();
         }
 
         /// <summary>
         /// Opens a folder picker to get the user to select the shared drive folder
         /// </summary>
         /// <returns>The folders path</returns>
-        public async Task SelectSharedDrive()
+        [RelayCommand]
+        private async Task SelectSharedDirectory(InfoBar errorInfoBar)
         {
             FolderPicker folderPicker = new FolderPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, App.Hwnd);
@@ -55,16 +69,27 @@ namespace BattleAssistant.DialogModels
             StorageFolder folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
-                Opponent.SharedDir = folder.Path;
+                OpponentSharedDirectory = folder.Path;
+                PrimaryButtonEnabled = true;
             }
         }
 
         /// <summary>
         /// Adds the opponent to the list and updates the save file
         /// </summary>
-        public void AddOpponent()
+        [RelayCommand(CanExecute = nameof(OpponentDirectoryIsValid))]
+        private void AddOpponent()
         {
-            App.AddOpponent(Opponent);
+            App.AddOpponent(new OpponentModel(OpponentName, OpponentSharedDirectory));
+        }
+
+        /// <summary>
+        /// Returns if the shared directory is valid
+        /// </summary>
+        /// <returns></returns>
+        private bool OpponentDirectoryIsValid()
+        {
+            return OpponentSharedDirectory != null;
         }
     }
 }

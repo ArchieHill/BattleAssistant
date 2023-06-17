@@ -9,8 +9,8 @@
     Title="Add Opponent"
     PrimaryButtonText="Add Opponent"
     CloseButtonText="Cancel"
-    PrimaryButtonClick="AddOpponent_Click"
-    IsPrimaryButtonEnabled="False">
+    PrimaryButtonCommand="{Binding AddOpponentCommand}"
+    IsPrimaryButtonEnabled="{Binding PrimaryButtonEnabled}">
 
     <ScrollViewer>
         <StackPanel Style="{StaticResource ListStackPanel}">
@@ -21,15 +21,14 @@
             <TextBox Header="Opponents Name" 
                  x:Name="OpponentName"
                  PlaceholderText="Name" 
-                 TextChanged="OpponentName_TextChanged" 
-                 Text="{Binding Opponent.Name, Mode=TwoWay}"/>
+                 Text="{Binding OpponentName, Mode=TwoWay}"/>
 
             <!-- Shared Directory Input-->
             <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>The Shared Drive</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
-                    <TextBox PlaceholderText="Shared Drive Path" Text="{Binding Opponent.SharedDir, Mode=OneWay}" Width="380"/>
-                    <Button Content="Select Folder" Click="SelectSharedDrive_Click" Width="105"/>
+                    <TextBox PlaceholderText="Shared Drive Path" Text="{Binding OpponentSharedDirectory, Mode=OneWay}" Width="380"/>
+                    <Button Content="Select Folder" Command="{Binding SelectSharedDirectoryCommand}" Width="105"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

@@ -35,46 +35,13 @@ namespace BattleAssistant.Dialogs
     /// </summary>
     public sealed partial class EndBattleConfirmationDialog : ContentDialog
     {
-        private EndBattleConfirmationDialogModel DialogModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public EndBattleConfirmationDialog(BattleModel battle)
         {
             this.InitializeComponent();
-            DialogModel = new EndBattleConfirmationDialogModel(battle);
-            DataContext = DialogModel;
-        }
-
-        /// <summary>
-        /// Cleanup checkbox checked event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CleanUp_Checked(object sender, RoutedEventArgs e)
-        {
-            DialogModel.CleanUpFolders = true;
-        }
-
-        /// <summary>
-        /// Cleanup checkbox uncheck event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CleanUp_Unchecked(object sender, RoutedEventArgs e)
-        {
-            DialogModel.CleanUpFolders = false;
-        }
-
-        /// <summary>
-        /// End battle click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void EndBattle_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            DialogModel.EndBattle();
+            DataContext = new EndBattleConfirmationDialogModel(battle);
         }
     }
 }

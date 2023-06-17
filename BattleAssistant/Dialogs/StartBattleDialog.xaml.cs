@@ -34,8 +34,6 @@ namespace BattleAssistant.Dialogs
     /// </summary>
     public sealed partial class StartBattleDialog : ContentDialog
     {
-        private StartBattleDialogModel DialogModel { get; set; }
-
         private bool GameAndOpponentExist;
 
         /// <summary>
@@ -44,50 +42,7 @@ namespace BattleAssistant.Dialogs
         public StartBattleDialog()
         {
             this.InitializeComponent();
-            DialogModel = new StartBattleDialogModel(DialogInfoBar);
-            DataContext = DialogModel;
-            Loaded += StartBattleDialog_Loaded;
-            GameAndOpponentExist = false;
-        }
-
-        /// <summary>
-        /// Page Loaded Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StartBattleDialog_Loaded(object sender, RoutedEventArgs e)
-        {
-            //If at least one game and opponent exist then allow a battle to be started
-            GameAndOpponentExist = DialogModel.Games.Count > 0 && DialogModel.Opponents.Count > 0;
-        }
-
-        /// <summary>
-        /// Start Battle Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void StartBattle_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            DialogModel.StartBattle();
-        }
-
-        /// <summary>
-        /// Select Battle File Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void SelectFile_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogModel.SelectBattleFile();
-            CheckInputs();
-        }
-
-        /// <summary>
-        /// Checks the inputs and enables the primary button
-        /// </summary>
-        private void CheckInputs()
-        {
-            IsPrimaryButtonEnabled = DialogModel.Battle.BattleFile != null && GameAndOpponentExist;
+            DataContext = new StartBattleDialogModel();
         }
     }
 }

@@ -34,45 +34,13 @@ namespace BattleAssistant.Dialogs
     /// </summary>
     public sealed partial class AddGameDialog : ContentDialog
     {
-        private AddGameDialogModel DialogModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public AddGameDialog()
         {
             this.InitializeComponent();
-            DialogModel = new AddGameDialogModel(DialogInfoBar);
-            DataContext = DialogModel;
-        }
-
-        /// <summary>
-        /// Add Game Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void AddGame_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            DialogModel.AddGame();
-        }
-
-        /// <summary>
-        /// Select Game Directory Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void SelectGameDir_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogModel.SelectGameDir();
-            CheckInputs();
-        }
-
-        /// <summary>
-        /// Checks the inputs to enable the primary button
-        /// </summary>
-        private void CheckInputs()
-        {
-            IsPrimaryButtonEnabled = DialogModel.Game.GameDir != null;
+            DataContext = new AddGameDialogModel();
         }
     }
 }

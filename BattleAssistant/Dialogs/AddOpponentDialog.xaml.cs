@@ -35,69 +35,13 @@ namespace BattleAssistant.Dialogs
     /// </summary>
     public sealed partial class AddOpponentDialog : ContentDialog
     {
-        private AddOpponentDialogModel DialogModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public AddOpponentDialog()
         {
             this.InitializeComponent();
-            DialogModel = new AddOpponentDialogModel();
-            DataContext = DialogModel;
-        }
-
-        /// <summary>
-        /// Add Opponents Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void AddOpponent_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            DialogModel.AddOpponent();
-        }
-
-        /// <summary>
-        /// Select Shared Drive Click Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void SelectSharedDrive_Click(object sender, RoutedEventArgs e)
-        {
-            await DialogModel.SelectSharedDrive();
-            CheckInputs();
-        }
-
-        /// <summary>
-        /// Opponents Name Changed Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpponentName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckInputs();
-        }
-
-        /// <summary>
-        /// Check inputs to enable primary button
-        /// </summary>
-        private void CheckInputs()
-        {
-            bool opponentNameUnique = true;
-            foreach (OpponentModel opponent in App.Opponents)
-            {
-                if (opponent.Name == OpponentName.Text)
-                {
-                    DialogInfoBar.Severity = InfoBarSeverity.Error;
-                    DialogInfoBar.Title = "Name not unique";
-                    DialogInfoBar.Message = "The opponents name isn't unique";
-                    DialogInfoBar.IsOpen = true;
-                    opponentNameUnique = false;
-                    break;
-                }
-            }
-
-            IsPrimaryButtonEnabled = DialogModel.Opponent.SharedDir != null && OpponentName.Text != "" && opponentNameUnique;
+            DataContext = new AddOpponentDialogModel();
         }
     }
 }

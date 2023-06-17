@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -39,6 +40,9 @@ namespace BattleAssistant.DialogModels
     /// </summary>
     public partial class StartBattleDialogModel : ObservableObject
     {
+        [ObservableProperty]
+        private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
+
         [ObservableProperty]
         private GameModel selectedGame;
 
@@ -78,24 +82,22 @@ namespace BattleAssistant.DialogModels
 
         public BattleModel Battle { get; set; }
 
-        private readonly InfoBar DialogInfoBar;
-
         /// <summary>
         /// Constructor
         /// </summary>
-        public StartBattleDialogModel(InfoBar dialogInfoBar)
+        public StartBattleDialogModel()
         {
             Battle = new BattleModel();
             Games = App.Games;
             Opponents = App.Opponents;
-            DialogInfoBar = dialogInfoBar;
         }
 
         /// <summary>
         /// Opens a file picker to so the user can select the battle file
         /// </summary>
         /// <returns>The battle files path</returns>
-        public async Task SelectBattleFile()
+        [RelayCommand]
+        private async Task SelectBattleFile(InfoBar errorInfoBar)
         {
             var filePicker = new FileOpenPicker();
             WinRT.Interop.InitializeWithWindow.Initialize(filePicker, App.Hwnd);
@@ -106,13 +108,14 @@ namespace BattleAssistant.DialogModels
             {
                 if (!FileHelper.CheckFileIsValid(file.Path))
                 {
-                    DialogInfoBar.Severity = InfoBarSeverity.Error;
-                    DialogInfoBar.Title = "Invalid file";
-                    DialogInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
-                    DialogInfoBar.IsOpen = true;
+                    errorInfoBar.Severity = InfoBarSeverity.Error;
+                    errorInfoBar.Title = "Invalid file";
+                    errorInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
+                    errorInfoBar.IsOpen = true;
                 }
 
                 Battle.BattleFile = file.Path;
+                PrimaryButtonEnabled = true;
 
                 string fileDir = Path.GetDirectoryName(file.Path);
                 if (Path.GetFileName(fileDir) == "Outgoing Email" || Path.GetFileName(fileDir) == "Incoming Email")
@@ -133,7 +136,6 @@ namespace BattleAssistant.DialogModels
         /// Auto selects a game if the battle file is in a game folder
         /// </summary>
         /// <param name="fileDir"></param>
-        /// <param name="path"></param>
         private void AutoSelectGame(string fileDir)
         {
             //Try and find if the game already exists for the game directory found
@@ -184,7 +186,8 @@ namespace BattleAssistant.DialogModels
         /// <summary>
         /// Adds the battle to the list and updates the save file
         /// </summary>
-        public async void StartBattle()
+        [RelayCommand]
+        private async void StartBattle()
         {
             Battle.Game = SelectedGame;
             Battle.Opponent = SelectedOpponent;

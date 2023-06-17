@@ -25,6 +25,8 @@ using System.Collections.ObjectModel;
 using BattleAssistant.Dialogs;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Serilog;
@@ -34,8 +36,10 @@ namespace BattleAssistant.ViewModels
     /// <summary>
     /// Games page view model
     /// </summary>
-    public class GamesPageViewModel
+    public partial class GamesPageViewModel
     {
+        private readonly XamlRoot root;
+
         public ObservableCollection<GameModel> Games { get; set; } = App.Games;
 
         /// <summary>
@@ -43,28 +47,34 @@ namespace BattleAssistant.ViewModels
         /// </summary>
         public GamesPageViewModel()
         {
-
+            root = App.MainWindow.Content.XamlRoot;
         }
 
         /// <summary>
         /// Opens the add game dialog
         /// </summary>
-        /// <param name="root"></param>
-        public async void AddGame(XamlRoot root)
+        /// <param name="root"></param>#
+        [RelayCommand]
+        public async void AddGame()
         {
             AddGameDialog dialog = new()
             {
                 XamlRoot = root
             };
-            await dialog.ShowAsync();
-            Log.Information("Game added");
+            var result = await dialog.ShowAsync();
+
+            if(result == ContentDialogResult.Primary)
+            {
+                Log.Information("Game added");
+            } 
         }
 
         /// <summary>
         /// Deletes the game from the list
         /// </summary>
         /// <param name="index"></param>
-        public async void DeleteGame(int index, XamlRoot root)
+        [RelayCommand]
+        public async void DeleteGame(int index)
         {
             bool deleteAllowed = true;
 
@@ -81,6 +91,7 @@ namespace BattleAssistant.ViewModels
             {
                 XamlRoot = root
             };
+
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {

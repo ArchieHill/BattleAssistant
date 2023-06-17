@@ -78,7 +78,7 @@ namespace BattleAssistant.Models
         
         public void Dispose()
         {
-            if(oGEFWatcher != null)
+            if (oGEFWatcher != null)
             {
                 oGEFWatcher.Dispose();
             }

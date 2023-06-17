@@ -24,7 +24,7 @@
             <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Backup Folder Path</TextBlock>
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <TextBox Text="{Binding BackupFolderPath, Mode=TwoWay}" Width="380"/>
-                <Button Content="Select Folder" Click="SelectBackupFolder_Click" Width="105"/>
+                <Button Content="Select Folder" Command="{Binding SelectBackupFolderCommand}" Width="105"/>
             </StackPanel>
         </StackPanel>
 

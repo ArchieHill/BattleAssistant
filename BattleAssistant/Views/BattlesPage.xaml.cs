@@ -34,37 +34,13 @@ namespace BattleAssistant.Views
     /// </summary>
     public sealed partial class BattlesPage : Page
     {
-        public BattlesPageViewModel ViewModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public BattlesPage()
         {
             this.InitializeComponent();
-            ViewModel = new BattlesPageViewModel();
-            DataContext = ViewModel;
-        }
-
-        /// <summary>
-        /// Start battle click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StartBattle_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.StartBattle(this.Content.XamlRoot);
-        }
-
-        /// <summary>
-        /// End battle click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EndBattle_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = (Button)sender;
-            ViewModel.EndBattle(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
+            DataContext = new BattlesPageViewModel();
         }
     }
 }

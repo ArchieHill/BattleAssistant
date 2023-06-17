@@ -6,11 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:models="using:BattleAssistant.Models"
+    xmlns:viewmodels="using:BattleAssistant.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <viewmodels:GamesPageViewModel x:Key="GamesPageViewModel"/>
+    </Page.Resources>
+    
     <StackPanel Style="{StaticResource FrameStackPanel}">
-        <Button Content="Add Game" Click="AddGame_Click" HorizontalAlignment="Stretch" FontSize="20" Height="56"/>
+        <Button Content="Add Game" Command="{Binding AddGameCommand}" HorizontalAlignment="Stretch" FontSize="20" Height="56"/>
 
         <ItemsRepeater ItemsSource="{Binding Games, Mode=OneWay}">
             <ItemsRepeater.Layout>
@@ -40,7 +45,10 @@
                                 <TextBlock Text="{Binding OutgoingEmailFolder, Mode=OneWay}"/>
                             </StackPanel>
 
-                            <Button Content="Delete" Click="DeleteGame_Click" Tag="{Binding Index, Mode=OneWay}" HorizontalAlignment="Stretch"/>
+                            <Button Content="Delete"
+                                    Command="{Binding DeleteGameCommand, Source={StaticResource GamesPageViewModel}}" 
+                                    CommandParameter="{Binding Index}" 
+                                    HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>

@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using BattleAssistant.Dialogs;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Serilog;
@@ -34,8 +35,10 @@ namespace BattleAssistant.ViewModels
     /// <summary>
     /// Opponents page view model
     /// </summary>
-    public class OpponentsPageViewModel
+    public partial class OpponentsPageViewModel
     {
+        private readonly XamlRoot root;
+
         public ObservableCollection<OpponentModel> Opponents { get; set; } = App.Opponents;
 
         /// <summary>
@@ -43,28 +46,34 @@ namespace BattleAssistant.ViewModels
         /// </summary>
         public OpponentsPageViewModel()
         {
-
+            root = App.MainWindow.Content.XamlRoot;
         }
 
         /// <summary>
         /// Opens the add opponent dialog
         /// </summary>
         /// <param name="root"></param>
-        public async void AddOpponent(XamlRoot root)
+        [RelayCommand]
+        public async void AddOpponent()
         {
             AddOpponentDialog dialog = new()
             {
                 XamlRoot = root
             };
-            await dialog.ShowAsync();
-            Log.Information("Opponent added");
+            var result = await dialog.ShowAsync();
+            
+            if(result == ContentDialogResult.Primary)
+            {
+                Log.Information("Opponent added");
+            }
         }
 
         /// <summary>
         /// Deletes the opponent
         /// </summary>
         /// <param name="index"></param>
-        public async void DeleteOpponent(int index, XamlRoot root)
+        [RelayCommand]
+        public async void DeleteOpponent(int index)
         {
             bool deleteAllowed = true;
 

@@ -34,37 +34,13 @@ namespace BattleAssistant.Views
     /// </summary>
     public sealed partial class GamesPage : Page
     {
-        public GamesPageViewModel ViewModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public GamesPage()
         {
             this.InitializeComponent();
-            ViewModel = new GamesPageViewModel();
-            DataContext = ViewModel;
-        }
-
-        /// <summary>
-        /// Add game click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddGame_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.AddGame(this.Content.XamlRoot);
-        }
-
-        /// <summary>
-        /// Delete game click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DeleteGame_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = (Button)sender;
-            ViewModel.DeleteGame(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
+            DataContext = new GamesPageViewModel();
         }
     }
 }

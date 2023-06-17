@@ -22,9 +22,12 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using BattleAssistant.Dialogs;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Serilog;
@@ -34,8 +37,10 @@ namespace BattleAssistant.ViewModels
     /// <summary>
     /// Battle page view model
     /// </summary>
-    public class BattlesPageViewModel
+    public partial class BattlesPageViewModel
     {
+        private readonly XamlRoot root;
+
         public ObservableCollection<BattleModel> Battles { get; set; } = App.Battles;
 
         /// <summary>
@@ -43,28 +48,33 @@ namespace BattleAssistant.ViewModels
         /// </summary>
         public BattlesPageViewModel()
         {
-
+            root = App.MainWindow.Content.XamlRoot;
         }
 
         /// <summary>
         /// Opens the start battle dialog
         /// </summary>
-        /// <param name="root">The window root for the dialog</param>
-        public async void StartBattle(XamlRoot root)
+        [RelayCommand]
+        private async void StartBattle()
         {
             StartBattleDialog dialog = new StartBattleDialog
             {
                 XamlRoot = root
             };
-            await dialog.ShowAsync();
-            Log.Information("Battle started");
+            var result = await dialog.ShowAsync();
+
+            if(result == ContentDialogResult.Primary)
+            {
+                Log.Information("Battle started");
+            }   
         }
 
         /// <summary>
         /// Deletes the battle from the list
         /// </summary>
-        /// <param name="index"></param>
-        public async void EndBattle(int index, XamlRoot root)
+        /// <param name="index">The index of the battle in the collection</param>
+        [RelayCommand]
+        private async void EndBattle(int index)
         {
             EndBattleConfirmationDialog dialog = new(Battles[index])
             {

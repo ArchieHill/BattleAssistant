@@ -34,37 +34,13 @@ namespace BattleAssistant.Views
     /// </summary>
     public sealed partial class OpponentsPage : Page
     {
-        public OpponentsPageViewModel ViewModel { get; set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
         public OpponentsPage()
         {
             this.InitializeComponent();
-            ViewModel = new OpponentsPageViewModel();
-            DataContext = ViewModel;
-        }
-
-        /// <summary>
-        /// Add opponent click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddOpponent_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.AddOpponent(this.Content.XamlRoot);
-        }
-
-        /// <summary>
-        /// Delete opponent click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = (Button)sender;
-            ViewModel.DeleteOpponent(int.Parse(btn.Tag.ToString()), this.Content.XamlRoot);
+            DataContext = new OpponentsPageViewModel();
         }
     }
 }

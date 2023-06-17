@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -57,6 +58,7 @@ namespace BattleAssistant.ViewModels
         /// Opens a folder picker to get the user to select the shared drive folder
         /// </summary>
         /// <returns>The folders path</returns>
+        [RelayCommand]
         public async Task SelectBackupFolder()
         {
             FolderPicker folderPicker = new FolderPicker();

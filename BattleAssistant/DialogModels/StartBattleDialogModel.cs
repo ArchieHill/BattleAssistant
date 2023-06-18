@@ -49,6 +49,11 @@ namespace BattleAssistant.DialogModels
         [ObservableProperty]
         private OpponentModel selectedOpponent;
 
+        [ObservableProperty]
+        private string battleFile;
+
+        [ObservableProperty]
+        private bool backup;
 
         private ObservableCollection<GameModel> games;
 
@@ -80,14 +85,26 @@ namespace BattleAssistant.DialogModels
             }
         }
 
-        public BattleModel Battle { get; set; }
+        partial void OnBattleFileChanged(string value)
+        {
+            PrimaryButtonEnabled = ValidateInputs();
+        }
+
+        partial void OnSelectedGameChanged(GameModel value)
+        {
+            PrimaryButtonEnabled = ValidateInputs();
+        }
+
+        partial void OnSelectedOpponentChanged(OpponentModel value)
+        {
+            PrimaryButtonEnabled = ValidateInputs();
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
         public StartBattleDialogModel()
         {
-            Battle = new BattleModel();
             Games = App.Games;
             Opponents = App.Opponents;
         }
@@ -114,8 +131,7 @@ namespace BattleAssistant.DialogModels
                     errorInfoBar.IsOpen = true;
                 }
 
-                Battle.BattleFile = file.Path;
-                PrimaryButtonEnabled = true;
+                BattleFile = file.Path;
 
                 string fileDir = Path.GetDirectoryName(file.Path);
                 if (Path.GetFileName(fileDir) == "Outgoing Email" || Path.GetFileName(fileDir) == "Incoming Email")
@@ -189,19 +205,31 @@ namespace BattleAssistant.DialogModels
         [RelayCommand]
         private async void StartBattle()
         {
-            Battle.Game = SelectedGame;
-            Battle.Opponent = SelectedOpponent;
-            App.Battles.Add(Battle);
+            BattleModel battle = new(BattleFile, SelectedGame, SelectedOpponent, Backup);
+            App.Battles.Add(battle);
+
             //Assign its index so we know where to look to delete it
-            Battle.Index = App.Battles.IndexOf(Battle);
-            if (File.Exists($@"{Battle.Game.OutgoingEmailFolder}\{Path.GetFileName(Battle.BattleFile)}"))
+            battle.Index = App.Battles.IndexOf(battle);
+
+            if (File.Exists($@"{battle.Game.OutgoingEmailFolder}\{Path.GetFileName(battle.BattleFile)}"))
             {
-                await FileHelper.CopyToSharedDriveAsync(Battle);
+                await FileHelper.CopyToSharedDriveAsync(battle);
             }
             else
             {
-                await FileHelper.CopyToIncomingEmailAsync(Battle);
+                await FileHelper.CopyToIncomingEmailAsync(battle);
             }
+        }
+
+        /// <summary>
+        /// Checks if the UI inputs are valid
+        /// </summary>
+        /// <returns>Boolean on if they are valid or not</returns>
+        private bool ValidateInputs()
+        {
+            return SelectedGame != null &&
+                   SelectedOpponent != null &&
+                   !string.IsNullOrWhiteSpace(BattleFile);
         }
     }
 }

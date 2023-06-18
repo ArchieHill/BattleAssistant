@@ -21,7 +21,6 @@
 // SOFTWARE.
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using BattleAssistant.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -35,19 +34,27 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Add Opponents Dialog Model
     /// </summary>
-    public partial class AddOpponentDialogModel : ObservableValidator
+    public partial class AddOpponentDialogModel : ObservableObject
     {
         [ObservableProperty]
         private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
 
         [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required]
         private string opponentName;
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddOpponentCommand))]
+        //[NotifyCanExecuteChangedFor(nameof(AddOpponentCommand))]
         private string opponentSharedDirectory;
+
+        partial void OnOpponentNameChanged(string value)
+        {
+            PrimaryButtonEnabled = ValidateInputs();
+        }
+
+        partial void OnOpponentSharedDirectoryChanged(string value)
+        {
+            PrimaryButtonEnabled = ValidateInputs();
+        }
 
         /// <summary>
         /// Constructor
@@ -70,26 +77,27 @@ namespace BattleAssistant.DialogModels
             if (folder != null)
             {
                 OpponentSharedDirectory = folder.Path;
-                PrimaryButtonEnabled = true;
             }
         }
 
         /// <summary>
         /// Adds the opponent to the list and updates the save file
         /// </summary>
-        [RelayCommand(CanExecute = nameof(OpponentDirectoryIsValid))]
+        //[RelayCommand(CanExecute = nameof(ValidateInputs))]
+        [RelayCommand]
         private void AddOpponent()
         {
             App.AddOpponent(new OpponentModel(OpponentName, OpponentSharedDirectory));
         }
 
         /// <summary>
-        /// Returns if the shared directory is valid
+        /// Checks if the UI inputs are valid
         /// </summary>
-        /// <returns></returns>
-        private bool OpponentDirectoryIsValid()
+        /// <returns>Boolean on if they are valid or not</returns>
+        private bool ValidateInputs()
         {
-            return OpponentSharedDirectory != null;
+            return OpponentSharedDirectory != null &&
+                   !string.IsNullOrWhiteSpace(OpponentName);
         }
     }
 }

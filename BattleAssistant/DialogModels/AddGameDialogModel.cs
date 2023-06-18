@@ -47,6 +47,11 @@ namespace BattleAssistant.DialogModels
         //[NotifyCanExecuteChangedFor(nameof(AddGameCommand))]
         private string gameDirectory;
 
+        partial void OnGameDirectoryChanged(string value)
+        {
+            PrimaryButtonEnabled = value != null;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -73,7 +78,6 @@ namespace BattleAssistant.DialogModels
                     errorInfoBar.Title = "Invalid folder";
                     errorInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
                     errorInfoBar.IsOpen = true;
-                    PrimaryButtonEnabled = false;
                     return;
                 }
 
@@ -83,7 +87,6 @@ namespace BattleAssistant.DialogModels
                     errorInfoBar.Title = "Invalid folder";
                     errorInfoBar.Message = "The folder selected doesn't contain an Incoming Email folder in the Game Files folder";
                     errorInfoBar.IsOpen = true;
-                    PrimaryButtonEnabled = false;
                     return;
                 }
 
@@ -93,12 +96,10 @@ namespace BattleAssistant.DialogModels
                     errorInfoBar.Title = "Invalid folder";
                     errorInfoBar.Message = "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder";
                     errorInfoBar.IsOpen = true;
-                    PrimaryButtonEnabled = false;
                     return;
                 }
 
                 GameDirectory = folder.Path;
-                PrimaryButtonEnabled = true;
             }
         }
 

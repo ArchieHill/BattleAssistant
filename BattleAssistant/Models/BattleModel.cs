@@ -68,5 +68,22 @@ namespace BattleAssistant.Models
             Status = Common.Status.NoStatus;
             LastAction = Actions.NoLastAction;
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="battleFile">The latest battlefile of the battle</param>
+        /// <param name="game">The combat mission game for the battle</param>
+        /// <param name="opponent">The opponent being played against</param>
+        public BattleModel(string battleFile, GameModel game, OpponentModel opponent, bool backup)
+        {
+            BattleFile = battleFile;
+            CurrentFileNum = FileHelper.GetFileNumber(battleFile);
+            Backup = backup;
+            Game = game;
+            Opponent = opponent;
+            Status = Common.Status.NoStatus;
+            LastAction = Actions.NoLastAction;
+        }
     }
 }

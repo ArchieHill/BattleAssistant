@@ -34,8 +34,6 @@ namespace BattleAssistant.Dialogs
     /// </summary>
     public sealed partial class StartBattleDialog : ContentDialog
     {
-        private bool GameAndOpponentExist;
-
         /// <summary>
         /// Constructor
         /// </summary>

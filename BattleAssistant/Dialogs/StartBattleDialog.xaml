@@ -20,7 +20,7 @@
             <StackPanel Style="{StaticResource LabelContentStackPanel}">
                 <TextBlock>Battle File</TextBlock>
                 <StackPanel Orientation="Horizontal" Spacing="12">
-                    <TextBox Text="{Binding Battle.BattleFile, Mode=OneWay}" Width="380"/>
+                    <TextBox Text="{Binding BattleFile, Mode=OneWay}" Width="380"/>
                     <Button Content="Select File" 
                             Command="{Binding SelectBattleFileCommand}" 
                             CommandParameter="{Binding ElementName=errorInfoBar}" 
@@ -28,7 +28,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <ToggleSwitch Header="Backup Game Files" IsOn="{Binding Battle.Backup, Mode=TwoWay}" ToolTipService.ToolTip="Backs up the games files to the backup folder location."/>
+            <ToggleSwitch Header="Backup Game Files" IsOn="{Binding Backup, Mode=TwoWay}" ToolTipService.ToolTip="Backs up the games files to the backup folder location."/>
 
             <!-- Opponent Input -->
             <ComboBox Header="Opponent" PlaceholderText="No Opponents Added" 

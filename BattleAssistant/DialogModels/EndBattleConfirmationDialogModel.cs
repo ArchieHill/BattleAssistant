@@ -72,7 +72,7 @@ namespace BattleAssistant.DialogModels
             foreach (StorageFile file in await folder.GetFilesAsync())
             {
                 string fileDisplayName = FileHelper.GetFileDisplayName(file.Path);
-                if (battle.Name == fileDisplayName || battle.Name == "~" + fileDisplayName)
+                if (battle.Name == fileDisplayName || battle.Name == $"~{fileDisplayName}")
                 {
                     await file.DeleteAsync();
                 }

@@ -38,19 +38,22 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Add Game Dialog Model
     /// </summary>
-    public partial class AddGameDialogModel : ObservableObject
+    public partial class AddGameDialogModel : ObservableValidator
     {
         [ObservableProperty]
-        private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
-
-        [ObservableProperty]
-        //[NotifyCanExecuteChangedFor(nameof(AddGameCommand))]
-        private string gameDirectory;
+        [NotifyCanExecuteChangedFor(nameof(AddGameCommand))]
+        [NotifyDataErrorInfo]
+        [Required]
+        [MinLength(5)]
+        private string gameDirectory = string.Empty;
 
         partial void OnGameDirectoryChanged(string value)
         {
-            PrimaryButtonEnabled = value != null;
+            IsValid = !HasErrors;
         }
+
+        [ObservableProperty]
+        private bool isValid; 
 
         /// <summary>
         /// Constructor
@@ -106,20 +109,10 @@ namespace BattleAssistant.DialogModels
         /// <summary>
         /// Adds the game to the list and updates the save file
         /// </summary>
-        //[RelayCommand(CanExecute = nameof(GameDirectoryIsValid))]
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(IsValid))]
         private void AddGame()
         {
             App.AddGame(new GameModel(GameDirectory));
         }
-
-        /// <summary>
-        /// Returns if the folder path is valid or not
-        /// </summary>
-        /// <returns></returns>
-        //private bool GameDirectoryIsValid(GameDirectory)
-        //{
-        //    return GameDirectory is not null;
-        //}
     }
 }

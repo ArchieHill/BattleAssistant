@@ -22,8 +22,7 @@
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <TextBox Text="{Binding BattleFile, Mode=OneWay}" Width="380"/>
                     <Button Content="Select File" 
-                            Command="{Binding SelectBattleFileCommand}" 
-                            CommandParameter="{Binding ElementName=errorInfoBar}" 
+                            Command="{Binding SelectBattleFileCommand}"  
                             Width="105"/>
                 </StackPanel>
             </StackPanel>

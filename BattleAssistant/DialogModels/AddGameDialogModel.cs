@@ -25,6 +25,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using BattleAssistant.Common.CustomValidation;
 using BattleAssistant.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -38,18 +39,21 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Add Game Dialog Model
     /// </summary>
-    public partial class AddGameDialogModel : ObservableObject
+    public partial class AddGameDialogModel : ObservableValidator
     {
         [ObservableProperty]
         private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
+        [DirectoryPath]
         //[NotifyCanExecuteChangedFor(nameof(AddGameCommand))]
         private string gameDirectory;
 
         partial void OnGameDirectoryChanged(string value)
         {
-            PrimaryButtonEnabled = value != null;
+            PrimaryButtonEnabled = !HasErrors;
         }
 
         /// <summary>
@@ -74,33 +78,37 @@ namespace BattleAssistant.DialogModels
             {
                 if (!Directory.Exists($@"{folder.Path}\Game Files"))
                 {
-                    errorInfoBar.Severity = InfoBarSeverity.Error;
-                    errorInfoBar.Title = "Invalid folder";
-                    errorInfoBar.Message = "The folder selected doesn't contain the Game Files folder";
-                    errorInfoBar.IsOpen = true;
+                    DisplayErrorInfoBar(errorInfoBar, "The folder selected doesn't contain the Game Files folder");
                     return;
                 }
 
                 if (!Directory.Exists($@"{folder.Path}\Game Files\Incoming Email"))
                 {
-                    errorInfoBar.Severity = InfoBarSeverity.Error;
-                    errorInfoBar.Title = "Invalid folder";
-                    errorInfoBar.Message = "The folder selected doesn't contain an Incoming Email folder in the Game Files folder";
-                    errorInfoBar.IsOpen = true;
+                    DisplayErrorInfoBar(errorInfoBar, "The folder selected doesn't contain an Incoming Email folder in the Game Files folder");
                     return;
                 }
 
                 if (!Directory.Exists($@"{folder.Path}\Game Files\Outgoing Email"))
                 {
-                    errorInfoBar.Severity = InfoBarSeverity.Error;
-                    errorInfoBar.Title = "Invalid folder";
-                    errorInfoBar.Message = "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder";
-                    errorInfoBar.IsOpen = true;
+                    DisplayErrorInfoBar(errorInfoBar, "The folder selected doesn't contain an Outgoing Email folder in the Game Files folder");
                     return;
                 }
 
                 GameDirectory = folder.Path;
             }
+        }
+
+        /// <summary>
+        /// Adds information to the error info bar and displays it
+        /// </summary>
+        /// <param name="errorInfoBar">The info bar being displayed</param>
+        /// <param name="message">The error message to display</param>
+        private void DisplayErrorInfoBar(InfoBar errorInfoBar, string message)
+        {
+            errorInfoBar.Severity = InfoBarSeverity.Error;
+            errorInfoBar.Title = "Invalid folder";
+            errorInfoBar.Message = message;
+            errorInfoBar.IsOpen = true;
         }
 
         /// <summary>
@@ -112,14 +120,5 @@ namespace BattleAssistant.DialogModels
         {
             App.AddGame(new GameModel(GameDirectory));
         }
-
-        /// <summary>
-        /// Returns if the folder path is valid or not
-        /// </summary>
-        /// <returns></returns>
-        //private bool GameDirectoryIsValid(GameDirectory)
-        //{
-        //    return GameDirectory is not null;
-        //}
     }
 }

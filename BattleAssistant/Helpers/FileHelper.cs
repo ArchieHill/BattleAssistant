@@ -192,19 +192,6 @@ namespace BattleAssistant.Helpers
         }
 
         /// <summary>
-        /// Checks if the file has its three numbers at the end
-        /// </summary>
-        /// <param name="path">The file path being checked</param>
-        /// <returns>If the file is valid</returns>
-        public static bool CheckFileIsValid(string path)
-        {
-            string fileName = Path.GetFileNameWithoutExtension(path);
-            string fileNumbers = fileName.Substring(fileName.Length + FirstNumPosSubtractor);
-            return Regex.IsMatch(fileNumbers, @"\d\d\d");
-
-        }
-
-        /// <summary>
         /// Constructs a battle file path
         /// </summary>
         /// <param name="folderPath">The folder the battle file will be in</param>

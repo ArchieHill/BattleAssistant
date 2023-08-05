@@ -22,9 +22,11 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BattleAssistant.Common.CustomValidation;
 using BattleAssistant.Helpers;
 using BattleAssistant.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -38,18 +40,25 @@ namespace BattleAssistant.DialogModels
     /// <summary>
     /// Start Battle Dialog Model
     /// </summary>
-    public partial class StartBattleDialogModel : ObservableObject
+    public partial class StartBattleDialogModel : ObservableValidator
     {
         [ObservableProperty]
         private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
         private GameModel selectedGame;
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
         private OpponentModel selectedOpponent;
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required]
+        [BattleFile]
         private string battleFile;
 
         [ObservableProperty]
@@ -87,17 +96,20 @@ namespace BattleAssistant.DialogModels
 
         partial void OnBattleFileChanged(string value)
         {
-            PrimaryButtonEnabled = ValidateInputs();
+            ValidateAllProperties();
+            PrimaryButtonEnabled = !HasErrors;
         }
 
         partial void OnSelectedGameChanged(GameModel value)
         {
-            PrimaryButtonEnabled = ValidateInputs();
+            ValidateAllProperties();
+            PrimaryButtonEnabled = !HasErrors;
         }
 
         partial void OnSelectedOpponentChanged(OpponentModel value)
         {
-            PrimaryButtonEnabled = ValidateInputs();
+            ValidateAllProperties();
+            PrimaryButtonEnabled = !HasErrors;
         }
 
         /// <summary>
@@ -123,14 +135,6 @@ namespace BattleAssistant.DialogModels
 
             if (file != null)
             {
-                if (!FileHelper.CheckFileIsValid(file.Path))
-                {
-                    errorInfoBar.Severity = InfoBarSeverity.Error;
-                    errorInfoBar.Title = "Invalid file";
-                    errorInfoBar.Message = "The file name doesn't end with three numbers e.g 001";
-                    errorInfoBar.IsOpen = true;
-                }
-
                 BattleFile = file.Path;
 
                 string fileDir = Path.GetDirectoryName(file.Path);
@@ -219,17 +223,6 @@ namespace BattleAssistant.DialogModels
             {
                 await FileHelper.CopyToIncomingEmailAsync(battle);
             }
-        }
-
-        /// <summary>
-        /// Checks if the UI inputs are valid
-        /// </summary>
-        /// <returns>Boolean on if they are valid or not</returns>
-        private bool ValidateInputs()
-        {
-            return SelectedGame != null &&
-                   SelectedOpponent != null &&
-                   !string.IsNullOrWhiteSpace(BattleFile);
         }
     }
 }

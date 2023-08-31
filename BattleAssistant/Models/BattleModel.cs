@@ -22,6 +22,8 @@
 
 using BattleAssistant.Common;
 using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BattleAssistant.Models
@@ -52,8 +54,8 @@ namespace BattleAssistant.Models
 
         partial void OnBattleFileChanged(string value)
         {
-            Name = FileHelper.GetFileDisplayName(value);
-            CurrentFileNum = FileHelper.GetFileNumber(value);
+            Name = BattleFileHelper.GetFileDisplayName(value);
+            CurrentFileNum = BattleFileHelper.GetFileNumber(value);
         }
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace BattleAssistant.Models
         public BattleModel(string battleFile, GameModel game, OpponentModel opponent, bool backup)
         {
             BattleFile = battleFile;
-            CurrentFileNum = FileHelper.GetFileNumber(battleFile);
+            CurrentFileNum = BattleFileHelper.GetFileNumber(battleFile);
             Backup = backup;
             Game = game;
             Opponent = opponent;

@@ -23,7 +23,8 @@
 using System;
 using System.Threading.Tasks;
 using BattleAssistant.Common;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -34,23 +35,33 @@ namespace BattleAssistant.ViewModels
 {
     public partial class SettingsPageViewModel : ObservableObject
     {
-        private NumberBox flashAmountBox;
+        private readonly ISettingsService SettingsService;
 
-        private ToggleSwitch autoCreateOpponentSwitch;
+        [ObservableProperty]
+        private bool flashAmountBoxEnabled;
 
-        private ToggleSwitch autoCreateGameSwitch;
+        [ObservableProperty]
+        private bool autoCreateOpponentEnabled;
+
+        [ObservableProperty]
+        private bool autoCreateGameEnabled;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="autoCreateOpponentSwitch"></param>
-        /// <param name="autoCreateGameSwitch"></param>
-        public SettingsPageViewModel(NumberBox flashAmountBox, ToggleSwitch autoCreateOpponentSwitch, ToggleSwitch autoCreateGameSwitch)
+        public SettingsPageViewModel(ISettingsService settingsService)
         {
-            this.flashAmountBox = flashAmountBox;
-            this.autoCreateOpponentSwitch = autoCreateOpponentSwitch;
-            this.autoCreateGameSwitch = autoCreateGameSwitch;
-            BackupFolderPath = SettingsHelper.GetBackupFolderPath();
+            SettingsService = settingsService;
+
+            AutoSelectOpponent = SettingsService.GetAutoSelectOpponent();
+            AutoCreateOpponent = SettingsService.GetAutoCreateOpponent();
+            AutoSelectGame = SettingsService.GetAutoSelectGame();
+            AutoCreateGame = SettingsService.GetAutoCreateGame();
+
+            FlashIcon = SettingsService.GetFlashIcon();
+            FlashAmount = SettingsService.GetFlashAmount();
+
+            BackupFolderPath = SettingsService.GetBackupFolderPath();
         }
 
 
@@ -76,8 +87,8 @@ namespace BattleAssistant.ViewModels
 
         partial void OnFlashIconChanged(bool value)
         {
-            SettingsHelper.SaveFlashIcon(value);
-            flashAmountBox.IsEnabled = value;
+            SettingsService.SaveFlashIcon(value);
+            FlashAmountBoxEnabled = value;
         }
 
         [ObservableProperty]
@@ -85,7 +96,7 @@ namespace BattleAssistant.ViewModels
 
         partial void OnFlashAmountChanged(int value)
         {
-            SettingsHelper.SaveFlashAmount(value);
+            SettingsService.SaveFlashAmount(value);
         }
 
         [ObservableProperty]
@@ -93,12 +104,12 @@ namespace BattleAssistant.ViewModels
 
         partial void OnAutoSelectOpponentChanged(bool value)
         {
-            SettingsHelper.SaveAutoSelectOpponent(value);
-            autoCreateOpponentSwitch.IsEnabled = value;
+            SettingsService.SaveAutoSelectOpponent(value);
+            AutoCreateOpponentEnabled = value;
             if(!value)
             {
                 AutoCreateOpponent = false;
-                autoCreateGameSwitch.IsOn = false;
+                AutoCreateGame = false;
             }
         }
 
@@ -106,7 +117,7 @@ namespace BattleAssistant.ViewModels
         private bool autoCreateOpponent;
         partial void OnAutoCreateOpponentChanged(bool value)
         {
-            SettingsHelper.SaveAutoCreateOpponent(value);
+            SettingsService.SaveAutoCreateOpponent(value);
         }
 
         [ObservableProperty]
@@ -114,12 +125,11 @@ namespace BattleAssistant.ViewModels
 
         partial void OnAutoSelectGameChanged(bool value)
         {
-            SettingsHelper.SaveAutoSelectGame(value);
-            autoCreateGameSwitch.IsEnabled = value;
+            SettingsService.SaveAutoSelectGame(value);
+            AutoCreateGameEnabled = value;
             if (!value)
             {
                 AutoCreateGame = false;
-                autoCreateGameSwitch.IsOn = false;
             }
         }
 
@@ -127,7 +137,7 @@ namespace BattleAssistant.ViewModels
         private bool autoCreateGame;
         partial void OnAutoCreateGameChanged(bool value)
         {
-            SettingsHelper.SaveAutoCreateGame(value);
+            SettingsService.SaveAutoCreateGame(value);
         }
 
         [ObservableProperty]
@@ -135,7 +145,7 @@ namespace BattleAssistant.ViewModels
 
         partial void OnBackupFolderPathChanged(string value)
         {
-            SettingsHelper.SaveBackupFolderPath(value);
+            SettingsService.SaveBackupFolderPath(value);
         }
     }
 }

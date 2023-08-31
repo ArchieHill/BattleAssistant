@@ -32,9 +32,9 @@
             <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}">Auto Selection and Creation</TextBlock>
 
             <ToggleSwitch Header="Auto Select Opponent" IsOn="{Binding AutoSelectOpponent, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the opponent when the battle file is selected when starting a battle."/>
-            <ToggleSwitch x:Name="AutoCreateOpponentSwitch" Header="Auto Create Opponent" IsOn="{Binding AutoCreateOpponent, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the opponent when selecting, it will create a new opponent." />
+            <ToggleSwitch Header="Auto Create Opponent" IsOn="{Binding AutoCreateOpponent, Mode=TwoWay}" IsEnabled="{Binding AutoCreateOpponentEnabled, Mode=OneWay}" ToolTipService.ToolTip="If the app can't find the opponent when selecting, it will create a new opponent." />
             <ToggleSwitch Header="Auto Select Game" IsOn="{Binding AutoSelectGame, Mode=TwoWay}" ToolTipService.ToolTip="Attempts to select the game when the battle file is selected when starting a battle."/>
-            <ToggleSwitch x:Name="AutoCreateGameSwitch"  Header="Auto Create Game" IsOn="{Binding AutoCreateGame, Mode=TwoWay}" IsEnabled="False" ToolTipService.ToolTip="If the app can't find the game when selecting, it will create a new game."/>
+            <ToggleSwitch Header="Auto Create Game" IsOn="{Binding AutoCreateGame, Mode=TwoWay}" IsEnabled="{Binding AutoCreateGameEnabled, Mode=OneWay}" ToolTipService.ToolTip="If the app can't find the game when selecting, it will create a new game."/>
         </StackPanel>
 
         <StackPanel Style="{StaticResource LabelContentStackPanel}">
@@ -49,7 +49,7 @@
                        SmallChange="1" LargeChange="5" 
                        Minimum="1" Maximum="50"
                        HorizontalAlignment="Left"
-                       IsEnabled="False"/>
+                       IsEnabled="{Binding FlashAmountBoxEnabled, Mode=OneWay}"/>
         </StackPanel>
     </StackPanel>
 </Page>

@@ -22,6 +22,8 @@
 
 using System.Linq;
 using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
+using BattleAssistant.Services;
 using BattleAssistant.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -36,16 +38,18 @@ namespace BattleAssistant.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        private SettingsPageViewModel viewModel;
+        private readonly ISettingsService SettingsService;
+        private readonly SettingsPageViewModel ViewModel;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public SettingsPage()
+        public SettingsPage(ISettingsService settingsService, SettingsPageViewModel viewModel)
         {
             this.InitializeComponent();
-            viewModel = new SettingsPageViewModel(FlashAmountBox, AutoCreateOpponentSwitch, AutoCreateGameSwitch);
-            DataContext = viewModel;
+            SettingsService = settingsService;
+            ViewModel = viewModel;
+            DataContext = ViewModel;
             Loaded += SettingsPage_Loaded;
         }
 
@@ -58,14 +62,6 @@ namespace BattleAssistant.Views
         {
             string currentTheme = (this.XamlRoot.Content as Grid).RequestedTheme.ToString();
             (ThemePanel.Children.Cast<RadioButton>().FirstOrDefault(c => c?.Tag?.ToString() == currentTheme)).IsChecked = true;
-
-            viewModel.AutoSelectOpponent = SettingsHelper.GetAutoSelectOpponent();
-            viewModel.AutoCreateOpponent = SettingsHelper.GetAutoCreateOpponent();
-            viewModel.AutoSelectGame = SettingsHelper.GetAutoSelectGame();
-            viewModel.AutoCreateGame = SettingsHelper.GetAutoCreateGame();
-
-            viewModel.FlashIcon = SettingsHelper.GetFlashIcon();
-            viewModel.FlashAmount = SettingsHelper.GetFlashAmount();
         }
 
         /// <summary>
@@ -79,7 +75,7 @@ namespace BattleAssistant.Views
             if (selectedTheme != null)
             {
                 (App.MainWindow.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(selectedTheme);
-                SettingsHelper.SaveTheme(selectedTheme);
+                SettingsService.SaveTheme(selectedTheme);
             }
         }
     }

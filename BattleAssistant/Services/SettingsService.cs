@@ -21,17 +21,22 @@
 // SOFTWARE.
 
 using System;
+using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
+using BattleAssistant.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 
-namespace BattleAssistant.Helpers
+namespace BattleAssistant.Services
 {
     /// <summary>
     /// Settings Helper - Saves and loads settings
     /// </summary>
-    public static class SettingsHelper
+    public class SettingsService : ISettingsService
     {
+        private readonly NavShell Window;
+
         private static readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         private const string Theme = "theme";
 
@@ -48,11 +53,16 @@ namespace BattleAssistant.Helpers
         private const string FlashTaskBar = "flashTaskBar";
         private const string FlashAmount = "flashAmount";
 
+        public SettingsService(NavShell window) 
+        {
+            Window = window;
+        }
+
         /// <summary>
         /// Saves the theme
         /// </summary>
         /// <param name="theme">The theme string</param>
-        public static void SaveTheme(string theme)
+        public void SaveTheme(string theme)
         {
             localSettings.Values[Theme] = theme;
         }
@@ -62,7 +72,7 @@ namespace BattleAssistant.Helpers
         /// </summary>
         /// <param name="width">The window width</param>
         /// <param name="height">The window height</param>
-        public static void SaveWindowSize(int width, int height)
+        public void SaveWindowSize(int width, int height)
         {
             ApplicationDataCompositeValue windowSize = new()
             {
@@ -76,7 +86,7 @@ namespace BattleAssistant.Helpers
         /// Saves the backup folder path
         /// </summary>
         /// <param name="path">The path</param>
-        public static void SaveBackupFolderPath(string path)
+        public void SaveBackupFolderPath(string path)
         {
             localSettings.Values[BackupFolderPath] = path;
         }
@@ -85,7 +95,7 @@ namespace BattleAssistant.Helpers
         /// Saves the auto select opponent
         /// </summary>
         /// <param name="autoSelect">The auto select value</param>
-        public static void SaveAutoSelectOpponent(bool autoSelect)
+        public void SaveAutoSelectOpponent(bool autoSelect)
         {
             localSettings.Values[AutoSelectOpponent] = autoSelect;
         }
@@ -94,7 +104,7 @@ namespace BattleAssistant.Helpers
         /// Saves the auto create opponent
         /// </summary>
         /// <param name="autoCreate">The auto create value</param>
-        public static void SaveAutoCreateOpponent(bool autoCreate)
+        public void SaveAutoCreateOpponent(bool autoCreate)
         {
             localSettings.Values[AutoCreateOpponent] = autoCreate;
         }
@@ -103,7 +113,7 @@ namespace BattleAssistant.Helpers
         /// Saves the auto select game
         /// </summary>
         /// <param name="autoSelect">The auto select value</param>
-        public static void SaveAutoSelectGame(bool autoSelect)
+        public void SaveAutoSelectGame(bool autoSelect)
         {
             localSettings.Values[AutoSelectGame] = autoSelect;
         }
@@ -112,7 +122,7 @@ namespace BattleAssistant.Helpers
         /// Saves the auto create game
         /// </summary>
         /// <param name="autoCreate">The auto create value</param>
-        public static void SaveAutoCreateGame(bool autoCreate)
+        public void SaveAutoCreateGame(bool autoCreate)
         {
             localSettings.Values[AutoCreateGame] = autoCreate;
         }
@@ -121,7 +131,7 @@ namespace BattleAssistant.Helpers
         /// Saves the flash icon in task bar setting
         /// </summary>
         /// <param name="flashIcon">The flash icon in task bar flag</param>
-        public static void SaveFlashIcon(bool flashIcon)
+        public void SaveFlashIcon(bool flashIcon)
         {
             localSettings.Values[FlashTaskBar] = flashIcon;
         }
@@ -130,7 +140,7 @@ namespace BattleAssistant.Helpers
         /// Saves the flash amount for the flash icon
         /// </summary>
         /// <param name="flashAmount">The amount of times the icon flashes</param>
-        public static void SaveFlashAmount(int flashAmount)
+        public void SaveFlashAmount(int flashAmount)
         {
             localSettings.Values[FlashAmount] = flashAmount;
         }
@@ -138,21 +148,21 @@ namespace BattleAssistant.Helpers
         /// <summary>
         /// Loads all the settings, used at application start
         /// </summary>
-        public static void LoadSettings()
+        public void LoadSettings()
         {
             //Sets the application theme
-            string theme = (string)localSettings.Values[Theme];
+            var theme = (string)localSettings.Values[Theme];
             if (theme != null)
             {
-                (App.MainWindow.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(theme);
+                (Window.Content as Grid).RequestedTheme = EnumHelper.GetEnum<ElementTheme>(theme);
             }
 
             //Sets the application window size
-            ApplicationDataCompositeValue windowSize = (ApplicationDataCompositeValue)localSettings.Values[WindowSize];
+            var windowSize = (ApplicationDataCompositeValue)localSettings.Values[WindowSize];
             if (windowSize != null)
             {
-                int width = (int)windowSize[Width];
-                int height = (int)windowSize[Height];
+                var width = (int)windowSize[Width];
+                var height = (int)windowSize[Height];
 
                 App.SetWindowSize(width, height);
             }
@@ -166,14 +176,14 @@ namespace BattleAssistant.Helpers
         /// Get the backup folder path
         /// </summary>
         /// <returns>The folder path</returns>
-        public static string GetBackupFolderPath()
+        public string GetBackupFolderPath()
         {
-            string backupFolderPath = (string)localSettings.Values[BackupFolderPath];
+            var backupFolderPath = (string)localSettings.Values[BackupFolderPath];
             if (backupFolderPath != null | backupFolderPath == "")
             {
                 return backupFolderPath;
             }
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             return $@"{docPath}\Battlefront\Combat Mission\Battle Backups";
         }
 
@@ -181,9 +191,9 @@ namespace BattleAssistant.Helpers
         /// Get the auto select opponent setting
         /// </summary>
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
-        public static bool GetAutoSelectOpponent()
+        public bool GetAutoSelectOpponent()
         {
-            bool? autoSelectOpponent = (bool?)localSettings.Values[AutoSelectOpponent];
+            var autoSelectOpponent = (bool?)localSettings.Values[AutoSelectOpponent];
             if (autoSelectOpponent != null)
             {
                 return (bool)autoSelectOpponent;
@@ -196,9 +206,9 @@ namespace BattleAssistant.Helpers
         /// Get the auto create opponent setting
         /// </summary>
         /// <returns>bool of the setting, defaults to false is setting is null</returns>
-        public static bool GetAutoCreateOpponent()
+        public bool GetAutoCreateOpponent()
         {
-            bool? autoCreateOpponent = (bool?)localSettings.Values[AutoCreateOpponent];
+            var autoCreateOpponent = (bool?)localSettings.Values[AutoCreateOpponent];
             if (autoCreateOpponent != null)
             {
                 return (bool)autoCreateOpponent;
@@ -210,9 +220,9 @@ namespace BattleAssistant.Helpers
         /// Get the auto select game setting
         /// </summary>
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
-        public static bool GetAutoSelectGame()
+        public bool GetAutoSelectGame()
         {
-            bool? autoSelectGame = (bool?)localSettings.Values[AutoSelectGame];
+            var autoSelectGame = (bool?)localSettings.Values[AutoSelectGame];
             if (autoSelectGame != null)
             {
                 return (bool)autoSelectGame;
@@ -224,9 +234,9 @@ namespace BattleAssistant.Helpers
         /// Get the auto create game setting
         /// </summary>
         /// <returns>bool of the setting, defaults to false is setting is null</returns>
-        public static bool GetAutoCreateGame()
+        public bool GetAutoCreateGame()
         {
-            bool? autoCreateGame = (bool?)localSettings.Values[AutoCreateGame];
+            var autoCreateGame = (bool?)localSettings.Values[AutoCreateGame];
             if (autoCreateGame != null)
             {
                 return (bool)autoCreateGame;
@@ -238,9 +248,9 @@ namespace BattleAssistant.Helpers
         /// Get the flash icon in the task bar setting
         /// </summary>
         /// <returns>bool of the setting, defaults to true is setting is null</returns>
-        public static bool GetFlashIcon()
+        public bool GetFlashIcon()
         {
-            bool? flashTaskBar = (bool?)localSettings.Values[FlashTaskBar];
+            var flashTaskBar = (bool?)localSettings.Values[FlashTaskBar];
             if (flashTaskBar != null)
             {
                 return (bool)flashTaskBar;
@@ -252,9 +262,9 @@ namespace BattleAssistant.Helpers
         /// Gets the flash amount for the flash icon
         /// </summary>
         /// <returns>int of the setting, defaults to 5 is setting is null</returns>
-        public static int GetFlashAmount()
+        public int GetFlashAmount()
         {
-            int? flashAmount = (int?)localSettings.Values[FlashAmount];
+            var flashAmount = (int?)localSettings.Values[FlashAmount];
             if (flashAmount != null)
             {
                 return (int)flashAmount;

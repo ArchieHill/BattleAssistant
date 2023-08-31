@@ -27,8 +27,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BattleAssistant.Common.CustomValidation;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -42,6 +43,10 @@ namespace BattleAssistant.DialogModels
     /// </summary>
     public partial class StartBattleDialogModel : ObservableValidator
     {
+        private readonly IFileService FileService;
+        private readonly IStorageService StorageService;
+        private readonly ISettingsService SettingsService;
+
         [ObservableProperty]
         private bool primaryButtonEnabled; //Workaround until this fixed https://github.com/microsoft/microsoft-ui-xaml/issues/8563
 
@@ -94,6 +99,13 @@ namespace BattleAssistant.DialogModels
             }
         }
 
+        public StartBattleDialogModel(IFileService fileService, IStorageService storageService, ISettingsService settingsService)
+        {
+            FileService = fileService;
+            StorageService = storageService;
+            SettingsService = settingsService;
+        }
+
         partial void OnBattleFileChanged(string value)
         {
             ValidateAllProperties();
@@ -117,8 +129,8 @@ namespace BattleAssistant.DialogModels
         /// </summary>
         public StartBattleDialogModel()
         {
-            Games = App.Games;
-            Opponents = App.Opponents;
+            Games = StorageService.Games;
+            Opponents = StorageService.Opponents;
         }
 
         /// <summary>
@@ -140,12 +152,12 @@ namespace BattleAssistant.DialogModels
                 string fileDir = Path.GetDirectoryName(file.Path);
                 if (Path.GetFileName(fileDir) == "Outgoing Email" || Path.GetFileName(fileDir) == "Incoming Email")
                 {
-                    if (SettingsHelper.GetAutoSelectGame())
+                    if (SettingsService.GetAutoSelectGame())
                     {
                         AutoSelectGame(fileDir);
                     }
                 }
-                else if (SettingsHelper.GetAutoSelectOpponent())
+                else if (SettingsService.GetAutoSelectOpponent())
                 {
                     AutoSelectOpponent(fileDir);
                 }
@@ -168,7 +180,7 @@ namespace BattleAssistant.DialogModels
                 }
             }
 
-            if (SettingsHelper.GetAutoCreateGame())
+            if (SettingsService.GetAutoCreateGame())
             {
                 //If the game can't be found create a new game
                 GameModel newGame = new GameModel(Path.GetDirectoryName(Path.GetDirectoryName(fileDir)));
@@ -194,7 +206,7 @@ namespace BattleAssistant.DialogModels
                 }
             }
 
-            if (SettingsHelper.GetAutoCreateOpponent())
+            if (SettingsService.GetAutoCreateOpponent())
             {
                 //If the opponent can't be found create a new opponent
                 OpponentModel newOpponent = new OpponentModel(Path.GetFileName(fileDir), fileDir);
@@ -207,21 +219,21 @@ namespace BattleAssistant.DialogModels
         /// Adds the battle to the list and updates the save file
         /// </summary>
         [RelayCommand]
-        private async void StartBattle()
+        private async Task StartBattle()
         {
             BattleModel battle = new(BattleFile, SelectedGame, SelectedOpponent, Backup);
-            App.Battles.Add(battle);
+            StorageService.Battles.Add(battle);
 
             //Assign its index so we know where to look to delete it
-            battle.Index = App.Battles.IndexOf(battle);
+            battle.Index = StorageService.Battles.IndexOf(battle);
 
             if (File.Exists($@"{battle.Game.OutgoingEmailFolder}\{Path.GetFileName(battle.BattleFile)}"))
             {
-                await FileHelper.CopyToSharedDriveAsync(battle);
+                await FileService.CopyToSharedDriveAsync(battle);
             }
             else
             {
-                await FileHelper.CopyToIncomingEmailAsync(battle);
+                await FileService.CopyToIncomingEmailAsync(battle);
             }
         }
     }

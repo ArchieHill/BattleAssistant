@@ -22,8 +22,9 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using Serilog;
 
 namespace BattleAssistant.Watchers
@@ -33,13 +34,8 @@ namespace BattleAssistant.Watchers
     /// </summary>
     public class OutGoingEmailFolderWatcher : FolderWatcher
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="oGEFFolderPath"></param>
-        public OutGoingEmailFolderWatcher(string oGEFFolderPath) : base(oGEFFolderPath)
+        public OutGoingEmailFolderWatcher(string folderPath) : base(folderPath)
         {
-
         }
 
         /// <summary>
@@ -57,7 +53,7 @@ namespace BattleAssistant.Watchers
             }
 
             battle.BattleFile = newBattleFilePath;
-            await FileHelper.CopyToSharedDriveAsync(battle);
+            await FileService.CopyToSharedDriveAsync(battle);
         }
     }
 }

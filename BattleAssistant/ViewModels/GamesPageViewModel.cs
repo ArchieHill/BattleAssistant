@@ -23,8 +23,9 @@
 using System;
 using System.Collections.ObjectModel;
 using BattleAssistant.Dialogs;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -38,16 +39,26 @@ namespace BattleAssistant.ViewModels
     /// </summary>
     public partial class GamesPageViewModel
     {
+        private readonly ILogger Logger;
+        private readonly IStorageService StorageService;
+
         private readonly XamlRoot root;
 
-        public ObservableCollection<GameModel> Games { get; set; } = App.Games;
+        public ObservableCollection<GameModel> Games { get; set; }
+
+        public GamesPageViewModel() { }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public GamesPageViewModel()
+        public GamesPageViewModel(ILogger logger, IStorageService storageService)
         {
-            root = App.MainWindow.Content.XamlRoot;
+            root = App.Root;
+
+            Logger = logger;
+            StorageService = storageService;
+
+            Games = StorageService.Games;
         }
 
         /// <summary>
@@ -65,7 +76,7 @@ namespace BattleAssistant.ViewModels
 
             if(result == ContentDialogResult.Primary)
             {
-                Log.Information("Game added");
+                Logger.Information("Game added");
             } 
         }
 
@@ -78,7 +89,7 @@ namespace BattleAssistant.ViewModels
         {
             bool deleteAllowed = true;
 
-            foreach (BattleModel battle in App.Battles)
+            foreach (BattleModel battle in StorageService.Battles)
             {
                 if (battle.Game.Name == Games[index].Name)
                 {
@@ -98,8 +109,8 @@ namespace BattleAssistant.ViewModels
                 Games[index].Dispose();
                 Games.RemoveAt(index);
                 UpdateIndexes();
-                StorageHelper.UpdateGameFile();
-                Log.Information("Game deleted");
+                await StorageService.UpdateGameFile();
+                Logger.Information("Game deleted");
             }
         }
 

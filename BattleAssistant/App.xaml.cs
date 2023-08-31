@@ -24,9 +24,16 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using BattleAssistant.Common;
+using BattleAssistant.DialogModels;
 using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
+using BattleAssistant.ViewModels;
 using BattleAssistant.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -49,13 +56,11 @@ namespace BattleAssistant
         private const int MinHeight = 440;
         private const int MinWidth = 650;
 
-        public static ObservableCollection<BattleModel> Battles { get; set; }
+        public static IHost Application;
 
-        public static ObservableCollection<GameModel> Games { get; set; }
+        public static NavShell MainWindow;
 
-        public static ObservableCollection<OpponentModel> Opponents { get; set; }
-
-        public static Window MainWindow { get; set; }
+        public static XamlRoot Root;
 
         public static IntPtr Hwnd { get; set; }
 
@@ -79,6 +84,42 @@ namespace BattleAssistant
                 .WriteTo.Debug()
                 .WriteTo.File(Path.Combine(logsDirectoryPath, "log.txt"), LogEventLevel.Information, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+
+            Application = SetupApplication();
+            Application.Start();
+        }
+
+        private IHost SetupApplication()
+        {
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog();
+
+            //Services
+            builder.Services.AddSingleton<IFileService, FileService>();
+            builder.Services.AddSingleton<ISettingsService, SettingsService>();
+            builder.Services.AddSingleton<IStorageService, StorageService>();
+
+            //ViewModels
+            builder.Services.AddSingleton<BattlesPageViewModel>();
+            builder.Services.AddSingleton<GamesPageViewModel>();
+            builder.Services.AddSingleton<OpponentsPageViewModel>();
+            builder.Services.AddSingleton<SettingsPageViewModel>();
+            builder.Services.AddSingleton<AddGameDialogModel>();
+            builder.Services.AddSingleton<AddOpponentDialogModel>();
+            builder.Services.AddSingleton<EndBattleConfirmationDialogModel>();
+            builder.Services.AddSingleton<StartBattleDialogModel>();
+
+            //Views
+            builder.Services.AddSingleton<BattlesPage>();
+            builder.Services.AddSingleton<GamesPage>();
+            builder.Services.AddSingleton<OpponentsPage>();
+            builder.Services.AddSingleton<AboutPage>();
+            builder.Services.AddSingleton<GettingStartedPage>();
+            builder.Services.AddSingleton<SettingsPage>();
+            builder.Services.AddSingleton<NavShell>();
+
+            return builder.Build();
         }
 
         /// <summary>
@@ -88,24 +129,11 @@ namespace BattleAssistant
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            InitialiseWindow();
-        }
-
-        /// <summary>
-        /// Loads data and activates the window
-        /// </summary>
-        private async void InitialiseWindow()
-        {
-            //Load data, must come before making the main window to ensure the data is loaded onto the default navigated page
-            await StorageHelper.LoadAllAsync();
-
-            MainWindow = new NavShell();
+            MainWindow = Application.Services.GetService<NavShell>();
+            Root = MainWindow.Content.XamlRoot;
             Hwnd = WindowNative.GetWindowHandle(MainWindow);
             windowId = Win32Interop.GetWindowIdFromWindow(Hwnd);
             AppWindow = AppWindow.GetFromWindowId(windowId);
-
-            //Load settings
-            SettingsHelper.LoadSettings();
 
             //We set this after the load settings so we don't waste time writing the sizes to the settings that we just loaded
             AppWindow.Changed += AppWindow_Changed;
@@ -123,10 +151,12 @@ namespace BattleAssistant
         /// <param name="opponent">The opponent model to add</param>
         public static void AddOpponent(OpponentModel opponent)
         {
-            Opponents.Add(opponent);
+            IStorageService storageService = Application.Services.GetService<IStorageService>();
+
+            storageService.Opponents.Add(opponent);
             //Assign its index so we know where to look to delete it
-            opponent.Index = Opponents.IndexOf(opponent);
-            StorageHelper.UpdateOpponentFile();
+            opponent.Index = storageService.Opponents.IndexOf(opponent);
+            storageService.UpdateOpponentFile();
         }
 
         /// <summary>
@@ -135,10 +165,12 @@ namespace BattleAssistant
         /// <param name="game">The game model to add</param>
         public static void AddGame(GameModel game)
         {
-            Games.Add(game);
+            IStorageService storageService = Application.Services.GetService<IStorageService>();
+
+            storageService.Games.Add(game);
             //Assign its index so we know where to look to delete it
-            game.Index = Games.IndexOf(game);
-            StorageHelper.UpdateGameFile();
+            game.Index = storageService.Games.IndexOf(game);
+            storageService.UpdateGameFile();
         }
 
         /// <summary>
@@ -163,6 +195,8 @@ namespace BattleAssistant
         /// <param name="args">The event args</param>
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
+            ISettingsService settingsService = Application.Services.GetService<ISettingsService>();
+
             if (args.DidSizeChange)
             {
                 var size = sender.Size;
@@ -177,7 +211,7 @@ namespace BattleAssistant
                     size.Width = MinWidth;
                 }
 
-                SettingsHelper.SaveWindowSize(size.Width, size.Height);
+                settingsService.SaveWindowSize(size.Width, size.Height);
             }
         }
 
@@ -186,26 +220,29 @@ namespace BattleAssistant
         /// </summary>
         private static async void UpdateAllBattles()
         {
-            foreach (BattleModel battle in Battles)
+            IFileService fileService = Application.Services.GetRequiredService<IFileService>();
+            IStorageService storageService = Application.Services.GetService<IStorageService>();
+
+            foreach (BattleModel battle in storageService.Battles)
             {
                 if (battle.Status == Status.Waiting)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
-                    string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
+                    string nextBattleFilePath = BattleFileHelper.ConstructFilePath(battle.Opponent.SharedDir, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        await FileHelper.CopyToIncomingEmailAsync(battle);
+                        await fileService.CopyToIncomingEmailAsync(battle);
                     }
                 }
                 else if (battle.Status == Status.YourTurn)
                 {
                     //This constructs the path of the file with the next file number, then checks if its exists
-                    string nextBattleFilePath = FileHelper.ConstructBattleFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);
+                    string nextBattleFilePath = BattleFileHelper.ConstructFilePath(battle.Game.OutgoingEmailFolder, battle.Name, battle.CurrentFileNum + 1);
                     if (File.Exists(nextBattleFilePath))
                     {
                         battle.BattleFile = nextBattleFilePath;
-                        await FileHelper.CopyToSharedDriveAsync(battle);
+                        await fileService.CopyToSharedDriveAsync(battle);
                     }
                 }
             }

@@ -24,13 +24,15 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using BattleAssistant.Dialogs;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Serilog;
+using Windows.Storage;
 
 namespace BattleAssistant.ViewModels
 {
@@ -39,23 +41,32 @@ namespace BattleAssistant.ViewModels
     /// </summary>
     public partial class BattlesPageViewModel
     {
+        private readonly ILogger Logger;
+        private readonly IStorageService StorageService;
+
         private readonly XamlRoot root;
 
-        public ObservableCollection<BattleModel> Battles { get; set; } = App.Battles;
+        public ObservableCollection<BattleModel> Battles { get; set; }
+
+        public BattlesPageViewModel() { }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BattlesPageViewModel()
+        public BattlesPageViewModel(ILogger logger, IStorageService storageService)
         {
-            root = App.MainWindow.Content.XamlRoot;
+            root = App.Root;
+            Logger = logger;
+            StorageService = storageService;
+
+            Battles = StorageService.Battles;
         }
 
         /// <summary>
         /// Opens the start battle dialog
         /// </summary>
         [RelayCommand]
-        private async void StartBattle()
+        private async Task StartBattle()
         {
             StartBattleDialog dialog = new StartBattleDialog
             {
@@ -65,7 +76,7 @@ namespace BattleAssistant.ViewModels
 
             if(result == ContentDialogResult.Primary)
             {
-                Log.Information("Battle started");
+                Logger.Information("Battle started");
             }   
         }
 
@@ -74,7 +85,7 @@ namespace BattleAssistant.ViewModels
         /// </summary>
         /// <param name="index">The index of the battle in the collection</param>
         [RelayCommand]
-        private async void EndBattle(int index)
+        private async Task EndBattle(int index)
         {
             EndBattleConfirmationDialog dialog = new(Battles[index])
             {
@@ -85,8 +96,8 @@ namespace BattleAssistant.ViewModels
             {
                 Battles.RemoveAt(index);
                 UpdateIndexes();
-                StorageHelper.UpdateBattleFile();
-                Log.Information("Battle ended");
+                await StorageService.UpdateBattleFile();
+                Logger.Information("Battle ended");
             }
         }
 

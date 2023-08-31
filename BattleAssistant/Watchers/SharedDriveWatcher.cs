@@ -23,8 +23,9 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using Serilog;
 
 namespace BattleAssistant.Watchers
@@ -34,13 +35,8 @@ namespace BattleAssistant.Watchers
     /// </summary>
     public class SharedDriveWatcher : FolderWatcher
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="sharedDrivePath">The folders path</param>
-        public SharedDriveWatcher(string sharedDrivePath) : base(sharedDrivePath)
+        public SharedDriveWatcher(string folderPath) : base(folderPath)
         {
-
         }
 
         protected override async void File_CreatedTask(BattleModel battle, string newBattleFilePath)
@@ -53,7 +49,7 @@ namespace BattleAssistant.Watchers
             }
 
             battle.BattleFile = newBattleFilePath;
-            await FileHelper.CopyToIncomingEmailAsync(battle);
+            await FileService.CopyToIncomingEmailAsync(battle);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// FileHelper.cs
+﻿// ISettingsService.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -22,44 +22,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleAssistant.Helpers
+namespace BattleAssistant.Interfaces
 {
-    public class FileHelper
+    public interface ISettingsService
     {
-        /// <summary>
-        /// Checks if the file is locked 
-        /// </summary>
-        /// <param name="file">The file that is being checked</param>
-        /// <returns>If the file is locked or not</returns>
-        public static bool FileIsLocked(FileInfo file)
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = file.Open(FileMode.Open,
-                         FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-            finally
-            {
-                if (stream != null) { stream.Close(); }
-            }
-
-            //file is not locked
-            return false;
-        }
+        void SaveTheme(string theme);
+        void SaveWindowSize(int width, int height);
+        void SaveBackupFolderPath(string path);
+        void SaveAutoSelectOpponent(bool autoSelect);
+        void SaveAutoCreateOpponent(bool autoCreate);
+        void SaveAutoSelectGame(bool autoSelect);
+        void SaveAutoCreateGame(bool autoCreate);
+        void SaveFlashIcon(bool flashIcon);
+        void SaveFlashAmount(int flashAmount);
+        void LoadSettings();
+        string GetBackupFolderPath();
+        bool GetAutoSelectOpponent();
+        bool GetAutoCreateOpponent();
+        bool GetAutoSelectGame();
+        bool GetAutoCreateGame();
+        bool GetFlashIcon();
+        int GetFlashAmount();
     }
 }

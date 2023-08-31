@@ -37,10 +37,10 @@ namespace BattleAssistant.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public OpponentsPage()
+        public OpponentsPage(OpponentsPageViewModel viewModel)
         {
             this.InitializeComponent();
-            DataContext = new OpponentsPageViewModel();
+            DataContext = viewModel;
         }
     }
 }

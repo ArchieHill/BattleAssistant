@@ -22,45 +22,57 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using BattleAssistant.Common;
+using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
 using Newtonsoft.Json;
 using Serilog;
 using Windows.Storage;
 
-namespace BattleAssistant.Helpers
+namespace BattleAssistant.Services
 {
     /// <summary>
     /// Storage helper methods
     /// </summary>
-    public static class StorageHelper
+    public class StorageService : IStorageService
     {
-        static readonly StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+        private readonly ILogger Logger;
 
-        /// <summary>
-        /// Updates all save files
-        /// </summary>
-        /// <returns></returns>
-        public static async Task SaveAllAsync()
+        private static readonly StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
+        public ObservableCollection<BattleModel> Battles { get; private set; }
+        public ObservableCollection<GameModel> Games { get; private set; }
+        public ObservableCollection<OpponentModel> Opponents { get; private set; }
+
+        public StorageService(ILogger logger)
         {
-            await SaveModels(App.Games, SaveFiles.Games);
-            await SaveModels(App.Opponents, SaveFiles.Opponents);
-            await SaveModels(App.Battles, SaveFiles.Battles);
+            Logger = logger;
+
+            Games = Load<GameModel>(SaveFiles.Games).Result;
+            Opponents = Load<OpponentModel>(SaveFiles.Opponents).Result;
+            Battles = Load<BattleModel>(SaveFiles.Battles).Result;
+            Logger.Information("Loaded save files");
         }
 
-        /// <summary>
-        /// Loads all save files
-        /// </summary>
-        /// <returns></returns>
-        public static async Task LoadAllAsync()
+        public async Task UpdateBattleFile()
         {
-            App.Games = await LoadModels<GameModel>(SaveFiles.Games);
-            App.Opponents = await LoadModels<OpponentModel>(SaveFiles.Opponents);
-            App.Battles = await LoadModels<BattleModel>(SaveFiles.Battles);
-            Log.Information("Loaded all save data");
+            await Save(Battles, SaveFiles.Battles);
+        }
+
+        public async Task UpdateGameFile()
+        {
+            await Save(Games, SaveFiles.Games);
+        }
+
+        public async Task UpdateOpponentFile()
+        {
+            await Save(Opponents, SaveFiles.Opponents);
         }
 
         /// <summary>
@@ -70,37 +82,13 @@ namespace BattleAssistant.Helpers
         /// <param name="models">The list of models</param>
         /// <param name="fileName">The save file, file name</param>
         /// <returns></returns>
-        public static async Task SaveModels<T>(ObservableCollection<T> models, string fileName)
+        private static async Task Save<T>(ObservableCollection<T> models, string fileName)
         {
-            if (models != null)
+            while (FileHelper.FileIsLocked(new FileInfo(fileName)))
             {
-                StorageFile file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+                var file = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(models, Formatting.Indented));
             }
-        }
-
-        /// <summary>
-        /// Saves the battle models to the save file
-        /// </summary>
-        public static async void UpdateBattleFile()
-        {
-            await SaveModels(App.Battles, SaveFiles.Battles);
-        }
-
-        /// <summary>
-        /// Saves the game models to the save file
-        /// </summary>
-        public static async void UpdateGameFile()
-        {
-            await SaveModels(App.Games, SaveFiles.Games);
-        }
-
-        /// <summary>
-        /// Saves the opponent models to the save file
-        /// </summary>
-        public static async void UpdateOpponentFile()
-        {
-            await SaveModels(App.Opponents, SaveFiles.Opponents);
         }
 
         /// <summary>
@@ -109,13 +97,13 @@ namespace BattleAssistant.Helpers
         /// <typeparam name="T">The type of model thats being loaded</typeparam>
         /// <param name="fileName">The file name the data is being loaded from</param>
         /// <returns>A collection of the models loaded</returns>
-        public static async Task<ObservableCollection<T>> LoadModels<T>(string fileName)
+        private async Task<ObservableCollection<T>> Load<T>(string fileName)
         {
             try
             {
-                StorageFile file = await localFolder.GetFileAsync(fileName);
-                string text = await FileIO.ReadTextAsync(file);
-                ObservableCollection<T> models = JsonConvert.DeserializeObject<ObservableCollection<T>>(text);
+                var file = await localFolder.GetFileAsync(fileName);
+                var text = await FileIO.ReadTextAsync(file);
+                var models = JsonConvert.DeserializeObject<ObservableCollection<T>>(text);
                 if (models != null)
                 {
                     return models;
@@ -125,14 +113,14 @@ namespace BattleAssistant.Helpers
             catch (FileNotFoundException ex)
             {
                 //With no file found, assume it doesn't exist and move on
-                Log.Warning(ex, "Save file not found, creating empty list");
+                Logger.Warning(ex, "Save file not found, creating empty list");
                 return new ObservableCollection<T>();
             }
             catch (Exception ex)
             {
                 if (ex.Source != null)
                 {
-                    Log.Error("IOException source: {0}", ex.Source);
+                    Logger.Error("IOException source: {0}", ex.Source);
                 }
                 return new ObservableCollection<T>();
             }

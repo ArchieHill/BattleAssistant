@@ -1,4 +1,4 @@
-﻿// FileHelper.cs
+﻿// IFileSerivce.cs
 //
 // Copyright (c) 2022 Archie Hill
 //
@@ -22,44 +22,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BattleAssistant.Models;
 
-namespace BattleAssistant.Helpers
+namespace BattleAssistant.Interfaces
 {
-    public class FileHelper
+    public interface IFileService
     {
-        /// <summary>
-        /// Checks if the file is locked 
-        /// </summary>
-        /// <param name="file">The file that is being checked</param>
-        /// <returns>If the file is locked or not</returns>
-        public static bool FileIsLocked(FileInfo file)
-        {
-            FileStream stream = null;
-
-            try
-            {
-                stream = file.Open(FileMode.Open,
-                         FileAccess.ReadWrite, FileShare.None);
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-            finally
-            {
-                if (stream != null) { stream.Close(); }
-            }
-
-            //file is not locked
-            return false;
-        }
+       Task CopyToIncomingEmailAsync(BattleModel battle);
+       Task CopyToSharedDriveAsync(BattleModel battle);
     }
 }

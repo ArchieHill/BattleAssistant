@@ -23,7 +23,10 @@
 using System;
 using System.IO;
 using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace BattleAssistant.Watchers
@@ -33,6 +36,9 @@ namespace BattleAssistant.Watchers
     /// </summary>
     public abstract class FolderWatcher : IDisposable
     {
+        protected readonly IFileService FileService;
+        private readonly IStorageService StorageService;
+
         protected FileSystemWatcher Watcher { get; set; }
 
         /// <summary>
@@ -41,6 +47,8 @@ namespace BattleAssistant.Watchers
         /// <param name="folderPath">The folder path</param>
         public FolderWatcher(string folderPath)
         {
+            FileService = App.Application.Services.GetService<IFileService>();
+            StorageService = App.Application.Services.GetService<IStorageService>();
 
             Watcher = new()
             {
@@ -62,9 +70,9 @@ namespace BattleAssistant.Watchers
             Log.Information($"File creation detected {e.FullPath}");
             string createdFile = e.FullPath.Replace("-TEMP", "");
 
-            foreach (BattleModel battle in App.Battles)
+            foreach (BattleModel battle in StorageService.Battles)
             {
-                if (battle.Name == FileHelper.GetFileDisplayName(createdFile) &&
+                if (battle.Name == BattleFileHelper.GetFileDisplayName(createdFile) &&
                     Path.GetFileName(battle.BattleFile) != Path.GetFileName(createdFile))
                 {
                     //This if statement is used to allow the file watcher thread to access the UI thread

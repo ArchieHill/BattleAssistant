@@ -22,9 +22,11 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using BattleAssistant.Dialogs;
-using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -37,24 +39,33 @@ namespace BattleAssistant.ViewModels
     /// </summary>
     public partial class OpponentsPageViewModel
     {
+        private readonly ILogger Logger;
+        private readonly IStorageService StorageService;
+
         private readonly XamlRoot root;
 
-        public ObservableCollection<OpponentModel> Opponents { get; set; } = App.Opponents;
+        public ObservableCollection<OpponentModel> Opponents { get; set; }
+
+        public OpponentsPageViewModel() { }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public OpponentsPageViewModel()
+        public OpponentsPageViewModel(ILogger logger, IStorageService storageService)
         {
-            root = App.MainWindow.Content.XamlRoot;
+            root = App.Root;
+
+            Logger = logger;
+            StorageService = storageService;
+
+            Opponents = StorageService.Opponents;
         }
 
         /// <summary>
         /// Opens the add opponent dialog
         /// </summary>
-        /// <param name="root"></param>
         [RelayCommand]
-        public async void AddOpponent()
+        public async Task AddOpponent()
         {
             AddOpponentDialog dialog = new()
             {
@@ -64,7 +75,7 @@ namespace BattleAssistant.ViewModels
             
             if(result == ContentDialogResult.Primary)
             {
-                Log.Information("Opponent added");
+                Logger.Information("Opponent added");
             }
         }
 
@@ -73,11 +84,11 @@ namespace BattleAssistant.ViewModels
         /// </summary>
         /// <param name="index"></param>
         [RelayCommand]
-        public async void DeleteOpponent(int index)
+        public async Task DeleteOpponent(int index)
         {
             bool deleteAllowed = true;
 
-            foreach (BattleModel battle in App.Battles)
+            foreach (BattleModel battle in StorageService.Battles)
             {
                 if (battle.Opponent.Name == Opponents[index].Name)
                 {
@@ -96,8 +107,8 @@ namespace BattleAssistant.ViewModels
                 Opponents[index].Dispose();
                 Opponents.RemoveAt(index);
                 UpdateIndexes();
-                StorageHelper.UpdateOpponentFile();
-                Log.Information("Opponent deleted");
+                await StorageService.UpdateOpponentFile();
+                Logger.Information("Opponent deleted");
             }
         }
 

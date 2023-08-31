@@ -22,7 +22,9 @@
 
 using System;
 using BattleAssistant.Helpers;
+using BattleAssistant.Interfaces;
 using BattleAssistant.Models;
+using BattleAssistant.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Windows.Storage;
@@ -71,7 +73,7 @@ namespace BattleAssistant.DialogModels
             StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(folderPath);
             foreach (StorageFile file in await folder.GetFilesAsync())
             {
-                string fileDisplayName = FileHelper.GetFileDisplayName(file.Path);
+                string fileDisplayName = BattleFileHelper.GetFileDisplayName(file.Path);
                 if (battle.Name == fileDisplayName || battle.Name == $"~{fileDisplayName}")
                 {
                     await file.DeleteAsync();
